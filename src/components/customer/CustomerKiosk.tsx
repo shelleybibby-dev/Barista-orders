@@ -191,32 +191,28 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
       <main className="mx-auto max-w-5xl px-5 py-6 pb-44">
         <h1 className="font-display text-4xl font-semibold">Order here</h1>
         <p className="mt-2 text-lg text-coffee">
-          Add drinks and donut packs to the same tray. No payment needed.
+          Add coffee, tea and donut packs to the same tray. No payment needed.
         </p>
 
         <h2 className="mt-10 font-display text-3xl font-semibold">Drinks</h2>
-        <p className="mt-1 text-base text-coffee">Tap a coffee or tea, then pick a size.</p>
+        <p className="mt-1 text-base text-coffee">Tap a coffee, then pick a size.</p>
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {menu.drinks.map((drink) => (
-            <button
-              key={drink.id}
-              type="button"
-              onClick={() => openProduct(drink, "drink")}
-              className="tap flex min-h-36 items-center gap-4 rounded-3xl bg-foam p-5 text-left shadow-[0_10px_30px_rgba(42,24,16,0.08)] ring-1 ring-espresso/5"
-            >
-              <CoffeeCup drink={drink} className="h-20 w-20 shrink-0" />
-              <span>
-                <span className="block font-display text-3xl font-semibold leading-tight">
-                  {drink.name}
-                </span>
-                <span className="mt-1 block text-base text-coffee">{drink.description}</span>
-                <span className="mt-3 inline-flex rounded-full bg-caramel/15 px-3 py-1 text-sm font-semibold text-mocha">
-                  From {formatGbp(lowestPricePence(drink))}
-                </span>
-              </span>
-            </button>
+            <DrinkCard key={drink.id} product={drink} onOpen={() => openProduct(drink, "drink")} />
           ))}
         </div>
+
+        {(menu.teas ?? []).length > 0 ? (
+          <>
+            <h2 className="mt-12 font-display text-3xl font-semibold">Teas</h2>
+            <p className="mt-1 text-base text-coffee">Regular or large. No extras.</p>
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {(menu.teas ?? []).map((tea) => (
+                <DrinkCard key={tea.id} product={tea} onOpen={() => openProduct(tea, "drink")} />
+              ))}
+            </div>
+          </>
+        ) : null}
 
         <h2 className="mt-12 font-display text-3xl font-semibold">Donuts</h2>
         <p className="mt-1 text-base text-coffee">
@@ -285,6 +281,33 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
 
       {placed ? <OrderConfirmation order={placed} onNew={startNewOrder} /> : null}
     </div>
+  );
+}
+
+function DrinkCard({
+  product,
+  onOpen,
+}: {
+  product: MenuDrink;
+  onOpen: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className="tap flex min-h-36 items-center gap-4 rounded-3xl bg-foam p-5 text-left shadow-[0_10px_30px_rgba(42,24,16,0.08)] ring-1 ring-espresso/5"
+    >
+      <CoffeeCup drink={product} className="h-20 w-20 shrink-0" />
+      <span>
+        <span className="block font-display text-3xl font-semibold leading-tight">
+          {product.name}
+        </span>
+        <span className="mt-1 block text-base text-coffee">{product.description}</span>
+        <span className="mt-3 inline-flex rounded-full bg-caramel/15 px-3 py-1 text-sm font-semibold text-mocha">
+          From {formatGbp(lowestPricePence(product))}
+        </span>
+      </span>
+    </button>
   );
 }
 

@@ -1,14 +1,17 @@
 import type { Menu, MenuDrink, MenuExtra, ProductKind } from "@/lib/types";
 
 export function findDrink(menu: Menu, drinkId: string): MenuDrink | undefined {
-  return menu.drinks.find((drink) => drink.id === drinkId);
+  return (
+    menu.drinks.find((drink) => drink.id === drinkId) ??
+    (menu.teas ?? []).find((tea) => tea.id === drinkId)
+  );
 }
 
 export function findProduct(
   menu: Menu,
   productId: string,
 ): { product: MenuDrink; kind: ProductKind } | undefined {
-  const drink = menu.drinks.find((item) => item.id === productId);
+  const drink = findDrink(menu, productId);
   if (drink) return { product: drink, kind: "drink" };
 
   const donut = (menu.donuts ?? []).find((item) => item.id === productId);

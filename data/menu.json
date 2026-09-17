@@ -129,7 +129,9 @@
         { "id": "regular", "name": "Regular", "pricePence": 400 },
         { "id": "large", "name": "Large", "pricePence": 440 }
       ]
-    },
+    }
+  ],
+  "teas": [
     {
       "id": "tea",
       "name": "Tea",

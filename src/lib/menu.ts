@@ -12,6 +12,7 @@ export function getMenu(): Menu {
     throw new Error("Menu config is missing cafeName, drinks or extras.");
   }
 
+  menu.teas = Array.isArray(menu.teas) ? menu.teas : [];
   menu.donuts = Array.isArray(menu.donuts) ? menu.donuts : [];
   return menu;
 }

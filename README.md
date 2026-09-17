@@ -84,8 +84,9 @@ Amounts are in **pence** (`380` = £3.80). After a change, refresh the customer 
 Useful fields:
 
 - `cafeName` / `tagline` — shown on the home and kiosk screens
-- `drinks[].name`, `description`, `sizes[]` — size `name` is what customers see (`Small`, `Regular`, `Large`, or `Single` / `Double` for espresso)
+- `drinks[].name`, `description`, `sizes[]` — coffee drinks; size `name` is what customers see (`Small`, `Regular`, `Large`, or `Single` / `Double` for espresso)
 - `drinks[].extras` — which extras from the shared `extras` list are allowed on that drink
+- `teas[]` — tea, decaf tea and green tea (Regular / Large, no extras), shown in their own kiosk section
 - `donuts[]` — topping/style plus pack sizes (`2 donuts`, `4 donuts`, `6 donuts`) matching the truck
 - `extras[].pricePence` and `group` — `milk` options are mutually exclusive; syrup flavours are mutually exclusive; `shot` and a syrup flavour can combine with milk
 

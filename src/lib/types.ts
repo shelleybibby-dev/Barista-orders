@@ -35,6 +35,7 @@ export interface Menu {
   tagline: string;
   currency: "GBP";
   drinks: MenuDrink[];
+  teas?: MenuDrink[];
   donuts: MenuDonut[];
   extras: MenuExtra[];
 }

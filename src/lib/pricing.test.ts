@@ -217,8 +217,10 @@ describe("café menu syrup flavours", () => {
 
   it("offers tea, decaf tea and green tea with regular and large and no extras", () => {
     const cafeMenu = getMenu();
+    expect(cafeMenu.drinks.some((drink) => drink.id.includes("tea"))).toBe(false);
+
     const teas = ["tea", "decaf-tea", "green-tea"].map((id) => {
-      const drink = cafeMenu.drinks.find((item) => item.id === id);
+      const drink = (cafeMenu.teas ?? []).find((item) => item.id === id);
       expect(drink).toBeDefined();
       return drink!;
     });
