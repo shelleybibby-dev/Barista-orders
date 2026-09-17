@@ -3,6 +3,8 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { EventEmitter } from "node:events";
 import { afterEach, describe, expect, it } from "vitest";
+import { extraChoiceLabel } from "@/lib/menu-helpers";
+import { getMenu } from "@/lib/menu";
 import { formatGbp } from "@/lib/money";
 import { createOrderStore } from "@/lib/orders";
 import {
@@ -36,7 +38,7 @@ const menu: Menu = {
       description: "Milky",
       accent: "#000",
       foam: "#fff",
-      extras: ["oat", "soya", "extra-shot", "syrup"],
+      extras: ["oat", "soya", "extra-shot", "syrup-vanilla", "syrup-caramel"],
       sizes: [
         { id: "small", name: "Small", pricePence: 340 },
         { id: "regular", name: "Regular", pricePence: 380 },
@@ -48,7 +50,8 @@ const menu: Menu = {
     { id: "oat", name: "Oat milk", pricePence: 40, group: "milk" },
     { id: "soya", name: "Soya milk", pricePence: 40, group: "milk" },
     { id: "extra-shot", name: "Extra shot", pricePence: 60, group: "shot" },
-    { id: "syrup", name: "Syrup", pricePence: 40, group: "syrup" },
+    { id: "syrup-vanilla", name: "Vanilla syrup", pricePence: 40, group: "syrup" },
+    { id: "syrup-caramel", name: "Caramel syrup", pricePence: 40, group: "syrup" },
   ],
   donuts: [
     {
@@ -92,15 +95,31 @@ describe("pricing", () => {
     expect(menu.drinks[0].sizes.map((size) => size.id)).toEqual(["single", "double"]);
   });
 
-  it("adds oat milk, extra shot and syrup to a regular latte", () => {
+  it("adds oat milk, extra shot and vanilla syrup to a regular latte", () => {
     expect(
-      priceUnitPence(menu.drinks[1], "regular", ["oat", "extra-shot", "syrup"], menu.extras),
+      priceUnitPence(
+        menu.drinks[1],
+        "regular",
+        ["oat", "extra-shot", "syrup-vanilla"],
+        menu.extras,
+      ),
     ).toBe(380 + 40 + 60 + 40);
   });
 
   it("rejects two milk alternatives on one drink", () => {
     expect(() =>
       priceUnitPence(menu.drinks[1], "regular", ["oat", "soya"], menu.extras),
+    ).toThrow(OrderValidationError);
+  });
+
+  it("rejects two syrup flavours on one drink", () => {
+    expect(() =>
+      priceUnitPence(
+        menu.drinks[1],
+        "regular",
+        ["syrup-vanilla", "syrup-caramel"],
+        menu.extras,
+      ),
     ).toThrow(OrderValidationError);
   });
 
@@ -119,6 +138,16 @@ describe("pricing", () => {
     expect(item.lineTotalPence).toBe((420 + 40) * 2);
     expect(item.kind).toBe("drink");
     expect(item.extras.map((extra) => extra.name)).toEqual(["Oat milk"]);
+  });
+
+  it("stores the chosen syrup flavour name on the line", () => {
+    const item = buildOrderItem(
+      menu,
+      { drinkId: "latte", sizeId: "regular", extraIds: ["syrup-vanilla"], quantity: 1 },
+      "line-2",
+    );
+    expect(item.extras.map((extra) => extra.name)).toEqual(["Vanilla syrup"]);
+    expect(item.unitPricePence).toBe(380 + 40);
   });
 
   it("prices donut packs from the truck menu", () => {
@@ -140,6 +169,43 @@ describe("pricing", () => {
     expect(item.drinkName).toBe("Sugared");
     expect(item.sizeName).toBe("4 donuts");
     expect(item.lineTotalPence).toBe(500);
+  });
+});
+
+describe("café menu syrup flavours", () => {
+  it("lists seven named syrups and no generic syrup extra", () => {
+    const cafeMenu = getMenu();
+    const syrups = cafeMenu.extras.filter((extra) => extra.group === "syrup");
+    expect(cafeMenu.extras.some((extra) => extra.id === "syrup")).toBe(false);
+    expect(syrups.map((extra) => extraChoiceLabel(extra))).toEqual([
+      "Caramel",
+      "Hazelnut",
+      "Vanilla",
+      "Toasted marshmallow",
+      "Pistachio",
+      "Cherry",
+      "Orange",
+    ]);
+    expect(syrups.every((extra) => extra.pricePence === 40)).toBe(true);
+    expect(syrups.map((extra) => extra.name)).toEqual([
+      "Caramel syrup",
+      "Hazelnut syrup",
+      "Vanilla syrup",
+      "Toasted marshmallow syrup",
+      "Pistachio syrup",
+      "Cherry syrup",
+      "Orange syrup",
+    ]);
+
+    const flavourIds = syrups.map((extra) => extra.id);
+    for (const drink of cafeMenu.drinks) {
+      if (drink.id === "espresso") {
+        expect(drink.extras.some((id) => id.startsWith("syrup-"))).toBe(false);
+        continue;
+      }
+      expect(drink.extras).toEqual(expect.arrayContaining(flavourIds));
+      expect(drink.extras).not.toContain("syrup");
+    }
   });
 });
 

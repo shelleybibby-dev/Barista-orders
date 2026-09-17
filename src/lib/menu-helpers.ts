@@ -26,6 +26,13 @@ export function extrasForDrink(menu: Menu, drink: MenuDrink): MenuExtra[] {
   return menu.extras.filter((extra) => allowed.has(extra.id));
 }
 
+export function extraChoiceLabel(extra: MenuExtra): string {
+  if (extra.group === "syrup" && extra.name.endsWith(" syrup")) {
+    return extra.name.slice(0, -" syrup".length);
+  }
+  return extra.name;
+}
+
 export function lowestPricePence(drink: MenuDrink): number {
   return Math.min(...drink.sizes.map((size) => size.pricePence));
 }

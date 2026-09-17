@@ -87,7 +87,7 @@ Useful fields:
 - `drinks[].name`, `description`, `sizes[]` — size `name` is what customers see (`Small`, `Regular`, `Large`, or `Single` / `Double` for espresso)
 - `drinks[].extras` — which extras from the shared `extras` list are allowed on that drink
 - `donuts[]` — topping/style plus pack sizes (`2 donuts`, `4 donuts`, `6 donuts`) matching the truck
-- `extras[].pricePence` and `group` — `milk` options are mutually exclusive; `shot` and `syrup` can combine with milk
+- `extras[].pricePence` and `group` — `milk` options are mutually exclusive; syrup flavours are mutually exclusive; `shot` and a syrup flavour can combine with milk
 
 Starter prices (GBP):
 
@@ -98,7 +98,7 @@ Starter prices (GBP):
 | Latte, Cappuccino, Flat white | £3.40 / £3.80 / £4.20 |
 | Mocha | £3.60 / £4.00 / £4.40 |
 
-Extras: oat milk +£0.40, extra shot +£0.60, syrup +£0.40.
+Extras: oat milk +£0.40, extra shot +£0.60, syrup flavour +£0.40 (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, cherry or orange — one per drink).
 
 Donut packs (no singles — same bundles as the truck):
 

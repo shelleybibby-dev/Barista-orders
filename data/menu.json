@@ -21,7 +21,17 @@
       "description": "Espresso lengthened with hot water",
       "accent": "#4a2c1f",
       "foam": "#c4a484",
-      "extras": ["oat", "extra-shot", "syrup"],
+      "extras": [
+        "oat",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-cherry",
+        "syrup-orange"
+      ],
       "sizes": [
         { "id": "small", "name": "Small", "pricePence": 280 },
         { "id": "regular", "name": "Regular", "pricePence": 320 },
@@ -34,7 +44,17 @@
       "description": "Silky steamed milk and espresso",
       "accent": "#6b3f2a",
       "foam": "#f3e6d4",
-      "extras": ["oat", "extra-shot", "syrup"],
+      "extras": [
+        "oat",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-cherry",
+        "syrup-orange"
+      ],
       "sizes": [
         { "id": "small", "name": "Small", "pricePence": 340 },
         { "id": "regular", "name": "Regular", "pricePence": 380 },
@@ -47,7 +67,17 @@
       "description": "Equal parts espresso, milk and foam",
       "accent": "#7a4630",
       "foam": "#fff6ea",
-      "extras": ["oat", "extra-shot", "syrup"],
+      "extras": [
+        "oat",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-cherry",
+        "syrup-orange"
+      ],
       "sizes": [
         { "id": "small", "name": "Small", "pricePence": 340 },
         { "id": "regular", "name": "Regular", "pricePence": 380 },
@@ -60,7 +90,17 @@
       "description": "Velvety microfoam, stronger coffee",
       "accent": "#8b5a3c",
       "foam": "#efe0cc",
-      "extras": ["oat", "extra-shot", "syrup"],
+      "extras": [
+        "oat",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-cherry",
+        "syrup-orange"
+      ],
       "sizes": [
         { "id": "small", "name": "Small", "pricePence": 340 },
         { "id": "regular", "name": "Regular", "pricePence": 380 },
@@ -73,7 +113,17 @@
       "description": "Chocolate, espresso and steamed milk",
       "accent": "#4e2a1c",
       "foam": "#e8d5c4",
-      "extras": ["oat", "extra-shot", "syrup"],
+      "extras": [
+        "oat",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-cherry",
+        "syrup-orange"
+      ],
       "sizes": [
         { "id": "small", "name": "Small", "pricePence": 360 },
         { "id": "regular", "name": "Regular", "pricePence": 400 },
@@ -95,8 +145,44 @@
       "group": "shot"
     },
     {
-      "id": "syrup",
-      "name": "Syrup",
+      "id": "syrup-caramel",
+      "name": "Caramel syrup",
+      "pricePence": 40,
+      "group": "syrup"
+    },
+    {
+      "id": "syrup-hazelnut",
+      "name": "Hazelnut syrup",
+      "pricePence": 40,
+      "group": "syrup"
+    },
+    {
+      "id": "syrup-vanilla",
+      "name": "Vanilla syrup",
+      "pricePence": 40,
+      "group": "syrup"
+    },
+    {
+      "id": "syrup-toasted-marshmallow",
+      "name": "Toasted marshmallow syrup",
+      "pricePence": 40,
+      "group": "syrup"
+    },
+    {
+      "id": "syrup-pistachio",
+      "name": "Pistachio syrup",
+      "pricePence": 40,
+      "group": "syrup"
+    },
+    {
+      "id": "syrup-cherry",
+      "name": "Cherry syrup",
+      "pricePence": 40,
+      "group": "syrup"
+    },
+    {
+      "id": "syrup-orange",
+      "name": "Orange syrup",
       "pricePence": 40,
       "group": "syrup"
     }

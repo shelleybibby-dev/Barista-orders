@@ -4,7 +4,13 @@ import { useEffect, useMemo, useState } from "react";
 import { CoffeeCup } from "@/components/CoffeeCup";
 import { BrandLockup } from "@/components/CoffeeBeansLogo";
 import { DonutIcon } from "@/components/DonutIcon";
-import { defaultSizeId, extrasForDrink, findProduct, lowestPricePence } from "@/lib/menu-helpers";
+import {
+  defaultSizeId,
+  extraChoiceLabel,
+  extrasForDrink,
+  findProduct,
+  lowestPricePence,
+} from "@/lib/menu-helpers";
 import { formatGbp } from "@/lib/money";
 import { cartKey, priceUnitPence } from "@/lib/pricing";
 import type { Menu, MenuDrink, MenuExtra, Order, OrderItemInput, ProductKind } from "@/lib/types";
@@ -301,7 +307,8 @@ function CustomiseSheet({
 }) {
   const extras = extrasForDrink(menu, draft.product);
   const milks = extras.filter((extra) => extra.group === "milk");
-  const others = extras.filter((extra) => extra.group !== "milk");
+  const syrups = extras.filter((extra) => extra.group === "syrup");
+  const others = extras.filter((extra) => extra.group !== "milk" && extra.group !== "syrup");
   const unitPrice = priceUnitPence(draft.product, draft.sizeId, draft.extraIds, menu.extras);
   const isDonut = draft.kind === "donut";
   const sizeLabel = isDonut ? "Pack" : "Size";
@@ -377,6 +384,35 @@ function CustomiseSheet({
                   hint={`+ ${formatGbp(milk.pricePence)}`}
                   selected={draft.extraIds.includes(milk.id)}
                   onClick={() => onExtra(milk)}
+                />
+              ))}
+            </div>
+          </>
+        ) : null}
+
+        {syrups.length > 0 ? (
+          <>
+            <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-coffee">
+              Syrup flavour
+            </h3>
+            <div className="mt-3 grid grid-cols-2 gap-3">
+              <ChoiceChip
+                label="None"
+                hint="No syrup"
+                selected={!draft.extraIds.some((id) => syrups.some((syrup) => syrup.id === id))}
+                onClick={() => {
+                  syrups.forEach((syrup) => {
+                    if (draft.extraIds.includes(syrup.id)) onExtra(syrup);
+                  });
+                }}
+              />
+              {syrups.map((syrup) => (
+                <ChoiceChip
+                  key={syrup.id}
+                  label={extraChoiceLabel(syrup)}
+                  hint={`+ ${formatGbp(syrup.pricePence)}`}
+                  selected={draft.extraIds.includes(syrup.id)}
+                  onClick={() => onExtra(syrup)}
                 />
               ))}
             </div>
