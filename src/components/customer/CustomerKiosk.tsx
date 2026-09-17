@@ -589,6 +589,13 @@ function CartDrawer({
         >
           {submitting ? "Sending to the barista…" : `Place order · ${formatGbp(totalPence)}`}
         </button>
+        <button
+          type="button"
+          onClick={onClose}
+          className="tap mt-3 min-h-16 w-full rounded-2xl bg-cream text-xl font-semibold text-espresso"
+        >
+          Continue shopping
+        </button>
       </section>
     </div>
   );
@@ -621,11 +628,11 @@ function OrderConfirmation({ order, onNew }: { order: Order; onNew: () => void }
         <button
           type="button"
           onClick={onNew}
-          className="tap mt-10 min-h-16 w-full rounded-2xl bg-caramel text-2xl font-semibold text-espresso"
+          className="tap mt-10 min-h-20 w-full rounded-2xl bg-caramel text-2xl font-semibold text-espresso shadow-lg"
         >
-          New order
+          Continue shopping
         </button>
-        <p className="mt-4 text-sm text-foam/60">Ready for the next customer in {Math.max(seconds, 0)}s</p>
+        <p className="mt-4 text-sm text-foam/60">Back to the menu in {Math.max(seconds, 0)}s</p>
       </div>
     </div>
   );
