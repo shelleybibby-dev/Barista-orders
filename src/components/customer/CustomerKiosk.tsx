@@ -184,7 +184,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-5 py-6 pb-36">
+      <main className="mx-auto max-w-5xl px-5 py-6 pb-44">
         <h1 className="font-display text-4xl font-semibold">Order here</h1>
         <p className="mt-2 text-lg text-coffee">
           Add drinks and donut packs to the same tray. No payment needed.
