@@ -129,6 +129,42 @@
         { "id": "regular", "name": "Regular", "pricePence": 400 },
         { "id": "large", "name": "Large", "pricePence": 440 }
       ]
+    },
+    {
+      "id": "tea",
+      "name": "Tea",
+      "description": "Classic breakfast tea",
+      "accent": "#8a5a28",
+      "foam": "#e8d5a8",
+      "extras": [],
+      "sizes": [
+        { "id": "regular", "name": "Regular", "pricePence": 260 },
+        { "id": "large", "name": "Large", "pricePence": 300 }
+      ]
+    },
+    {
+      "id": "decaf-tea",
+      "name": "Decaf tea",
+      "description": "Breakfast tea without the caffeine",
+      "accent": "#9a7a58",
+      "foam": "#efe4c8",
+      "extras": [],
+      "sizes": [
+        { "id": "regular", "name": "Regular", "pricePence": 260 },
+        { "id": "large", "name": "Large", "pricePence": 300 }
+      ]
+    },
+    {
+      "id": "green-tea",
+      "name": "Green tea",
+      "description": "Light, clean and fragrant",
+      "accent": "#5a7a3c",
+      "foam": "#d8e8c0",
+      "extras": [],
+      "sizes": [
+        { "id": "regular", "name": "Regular", "pricePence": 260 },
+        { "id": "large", "name": "Large", "pricePence": 300 }
+      ]
     }
   ],
   "extras": [

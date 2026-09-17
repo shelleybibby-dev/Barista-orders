@@ -97,6 +97,7 @@ Starter prices (GBP):
 | Americano | Small £2.80 / Regular £3.20 / Large £3.60 |
 | Latte, Cappuccino, Flat white | £3.40 / £3.80 / £4.20 |
 | Mocha | £3.60 / £4.00 / £4.40 |
+| Tea, Decaf tea, Green tea | Regular £2.60 / Large £3.00 |
 
 Extras: oat milk +£0.40, extra shot +£0.60, syrup flavour +£0.40 (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, cherry or orange — one per drink).
 
