@@ -1,4 +1,5 @@
 import { clampQuantity } from "@/lib/money";
+import { findProduct } from "@/lib/menu-helpers";
 import type { Menu, MenuDrink, MenuExtra, OrderItem, OrderItemInput } from "@/lib/types";
 
 export class OrderValidationError extends Error {
@@ -69,24 +70,26 @@ export function buildOrderItem(
   input: OrderItemInput,
   itemId: string,
 ): OrderItem {
-  const drink = menu.drinks.find((item) => item.id === input.drinkId);
-  if (!drink) {
-    throw new OrderValidationError("Unknown drink.");
+  const match = findProduct(menu, input.drinkId);
+  if (!match) {
+    throw new OrderValidationError("Unknown item.");
   }
 
-  const size = drink.sizes.find((item) => item.id === input.sizeId);
+  const { product, kind } = match;
+  const size = product.sizes.find((item) => item.id === input.sizeId);
   if (!size) {
-    throw new OrderValidationError(`Unknown size for ${drink.name}.`);
+    throw new OrderValidationError(`Unknown size for ${product.name}.`);
   }
 
   const quantity = clampQuantity(input.quantity);
-  const extras = resolveExtras(drink, input.extraIds ?? [], menu.extras);
+  const extras = resolveExtras(product, input.extraIds ?? [], menu.extras);
   const unitPricePence = size.pricePence + extras.reduce((sum, extra) => sum + extra.pricePence, 0);
 
   return {
     id: itemId,
-    drinkId: drink.id,
-    drinkName: drink.name,
+    kind,
+    drinkId: product.id,
+    drinkName: product.name,
     sizeId: size.id,
     sizeName: size.name,
     extras: extras.map((extra) => ({

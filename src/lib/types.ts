@@ -2,13 +2,15 @@ export type ExtraGroup = "milk" | "shot" | "syrup";
 
 export type OrderStatus = "queued" | "ready" | "completed";
 
+export type ProductKind = "drink" | "donut";
+
 export interface MenuSize {
   id: string;
   name: string;
   pricePence: number;
 }
 
-export interface MenuDrink {
+export interface MenuProduct {
   id: string;
   name: string;
   description: string;
@@ -17,6 +19,9 @@ export interface MenuDrink {
   extras: string[];
   sizes: MenuSize[];
 }
+
+export type MenuDrink = MenuProduct;
+export type MenuDonut = MenuProduct;
 
 export interface MenuExtra {
   id: string;
@@ -30,6 +35,7 @@ export interface Menu {
   tagline: string;
   currency: "GBP";
   drinks: MenuDrink[];
+  donuts: MenuDonut[];
   extras: MenuExtra[];
 }
 
@@ -48,6 +54,7 @@ export interface OrderItemExtra {
 
 export interface OrderItem {
   id: string;
+  kind?: ProductKind;
   drinkId: string;
   drinkName: string;
   sizeId: string;

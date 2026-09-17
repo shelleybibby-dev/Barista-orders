@@ -50,6 +50,34 @@ const menu: Menu = {
     { id: "extra-shot", name: "Extra shot", pricePence: 60, group: "shot" },
     { id: "syrup", name: "Syrup", pricePence: 40, group: "syrup" },
   ],
+  donuts: [
+    {
+      id: "sugared",
+      name: "Sugared",
+      description: "Sugar-dusted",
+      accent: "#c9a227",
+      foam: "#f7e7b4",
+      extras: [],
+      sizes: [
+        { id: "pack-2", name: "2 donuts", pricePence: 300 },
+        { id: "pack-4", name: "4 donuts", pricePence: 500 },
+        { id: "pack-6", name: "6 donuts", pricePence: 800 },
+      ],
+    },
+    {
+      id: "biscoff",
+      name: "Biscoff topped",
+      description: "Biscoff",
+      accent: "#9a5a28",
+      foam: "#e0b07a",
+      extras: [],
+      sizes: [
+        { id: "pack-2", name: "2 donuts", pricePence: 400 },
+        { id: "pack-4", name: "4 donuts", pricePence: 700 },
+        { id: "pack-6", name: "6 donuts", pricePence: 1100 },
+      ],
+    },
+  ],
 };
 
 describe("pricing", () => {
@@ -89,7 +117,29 @@ describe("pricing", () => {
       "line-1",
     );
     expect(item.lineTotalPence).toBe((420 + 40) * 2);
+    expect(item.kind).toBe("drink");
     expect(item.extras.map((extra) => extra.name)).toEqual(["Oat milk"]);
+  });
+
+  it("prices donut packs from the truck menu", () => {
+    expect(priceUnitPence(menu.donuts[0], "pack-2", [], menu.extras)).toBe(300);
+    expect(priceUnitPence(menu.donuts[0], "pack-4", [], menu.extras)).toBe(500);
+    expect(priceUnitPence(menu.donuts[0], "pack-6", [], menu.extras)).toBe(800);
+    expect(priceUnitPence(menu.donuts[1], "pack-2", [], menu.extras)).toBe(400);
+    expect(priceUnitPence(menu.donuts[1], "pack-4", [], menu.extras)).toBe(700);
+    expect(priceUnitPence(menu.donuts[1], "pack-6", [], menu.extras)).toBe(1100);
+  });
+
+  it("builds a donut pack line", () => {
+    const item = buildOrderItem(
+      menu,
+      { drinkId: "sugared", sizeId: "pack-4", extraIds: [], quantity: 1 },
+      "donut-1",
+    );
+    expect(item.kind).toBe("donut");
+    expect(item.drinkName).toBe("Sugared");
+    expect(item.sizeName).toBe("4 donuts");
+    expect(item.lineTotalPence).toBe(500);
   });
 });
 
@@ -160,6 +210,24 @@ describe("order store", () => {
 
   it("rejects an empty order", () => {
     const store = tempStore();
-    expect(() => store.create({ items: [] })).toThrow(/at least one drink/);
+    expect(() => store.create({ items: [] })).toThrow(/at least one item/);
+  });
+
+  it("places coffee and a donut pack on the same ticket", () => {
+    const store = tempStore();
+    const order = store.create({
+      customerName: "Maya",
+      items: [
+        { drinkId: "latte", sizeId: "regular", extraIds: ["oat"], quantity: 1 },
+        { drinkId: "biscoff", sizeId: "pack-4", extraIds: [], quantity: 1 },
+      ],
+    });
+
+    expect(order.items).toHaveLength(2);
+    expect(order.items[0].kind).toBe("drink");
+    expect(order.items[1].kind).toBe("donut");
+    expect(order.items[1].drinkName).toBe("Biscoff topped");
+    expect(order.items[1].sizeName).toBe("4 donuts");
+    expect(order.totalPence).toBe(420 + 700);
   });
 });

@@ -2,17 +2,19 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { CoffeeCup } from "@/components/CoffeeCup";
-import { extrasForDrink, lowestPricePence } from "@/lib/menu-helpers";
+import { DonutIcon } from "@/components/DonutIcon";
+import { defaultSizeId, extrasForDrink, findProduct, lowestPricePence } from "@/lib/menu-helpers";
 import { formatGbp } from "@/lib/money";
 import { cartKey, priceUnitPence } from "@/lib/pricing";
-import type { Menu, MenuDrink, MenuExtra, Order, OrderItemInput } from "@/lib/types";
+import type { Menu, MenuDrink, MenuExtra, Order, OrderItemInput, ProductKind } from "@/lib/types";
 
 interface CartLine extends OrderItemInput {
   key: string;
 }
 
 interface Draft {
-  drink: MenuDrink;
+  product: MenuDrink;
+  kind: ProductKind;
   sizeId: string;
   extraIds: string[];
   quantity: number;
@@ -30,16 +32,18 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
   const pricedCart = useMemo(
     () =>
       cart.map((line) => {
-        const drink = menu.drinks.find((item) => item.id === line.drinkId);
-        if (!drink) return null;
-        const size = drink.sizes.find((item) => item.id === line.sizeId);
+        const match = findProduct(menu, line.drinkId);
+        if (!match) return null;
+        const { product, kind } = match;
+        const size = product.sizes.find((item) => item.id === line.sizeId);
         const extras = (line.extraIds
           .map((id) => menu.extras.find((extra) => extra.id === id))
           .filter(Boolean) ?? []) as MenuExtra[];
-        const unitPricePence = priceUnitPence(drink, line.sizeId, line.extraIds, menu.extras);
+        const unitPricePence = priceUnitPence(product, line.sizeId, line.extraIds, menu.extras);
         return {
           ...line,
-          drink,
+          kind,
+          product,
           sizeName: size?.name ?? line.sizeId,
           extras,
           unitPricePence,
@@ -52,14 +56,12 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
   const itemCount = pricedCart.reduce((sum, line) => sum + line.quantity, 0);
   const totalPence = pricedCart.reduce((sum, line) => sum + line.lineTotalPence, 0);
 
-  function openDrink(drink: MenuDrink) {
-    const extraOptions = extrasForDrink(menu, drink);
-    const defaultSize =
-      drink.sizes.find((size) => size.id === "regular")?.id ?? drink.sizes[0].id;
+  function openProduct(product: MenuDrink, kind: ProductKind) {
     setDraft({
-      drink,
-      sizeId: defaultSize,
-      extraIds: extraOptions.some((extra) => extra.group === "milk") ? [] : [],
+      product,
+      kind,
+      sizeId: defaultSizeId(product, kind),
+      extraIds: [],
       quantity: 1,
     });
     setError(null);
@@ -83,7 +85,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
   function addDraftToCart() {
     if (!draft) return;
     const key = cartKey({
-      drinkId: draft.drink.id,
+      drinkId: draft.product.id,
       sizeId: draft.sizeId,
       extraIds: draft.extraIds,
     });
@@ -100,7 +102,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
         ...current,
         {
           key,
-          drinkId: draft.drink.id,
+          drinkId: draft.product.id,
           sizeId: draft.sizeId,
           extraIds: draft.extraIds,
           quantity: draft.quantity,
@@ -183,17 +185,19 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
       </header>
 
       <main className="mx-auto max-w-5xl px-5 py-6 pb-36">
-        <h1 className="font-display text-4xl font-semibold">Choose a drink</h1>
+        <h1 className="font-display text-4xl font-semibold">Order here</h1>
         <p className="mt-2 text-lg text-coffee">
-          Tap a coffee, pick a size, then add it to your order. No payment needed.
+          Add drinks and donut packs to the same tray. No payment needed.
         </p>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <h2 className="mt-10 font-display text-3xl font-semibold">Drinks</h2>
+        <p className="mt-1 text-base text-coffee">Tap a coffee, then pick a size.</p>
+        <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {menu.drinks.map((drink) => (
             <button
               key={drink.id}
               type="button"
-              onClick={() => openDrink(drink)}
+              onClick={() => openProduct(drink, "drink")}
               className="tap flex min-h-36 items-center gap-4 rounded-3xl bg-foam p-5 text-left shadow-[0_10px_30px_rgba(42,24,16,0.08)] ring-1 ring-espresso/5"
             >
               <CoffeeCup drink={drink} className="h-20 w-20 shrink-0" />
@@ -204,6 +208,32 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
                 <span className="mt-1 block text-base text-coffee">{drink.description}</span>
                 <span className="mt-3 inline-flex rounded-full bg-caramel/15 px-3 py-1 text-sm font-semibold text-mocha">
                   From {formatGbp(lowestPricePence(drink))}
+                </span>
+              </span>
+            </button>
+          ))}
+        </div>
+
+        <h2 className="mt-12 font-display text-3xl font-semibold">Donuts</h2>
+        <p className="mt-1 text-base text-coffee">
+          Freshly made. Choose a topping, then a pack of 2, 4 or 6.
+        </p>
+        <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {(menu.donuts ?? []).map((donut) => (
+            <button
+              key={donut.id}
+              type="button"
+              onClick={() => openProduct(donut, "donut")}
+              className="tap flex min-h-36 items-center gap-4 rounded-3xl bg-foam p-5 text-left shadow-[0_10px_30px_rgba(42,24,16,0.08)] ring-1 ring-espresso/5"
+            >
+              <DonutIcon donut={donut} className="h-20 w-20 shrink-0" />
+              <span>
+                <span className="block font-display text-3xl font-semibold leading-tight">
+                  {donut.name}
+                </span>
+                <span className="mt-1 block text-base text-coffee">{donut.description}</span>
+                <span className="mt-3 inline-flex rounded-full bg-caramel/15 px-3 py-1 text-sm font-semibold text-mocha">
+                  From {formatGbp(lowestPricePence(donut))}
                 </span>
               </span>
             </button>
@@ -271,20 +301,26 @@ function CustomiseSheet({
   onQuantity: (quantity: number) => void;
   onAdd: () => void;
 }) {
-  const extras = extrasForDrink(menu, draft.drink);
+  const extras = extrasForDrink(menu, draft.product);
   const milks = extras.filter((extra) => extra.group === "milk");
   const others = extras.filter((extra) => extra.group !== "milk");
-  const unitPrice = priceUnitPence(draft.drink, draft.sizeId, draft.extraIds, menu.extras);
+  const unitPrice = priceUnitPence(draft.product, draft.sizeId, draft.extraIds, menu.extras);
+  const isDonut = draft.kind === "donut";
+  const sizeLabel = isDonut ? "Pack" : "Size";
 
   return (
     <div className="fixed inset-0 z-40 flex items-end justify-center bg-espresso/45 p-3 sm:items-center">
       <button className="absolute inset-0" type="button" aria-label="Close" onClick={onClose} />
       <section className="relative max-h-[92dvh] w-full max-w-2xl overflow-y-auto rounded-[2rem] bg-foam p-6 shadow-2xl">
         <div className="flex items-start gap-4">
-          <CoffeeCup drink={draft.drink} className="h-16 w-16" />
+          {isDonut ? (
+            <DonutIcon donut={draft.product} className="h-16 w-16" />
+          ) : (
+            <CoffeeCup drink={draft.product} className="h-16 w-16" />
+          )}
           <div className="flex-1">
-            <h2 className="font-display text-4xl font-semibold">{draft.drink.name}</h2>
-            <p className="text-lg text-coffee">{draft.drink.description}</p>
+            <h2 className="font-display text-4xl font-semibold">{draft.product.name}</h2>
+            <p className="text-lg text-coffee">{draft.product.description}</p>
           </div>
           <button
             type="button"
@@ -296,13 +332,13 @@ function CustomiseSheet({
           </button>
         </div>
 
-        <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-coffee">Size</h3>
+        <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-coffee">{sizeLabel}</h3>
         <div
           className={`mt-3 grid gap-3 ${
-            draft.drink.sizes.length === 2 ? "grid-cols-2" : "grid-cols-1 sm:grid-cols-3"
+            draft.product.sizes.length === 2 ? "grid-cols-2" : "grid-cols-1 sm:grid-cols-3"
           }`}
         >
-          {draft.drink.sizes.map((size) => {
+          {draft.product.sizes.map((size) => {
             const selected = draft.sizeId === size.id;
             return (
               <button
@@ -387,6 +423,11 @@ function CustomiseSheet({
             >
               +
             </button>
+            {isDonut ? (
+              <span className="pr-3 text-base font-semibold text-coffee">
+                {draft.quantity === 1 ? "pack" : "packs"}
+              </span>
+            ) : null}
           </div>
           <button
             type="button"
@@ -441,7 +482,8 @@ function CartDrawer({
   menuName: string;
   lines: Array<{
     key: string;
-    drink: MenuDrink;
+    kind: ProductKind;
+    product: MenuDrink;
     sizeName: string;
     extras: MenuExtra[];
     quantity: number;
@@ -476,7 +518,9 @@ function CartDrawer({
         </div>
 
         {lines.length === 0 ? (
-          <p className="mt-10 text-center text-xl text-coffee">Your tray is empty. Pick a drink to begin.</p>
+          <p className="mt-10 text-center text-xl text-coffee">
+            Your tray is empty. Pick a drink or a donut pack to begin.
+          </p>
         ) : (
           <ul className="mt-6 space-y-3">
             {lines.map((line) => (
@@ -484,7 +528,8 @@ function CartDrawer({
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-2xl font-semibold">
-                      {line.drink.name}
+                      {line.kind === "donut" ? "Donuts · " : ""}
+                      {line.product.name}
                       <span className="ml-2 text-lg font-normal text-coffee">{line.sizeName}</span>
                     </p>
                     {line.extras.length > 0 ? (

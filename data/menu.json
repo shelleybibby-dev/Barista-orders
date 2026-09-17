@@ -1,6 +1,6 @@
 {
   "cafeName": "The Daily Grind",
-  "tagline": "Barista coffee, made to order",
+  "tagline": "Barista coffee and freshly made donuts",
   "currency": "GBP",
   "drinks": [
     {
@@ -105,6 +105,73 @@
       "name": "Syrup",
       "pricePence": 40,
       "group": "syrup"
+    }
+  ],
+  "donuts": [
+    {
+      "id": "sugared",
+      "name": "Sugared",
+      "description": "Classic sugar-dusted donuts",
+      "accent": "#c9a227",
+      "foam": "#f7e7b4",
+      "extras": [],
+      "sizes": [
+        { "id": "pack-2", "name": "2 donuts", "pricePence": 300 },
+        { "id": "pack-4", "name": "4 donuts", "pricePence": 500 },
+        { "id": "pack-6", "name": "6 donuts", "pricePence": 800 }
+      ]
+    },
+    {
+      "id": "cinnamon",
+      "name": "Cinnamon",
+      "description": "Warm cinnamon sugar donuts",
+      "accent": "#8a4b24",
+      "foam": "#d4a574",
+      "extras": [],
+      "sizes": [
+        { "id": "pack-2", "name": "2 donuts", "pricePence": 300 },
+        { "id": "pack-4", "name": "4 donuts", "pricePence": 500 },
+        { "id": "pack-6", "name": "6 donuts", "pricePence": 800 }
+      ]
+    },
+    {
+      "id": "nutella",
+      "name": "Nutella topped",
+      "description": "Fresh donuts topped with Nutella",
+      "accent": "#4a2a18",
+      "foam": "#7a4630",
+      "extras": [],
+      "sizes": [
+        { "id": "pack-2", "name": "2 donuts", "pricePence": 400 },
+        { "id": "pack-4", "name": "4 donuts", "pricePence": 700 },
+        { "id": "pack-6", "name": "6 donuts", "pricePence": 1100 }
+      ]
+    },
+    {
+      "id": "oreo-nutella",
+      "name": "Oreo & Nutella topped",
+      "description": "Nutella donuts with Oreo crumb",
+      "accent": "#2b211c",
+      "foam": "#6b4a32",
+      "extras": [],
+      "sizes": [
+        { "id": "pack-2", "name": "2 donuts", "pricePence": 400 },
+        { "id": "pack-4", "name": "4 donuts", "pricePence": 700 },
+        { "id": "pack-6", "name": "6 donuts", "pricePence": 1100 }
+      ]
+    },
+    {
+      "id": "biscoff",
+      "name": "Biscoff topped",
+      "description": "Lotus Biscoff spread and crumb",
+      "accent": "#9a5a28",
+      "foam": "#e0b07a",
+      "extras": [],
+      "sizes": [
+        { "id": "pack-2", "name": "2 donuts", "pricePence": 400 },
+        { "id": "pack-4", "name": "4 donuts", "pricePence": 700 },
+        { "id": "pack-6", "name": "6 donuts", "pricePence": 1100 }
+      ]
     }
   ]
 }

@@ -25,7 +25,7 @@ export default function HomePage() {
             <p className="text-sm uppercase tracking-[0.25em] text-caramel">Customer iPad</p>
             <h2 className="mt-3 font-display text-4xl font-semibold">Order kiosk</h2>
             <p className="mt-3 text-lg text-coffee">
-              Portrait-friendly menu. Customers pick a drink, add extras, and send it to the bar.
+              Portrait-friendly menu. Customers pick drinks and donuts, then send the order to the bar.
             </p>
             <span className="mt-8 inline-flex min-h-14 items-center rounded-full bg-espresso px-6 text-lg font-semibold text-foam">
               Open customer view

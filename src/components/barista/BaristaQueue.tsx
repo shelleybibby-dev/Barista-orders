@@ -105,7 +105,7 @@ export function BaristaQueue({ cafeName }: { cafeName: string }) {
             hint="Oldest first"
           />
           {queued.length === 0 ? (
-            <EmptyState message="No drinks waiting. New orders will appear here as soon as they’re placed." />
+            <EmptyState message="No orders waiting. New tickets will appear here as soon as they’re placed." />
           ) : (
             <div className="mt-4 grid gap-4 md:grid-cols-2">
               {queued.map((order) => (
@@ -244,6 +244,9 @@ function OrderTicket({
       <ul className="mt-4 space-y-3">
         {order.items.map((item) => (
           <li key={item.id} className="border-t border-espresso/10 pt-3">
+            {item.kind === "donut" ? (
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-mocha">Donuts</p>
+            ) : null}
             <p className="text-xl font-semibold">
               {item.quantity > 1 ? `${item.quantity}× ` : ""}
               {item.drinkName}

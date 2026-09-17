@@ -2,7 +2,7 @@
 
 A café kiosk web app for two iPads:
 
-- **Customer iPad** (`/customer`) — large-button menu, cart, and place order (no payment)
+- **Customer iPad** (`/customer`) — large-button drinks and donut packs, cart, and place order (no payment)
 - **Barista iPad** (`/barista`) — live FIFO queue, mark ready / done, short completed history
 
 Orders sync in real time over Server-Sent Events. The queue is saved to disk so a refresh does not lose tickets.
@@ -73,7 +73,7 @@ No other secrets are required for v1 (no payments or accounts).
 
 ## Edit the menu
 
-All drinks, sizes, extras and prices live in one file:
+All drinks, donuts, sizes, extras and prices live in one file:
 
 ```text
 data/menu.json
@@ -86,6 +86,7 @@ Useful fields:
 - `cafeName` / `tagline` — shown on the home and kiosk screens
 - `drinks[].name`, `description`, `sizes[]` — size `name` is what customers see (`Small`, `Regular`, `Large`, or `Single` / `Double` for espresso)
 - `drinks[].extras` — which extras from the shared `extras` list are allowed on that drink
+- `donuts[]` — topping/style plus pack sizes (`2 donuts`, `4 donuts`, `6 donuts`) matching the truck
 - `extras[].pricePence` and `group` — `milk` options are mutually exclusive; `shot` and `syrup` can combine with milk
 
 Starter prices (GBP):
@@ -98,6 +99,13 @@ Starter prices (GBP):
 | Mocha | £3.60 / £4.00 / £4.40 |
 
 Extras: oat or almond milk +£0.40, extra shot +£0.60, syrup +£0.40.
+
+Donut packs (no singles — same bundles as the truck):
+
+| Style | 2 | 4 | 6 |
+| --- | --- | --- | --- |
+| Sugared, Cinnamon | £3 | £5 | £8 |
+| Nutella topped, Oreo & Nutella topped, Biscoff topped | £4 | £7 | £11 |
 
 ## Production (local or a café computer)
 

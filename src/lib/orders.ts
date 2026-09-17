@@ -39,11 +39,11 @@ export class OrderStore {
 
   create(input: CreateOrderInput): Order {
     if (!Array.isArray(input.items) || input.items.length === 0) {
-      throw new OrderValidationError("Add at least one drink before placing an order.");
+      throw new OrderValidationError("Add at least one item before placing an order.");
     }
 
     if (input.items.length > 20) {
-      throw new OrderValidationError("Too many drinks on one order.");
+      throw new OrderValidationError("Too many items on one order.");
     }
 
     const menu = getMenu();
