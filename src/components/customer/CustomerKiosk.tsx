@@ -359,7 +359,7 @@ function CustomiseSheet({
         {milks.length > 0 ? (
           <>
             <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-coffee">Milk</h3>
-            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
               <ChoiceChip
                 label="Dairy"
                 hint="Included"
