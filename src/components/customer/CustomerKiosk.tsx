@@ -184,8 +184,8 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
 
       <main className="mx-auto max-w-5xl px-5 py-6 pb-36">
         <h1 className="font-display text-4xl font-semibold">Choose a drink</h1>
-        <p className="mt-2 max-w-xl text-lg text-coffee">
-          Tap a coffee, pick a size, then add it to your order. No payment on this iPad.
+        <p className="mt-2 text-lg text-coffee">
+          Tap a coffee, pick a size, then add it to your order. No payment needed.
         </p>
 
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -297,7 +297,11 @@ function CustomiseSheet({
         </div>
 
         <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-coffee">Size</h3>
-        <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div
+          className={`mt-3 grid gap-3 ${
+            draft.drink.sizes.length === 2 ? "grid-cols-2" : "grid-cols-1 sm:grid-cols-3"
+          }`}
+        >
           {draft.drink.sizes.map((size) => {
             const selected = draft.sizeId === size.id;
             return (
