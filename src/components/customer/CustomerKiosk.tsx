@@ -317,7 +317,7 @@ function CustomiseSheet({
     <div className="fixed inset-0 z-40 flex items-end justify-center bg-espresso/45 p-3 sm:items-center">
       <button className="absolute inset-0" type="button" aria-label="Close" onClick={onClose} />
       <section className="relative flex max-h-[92dvh] w-full max-w-2xl flex-col overflow-hidden rounded-[2rem] bg-foam p-6 shadow-2xl">
-        <div className="min-h-0 flex-1 overflow-y-auto pr-1">
+        <div className="min-h-0 flex-1 overflow-y-auto pr-1 pb-2">
         <div className="flex items-start gap-4">
           {isDonut ? (
             <DonutIcon donut={draft.product} className="h-16 w-16" />
@@ -391,6 +391,25 @@ function CustomiseSheet({
           </>
         ) : null}
 
+        {others.length > 0 ? (
+          <>
+            <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-coffee">
+              Extras
+            </h3>
+            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {others.map((extra) => (
+                <ChoiceChip
+                  key={extra.id}
+                  label={extra.name}
+                  hint={`+ ${formatGbp(extra.pricePence)}`}
+                  selected={draft.extraIds.includes(extra.id)}
+                  onClick={() => onExtra(extra)}
+                />
+              ))}
+            </div>
+          </>
+        ) : null}
+
         {syrups.length > 0 ? (
           <>
             <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-coffee">
@@ -414,25 +433,6 @@ function CustomiseSheet({
                   hint={`+ ${formatGbp(syrup.pricePence)}`}
                   selected={draft.extraIds.includes(syrup.id)}
                   onClick={() => onExtra(syrup)}
-                />
-              ))}
-            </div>
-          </>
-        ) : null}
-
-        {others.length > 0 ? (
-          <>
-            <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-coffee">
-              Extras
-            </h3>
-            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {others.map((extra) => (
-                <ChoiceChip
-                  key={extra.id}
-                  label={extra.name}
-                  hint={`+ ${formatGbp(extra.pricePence)}`}
-                  selected={draft.extraIds.includes(extra.id)}
-                  onClick={() => onExtra(extra)}
                 />
               ))}
             </div>
