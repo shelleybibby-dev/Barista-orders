@@ -396,7 +396,11 @@ function CustomiseSheet({
             <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-coffee">
               Extras
             </h3>
-            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div
+              className={`mt-3 grid gap-3 ${
+                others.length === 1 ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2"
+              }`}
+            >
               {others.map((extra) => (
                 <ChoiceChip
                   key={extra.id}
