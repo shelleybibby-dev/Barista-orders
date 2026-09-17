@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLockup } from "@/components/CoffeeBeansLogo";
 import { getMenu } from "@/lib/menu";
 
 export const dynamic = "force-dynamic";
@@ -12,10 +13,9 @@ export default function HomePage() {
         <p className="text-sm font-semibold uppercase tracking-[0.35em] text-mocha">
           Dual iPad café setup
         </p>
-        <h1 className="mt-4 font-display text-6xl font-semibold tracking-tight">
-          {menu.cafeName}
-        </h1>
-        <p className="mt-4 max-w-2xl text-2xl text-coffee">{menu.tagline}</p>
+        <div className="mt-6">
+          <BrandLockup name={menu.cafeName} subtitle={menu.tagline} size="lg" nameAs="h1" />
+        </div>
 
         <div className="mt-12 grid gap-5 md:grid-cols-2">
           <Link

@@ -13,12 +13,16 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "The Daily Grind — coffee orders",
+  title: "Coffee Beans — coffee orders",
   description: "Dual-iPad café ordering: customer kiosk and live barista queue.",
   appleWebApp: {
     capable: true,
-    title: "Daily Grind",
+    title: "Coffee Beans",
     statusBarStyle: "black-translucent",
+  },
+  icons: {
+    icon: "/logo.svg",
+    apple: "/logo.svg",
   },
 };
 
@@ -26,7 +30,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#2a1810",
+  themeColor: "#6e1a27",
 };
 
 export default function RootLayout({

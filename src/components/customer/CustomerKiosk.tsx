@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { CoffeeCup } from "@/components/CoffeeCup";
+import { BrandLockup } from "@/components/CoffeeBeansLogo";
 import { DonutIcon } from "@/components/DonutIcon";
 import { defaultSizeId, extrasForDrink, findProduct, lowestPricePence } from "@/lib/menu-helpers";
 import { formatGbp } from "@/lib/money";
@@ -167,10 +168,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
     <div className="relative min-h-dvh bg-cream text-espresso">
       <header className="sticky top-0 z-20 border-b border-espresso/10 bg-cream/95 px-5 py-4 backdrop-blur-md safe-top">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
-          <div>
-            <p className="font-display text-3xl font-semibold tracking-tight">{menu.cafeName}</p>
-            <p className="text-base text-coffee">{menu.tagline}</p>
-          </div>
+          <BrandLockup name={menu.cafeName} subtitle={menu.tagline} size="md" />
           <button
             type="button"
             onClick={() => setCartOpen(true)}

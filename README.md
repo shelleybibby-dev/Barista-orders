@@ -1,4 +1,4 @@
-# The Daily Grind — dual-iPad coffee orders
+# Coffee Beans — dual-iPad coffee orders
 
 A café kiosk web app for two iPads:
 

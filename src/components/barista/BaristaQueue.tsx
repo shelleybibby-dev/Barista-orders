@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { BrandLockup } from "@/components/CoffeeBeansLogo";
 import { useOrderStream } from "@/hooks/useOrderStream";
 import { formatGbp } from "@/lib/money";
 import { formatClock, formatRelative } from "@/lib/time";
@@ -69,9 +70,14 @@ export function BaristaQueue({ cafeName }: { cafeName: string }) {
     <div className="min-h-dvh bg-espresso text-foam">
       <header className="sticky top-0 z-20 border-b border-white/10 bg-espresso/95 px-5 py-4 backdrop-blur safe-top">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
-          <div>
-            <p className="text-sm uppercase tracking-[0.3em] text-caramel">{cafeName}</p>
-            <h1 className="font-display text-4xl font-semibold">Barista queue</h1>
+          <div className="flex items-center gap-4">
+            <BrandLockup
+              name={cafeName}
+              subtitle="Barista queue"
+              variant="dark"
+              size="md"
+              subtitleAs="h1"
+            />
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <span
