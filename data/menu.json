@@ -21,7 +21,7 @@
       "description": "Espresso lengthened with hot water",
       "accent": "#4a2c1f",
       "foam": "#c4a484",
-      "extras": ["oat", "almond", "extra-shot", "syrup"],
+      "extras": ["oat", "extra-shot", "syrup"],
       "sizes": [
         { "id": "small", "name": "Small", "pricePence": 280 },
         { "id": "regular", "name": "Regular", "pricePence": 320 },
@@ -34,7 +34,7 @@
       "description": "Silky steamed milk and espresso",
       "accent": "#6b3f2a",
       "foam": "#f3e6d4",
-      "extras": ["oat", "almond", "extra-shot", "syrup"],
+      "extras": ["oat", "extra-shot", "syrup"],
       "sizes": [
         { "id": "small", "name": "Small", "pricePence": 340 },
         { "id": "regular", "name": "Regular", "pricePence": 380 },
@@ -47,7 +47,7 @@
       "description": "Equal parts espresso, milk and foam",
       "accent": "#7a4630",
       "foam": "#fff6ea",
-      "extras": ["oat", "almond", "extra-shot", "syrup"],
+      "extras": ["oat", "extra-shot", "syrup"],
       "sizes": [
         { "id": "small", "name": "Small", "pricePence": 340 },
         { "id": "regular", "name": "Regular", "pricePence": 380 },
@@ -60,7 +60,7 @@
       "description": "Velvety microfoam, stronger coffee",
       "accent": "#8b5a3c",
       "foam": "#efe0cc",
-      "extras": ["oat", "almond", "extra-shot", "syrup"],
+      "extras": ["oat", "extra-shot", "syrup"],
       "sizes": [
         { "id": "small", "name": "Small", "pricePence": 340 },
         { "id": "regular", "name": "Regular", "pricePence": 380 },
@@ -73,7 +73,7 @@
       "description": "Chocolate, espresso and steamed milk",
       "accent": "#4e2a1c",
       "foam": "#e8d5c4",
-      "extras": ["oat", "almond", "extra-shot", "syrup"],
+      "extras": ["oat", "extra-shot", "syrup"],
       "sizes": [
         { "id": "small", "name": "Small", "pricePence": 360 },
         { "id": "regular", "name": "Regular", "pricePence": 400 },
@@ -85,12 +85,6 @@
     {
       "id": "oat",
       "name": "Oat milk",
-      "pricePence": 40,
-      "group": "milk"
-    },
-    {
-      "id": "almond",
-      "name": "Almond milk",
       "pricePence": 40,
       "group": "milk"
     },

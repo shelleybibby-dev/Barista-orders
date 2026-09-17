@@ -36,7 +36,7 @@ const menu: Menu = {
       description: "Milky",
       accent: "#000",
       foam: "#fff",
-      extras: ["oat", "almond", "extra-shot", "syrup"],
+      extras: ["oat", "soya", "extra-shot", "syrup"],
       sizes: [
         { id: "small", name: "Small", pricePence: 340 },
         { id: "regular", name: "Regular", pricePence: 380 },
@@ -46,7 +46,7 @@ const menu: Menu = {
   ],
   extras: [
     { id: "oat", name: "Oat milk", pricePence: 40, group: "milk" },
-    { id: "almond", name: "Almond milk", pricePence: 40, group: "milk" },
+    { id: "soya", name: "Soya milk", pricePence: 40, group: "milk" },
     { id: "extra-shot", name: "Extra shot", pricePence: 60, group: "shot" },
     { id: "syrup", name: "Syrup", pricePence: 40, group: "syrup" },
   ],
@@ -100,7 +100,7 @@ describe("pricing", () => {
 
   it("rejects two milk alternatives on one drink", () => {
     expect(() =>
-      priceUnitPence(menu.drinks[1], "regular", ["oat", "almond"], menu.extras),
+      priceUnitPence(menu.drinks[1], "regular", ["oat", "soya"], menu.extras),
     ).toThrow(OrderValidationError);
   });
 

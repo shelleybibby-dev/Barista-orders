@@ -98,7 +98,7 @@ Starter prices (GBP):
 | Latte, Cappuccino, Flat white | £3.40 / £3.80 / £4.20 |
 | Mocha | £3.60 / £4.00 / £4.40 |
 
-Extras: oat or almond milk +£0.40, extra shot +£0.60, syrup +£0.40.
+Extras: oat milk +£0.40, extra shot +£0.60, syrup +£0.40.
 
 Donut packs (no singles — same bundles as the truck):
 
