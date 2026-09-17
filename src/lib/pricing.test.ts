@@ -215,7 +215,7 @@ describe("café menu syrup flavours", () => {
     }
   });
 
-  it("offers tea, decaf tea and green tea with regular and large and no extras", () => {
+  it("offers tea, decaf tea and green tea at a single £3 price with no extras", () => {
     const cafeMenu = getMenu();
     expect(cafeMenu.drinks.some((drink) => drink.id.includes("tea"))).toBe(false);
 
@@ -229,19 +229,18 @@ describe("café menu syrup flavours", () => {
 
     for (const tea of teas) {
       expect(tea.extras).toEqual([]);
-      expect(tea.sizes.map((size) => size.id)).toEqual(["regular", "large"]);
-      expect(priceUnitPence(tea, "regular", [], cafeMenu.extras)).toBe(260);
-      expect(priceUnitPence(tea, "large", [], cafeMenu.extras)).toBe(300);
+      expect(tea.sizes).toEqual([{ id: "standard", name: "", pricePence: 300 }]);
+      expect(priceUnitPence(tea, "standard", [], cafeMenu.extras)).toBe(300);
     }
 
     const item = buildOrderItem(
       cafeMenu,
-      { drinkId: "green-tea", sizeId: "large", extraIds: [], quantity: 1 },
+      { drinkId: "green-tea", sizeId: "standard", extraIds: [], quantity: 1 },
       "tea-1",
     );
     expect(item.kind).toBe("drink");
     expect(item.drinkName).toBe("Green tea");
-    expect(item.sizeName).toBe("Large");
+    expect(item.sizeName).toBe("");
     expect(item.lineTotalPence).toBe(300);
     expect(item.extras).toEqual([]);
   });
@@ -339,11 +338,11 @@ describe("order store", () => {
     const store = tempStore();
     const order = store.create({
       customerName: "Priya",
-      items: [{ drinkId: "decaf-tea", sizeId: "large", extraIds: [], quantity: 1 }],
+      items: [{ drinkId: "decaf-tea", sizeId: "standard", extraIds: [], quantity: 1 }],
     });
 
     expect(order.items[0].drinkName).toBe("Decaf tea");
-    expect(order.items[0].sizeName).toBe("Large");
+    expect(order.items[0].sizeName).toBe("");
     expect(order.items[0].extras).toEqual([]);
     expect(order.totalPence).toBe(300);
   });

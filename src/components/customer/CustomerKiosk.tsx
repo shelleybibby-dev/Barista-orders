@@ -205,7 +205,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
         {(menu.teas ?? []).length > 0 ? (
           <>
             <h2 className="mt-12 font-display text-3xl font-semibold">Teas</h2>
-            <p className="mt-1 text-base text-coffee">Regular or large. No extras.</p>
+            <p className="mt-1 text-base text-coffee">£3. No extras.</p>
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {(menu.teas ?? []).map((tea) => (
                 <DrinkCard key={tea.id} product={tea} onOpen={() => openProduct(tea, "drink")} />
@@ -304,7 +304,9 @@ function DrinkCard({
         </span>
         <span className="mt-1 block text-base text-coffee">{product.description}</span>
         <span className="mt-3 inline-flex rounded-full bg-caramel/15 px-3 py-1 text-sm font-semibold text-mocha">
-          From {formatGbp(lowestPricePence(product))}
+          {product.sizes.length === 1
+            ? formatGbp(lowestPricePence(product))
+            : `From ${formatGbp(lowestPricePence(product))}`}
         </span>
       </span>
     </button>
@@ -361,31 +363,35 @@ function CustomiseSheet({
           </button>
         </div>
 
-        <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-coffee">{sizeLabel}</h3>
-        <div
-          className={`mt-3 grid gap-3 ${
-            draft.product.sizes.length === 2 ? "grid-cols-2" : "grid-cols-1 sm:grid-cols-3"
-          }`}
-        >
-          {draft.product.sizes.map((size) => {
-            const selected = draft.sizeId === size.id;
-            return (
-              <button
-                key={size.id}
-                type="button"
-                onClick={() => onSize(size.id)}
-                className={`tap min-h-20 rounded-2xl px-4 text-left ring-2 ${
-                  selected
-                    ? "bg-espresso text-foam ring-espresso"
-                    : "bg-cream text-espresso ring-transparent"
-                }`}
-              >
-                <span className="block text-xl font-semibold">{size.name}</span>
-                <span className="block text-base opacity-80">{formatGbp(size.pricePence)}</span>
-              </button>
-            );
-          })}
-        </div>
+        {draft.product.sizes.length > 1 ? (
+          <>
+            <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-coffee">{sizeLabel}</h3>
+            <div
+              className={`mt-3 grid gap-3 ${
+                draft.product.sizes.length === 2 ? "grid-cols-2" : "grid-cols-1 sm:grid-cols-3"
+              }`}
+            >
+              {draft.product.sizes.map((size) => {
+                const selected = draft.sizeId === size.id;
+                return (
+                  <button
+                    key={size.id}
+                    type="button"
+                    onClick={() => onSize(size.id)}
+                    className={`tap min-h-20 rounded-2xl px-4 text-left ring-2 ${
+                      selected
+                        ? "bg-espresso text-foam ring-espresso"
+                        : "bg-cream text-espresso ring-transparent"
+                    }`}
+                  >
+                    <span className="block text-xl font-semibold">{size.name}</span>
+                    <span className="block text-base opacity-80">{formatGbp(size.pricePence)}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </>
+        ) : null}
 
         {milks.length > 0 ? (
           <>
@@ -593,7 +599,9 @@ function CartDrawer({
                     <p className="text-2xl font-semibold">
                       {line.kind === "donut" ? "Donuts · " : ""}
                       {line.product.name}
-                      <span className="ml-2 text-lg font-normal text-coffee">{line.sizeName}</span>
+                      {line.sizeName ? (
+                        <span className="ml-2 text-lg font-normal text-coffee">{line.sizeName}</span>
+                      ) : null}
                     </p>
                     {line.extras.length > 0 ? (
                       <p className="text-base text-coffee">

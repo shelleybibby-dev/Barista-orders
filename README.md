@@ -86,7 +86,7 @@ Useful fields:
 - `cafeName` / `tagline` — shown on the home and kiosk screens
 - `drinks[].name`, `description`, `sizes[]` — coffee drinks; size `name` is what customers see (`Small`, `Regular`, `Large`, or `Single` / `Double` for espresso)
 - `drinks[].extras` — which extras from the shared `extras` list are allowed on that drink
-- `teas[]` — tea, decaf tea and green tea (Regular / Large, no extras), shown in their own kiosk section
+- `teas[]` — tea, decaf tea and green tea (one size at £3, no extras), shown in their own kiosk section
 - `donuts[]` — topping/style plus pack sizes (`2 donuts`, `4 donuts`, `6 donuts`) matching the truck
 - `extras[].pricePence` and `group` — `milk` options are mutually exclusive; syrup flavours are mutually exclusive; `shot` and a syrup flavour can combine with milk
 
@@ -98,7 +98,7 @@ Starter prices (GBP):
 | Americano | Small £2.80 / Regular £3.20 / Large £3.60 |
 | Latte, Cappuccino, Flat white | £3.40 / £3.80 / £4.20 |
 | Mocha | £3.60 / £4.00 / £4.40 |
-| Tea, Decaf tea, Green tea | Regular £2.60 / Large £3.00 |
+| Tea, Decaf tea, Green tea | £3.00 |
 
 Extras: oat milk +£0.40, extra shot +£0.60, syrup flavour +£0.40 (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, cherry or orange — one per drink).
 

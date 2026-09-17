@@ -256,7 +256,9 @@ function OrderTicket({
             <p className="text-xl font-semibold">
               {item.quantity > 1 ? `${item.quantity}× ` : ""}
               {item.drinkName}
-              <span className="ml-2 font-normal text-coffee">{item.sizeName}</span>
+              {item.sizeName ? (
+                <span className="ml-2 font-normal text-coffee">{item.sizeName}</span>
+              ) : null}
             </p>
             {item.extras.length > 0 ? (
               <p className="text-base text-coffee">

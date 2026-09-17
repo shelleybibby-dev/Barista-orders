@@ -140,8 +140,7 @@
       "foam": "#e8d5a8",
       "extras": [],
       "sizes": [
-        { "id": "regular", "name": "Regular", "pricePence": 260 },
-        { "id": "large", "name": "Large", "pricePence": 300 }
+        { "id": "standard", "name": "", "pricePence": 300 }
       ]
     },
     {
@@ -152,8 +151,7 @@
       "foam": "#efe4c8",
       "extras": [],
       "sizes": [
-        { "id": "regular", "name": "Regular", "pricePence": 260 },
-        { "id": "large", "name": "Large", "pricePence": 300 }
+        { "id": "standard", "name": "", "pricePence": 300 }
       ]
     },
     {
@@ -164,8 +162,7 @@
       "foam": "#d8e8c0",
       "extras": [],
       "sizes": [
-        { "id": "regular", "name": "Regular", "pricePence": 260 },
-        { "id": "large", "name": "Large", "pricePence": 300 }
+        { "id": "standard", "name": "", "pricePence": 300 }
       ]
     }
   ],
