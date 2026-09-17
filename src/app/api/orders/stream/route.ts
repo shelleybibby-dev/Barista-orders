@@ -3,28 +3,41 @@ import { getOrderStore } from "@/lib/orders";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 export function GET(request: Request) {
   const encoder = new TextEncoder();
   const events = getOrderEvents();
   let cleanup: (() => void) | undefined;
+  let closed = false;
 
   const stream = new ReadableStream({
     start(controller) {
+      const safeEnqueue = (chunk: string) => {
+        if (closed) return;
+        try {
+          controller.enqueue(encoder.encode(chunk));
+        } catch {
+          closed = true;
+          cleanup?.();
+        }
+      };
+
       const send = () => {
         const payload = JSON.stringify({
           type: "orders",
           orders: getOrderStore().list(),
         });
-        controller.enqueue(encoder.encode(`data: ${payload}\n\n`));
+        safeEnqueue(`data: ${payload}\n\n`);
       };
 
+      safeEnqueue("retry: 2000\n\n");
       send();
       events.on("change", send);
 
       const heartbeat = setInterval(() => {
-        controller.enqueue(encoder.encode(`: ping\n\n`));
-      }, 15000);
+        safeEnqueue(`: ping ${Date.now()}\n\n`);
+      }, 10000);
 
       cleanup = () => {
         clearInterval(heartbeat);
@@ -32,6 +45,7 @@ export function GET(request: Request) {
       };
 
       request.signal.addEventListener("abort", () => {
+        closed = true;
         cleanup?.();
         try {
           controller.close();
@@ -41,6 +55,7 @@ export function GET(request: Request) {
       });
     },
     cancel() {
+      closed = true;
       cleanup?.();
     },
   });
@@ -51,6 +66,7 @@ export function GET(request: Request) {
       "Cache-Control": "no-cache, no-transform",
       Connection: "keep-alive",
       "X-Accel-Buffering": "no",
+      "Content-Encoding": "none",
     },
   });
 }

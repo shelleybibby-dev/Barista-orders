@@ -1,11 +1,11 @@
 # The Daily Grind — dual-iPad coffee orders
 
-A café kiosk web app for two iPads on the same Wi-Fi:
+A café kiosk web app for two iPads:
 
 - **Customer iPad** (`/customer`) — large-button menu, cart, and place order (no payment)
 - **Barista iPad** (`/barista`) — live FIFO queue, mark ready / done, short completed history
 
-Orders sync in real time over Server-Sent Events. Refreshing either iPad does not lose the queue (`data/orders.json`).
+Orders sync in real time over Server-Sent Events. The queue is saved to disk so a refresh does not lose tickets.
 
 ## Run locally
 
@@ -22,7 +22,11 @@ Then on the computer:
 
 `npm run dev` already binds to `0.0.0.0:3000` so other devices on the LAN can connect.
 
+Local orders are stored at `data/orders.json` (created automatically).
+
 ## Dual-iPad setup (same Wi-Fi)
+
+Use this when you are running the app on a laptop in the café. For hosting with no laptop, see [Deploy on Railway](#deploy-on-railway).
 
 1. Start the app on a laptop, Mac mini, or Raspberry Pi on the café Wi-Fi (`npm run dev`, or `npm run build && npm start` for a longer shift).
 2. Find that machine’s LAN address:
@@ -39,6 +43,34 @@ On first use, tap **Enable new-order chime** on the barista iPad if you want an 
 
 If the iPads cannot connect, check the café firewall allows port 3000 on the host machine.
 
+## Deploy on Railway
+
+Host the app so both iPads use Safari on a public HTTPS URL — no café laptop required.
+
+1. Push this repo to GitHub (or merge this branch) and open [Railway](https://railway.com).
+2. **New Project** → **Deploy from GitHub repo** and select this repository.
+3. Railway will install, run `npm run build`, then start with **`npm start`** (already set in `railway.json`). You do not need a custom start command unless you changed the service settings. `npm start` is `next start --hostname 0.0.0.0` and honours Railway’s `PORT` variable.
+4. **Volume (required so orders survive deploys):** in the service, add a volume and mount it at **`/data`**. Leave `ORDERS_PATH` unset — the app reads `RAILWAY_VOLUME_MOUNT_PATH` and writes `orders.json` on that volume. Do **not** mount the volume at `/app/data` (that folder holds the drink menu in the app image).
+5. Under **Settings → Networking**, generate a public domain.
+6. Keep the service at **1 replica**. Live barista updates use an in-process event stream, and a volume is attached to a single instance.
+7. On the **customer iPad**, open Safari to `https://YOUR-URL/customer`.
+8. On the **barista iPad**, open Safari to `https://YOUR-URL/barista`.
+
+Optional: Share → **Add to Home Screen** on each iPad.
+
+Check `https://YOUR-URL/api/health` — `durable` should be `true` and `ordersPath` should look like `/data/orders.json` once the volume is mounted.
+
+### Environment variables
+
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `PORT` | Set by Railway | Listen port. Do not hardcode it. |
+| `RAILWAY_VOLUME_MOUNT_PATH` | Set by Railway when a volume is attached | Orders are saved to `$RAILWAY_VOLUME_MOUNT_PATH/orders.json`. |
+| `ORDERS_PATH` | No | Absolute or project-relative file for the queue. Overrides the volume default. Example: `/data/orders.json`. |
+| `DATA_DIR` | No | Directory for `orders.json` if you are not using a Railway volume variable. |
+
+No other secrets are required for v1 (no payments or accounts).
+
 ## Edit the menu
 
 All drinks, sizes, extras and prices live in one file:
@@ -47,7 +79,7 @@ All drinks, sizes, extras and prices live in one file:
 data/menu.json
 ```
 
-Amounts are in **pence** (`380` = £3.80). After a change, refresh the customer iPad (in production, restart the server).
+Amounts are in **pence** (`380` = £3.80). After a change, refresh the customer iPad (in production, redeploy or restart the server).
 
 Useful fields:
 
@@ -67,14 +99,14 @@ Starter prices (GBP):
 
 Extras: oat or almond milk +£0.40, extra shot +£0.60, syrup +£0.40.
 
-## Production
+## Production (local or a café computer)
 
 ```bash
 npm run build
 npm start
 ```
 
-This also listens on `0.0.0.0:3000`. Put a reverse proxy (Caddy, nginx, or similar) in front if you want HTTPS on the café LAN.
+This binds to `0.0.0.0` and uses port **3000** unless `PORT` is set. Put a reverse proxy (Caddy, nginx, or similar) in front if you want HTTPS on the café LAN.
 
 ## Tests
 

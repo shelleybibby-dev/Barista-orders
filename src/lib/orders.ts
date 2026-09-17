@@ -9,9 +9,9 @@ import {
   buildOrderItem,
   canTransition,
 } from "@/lib/pricing";
+import { resolveOrdersPath } from "@/lib/storage-path";
 import type { CreateOrderInput, Order, OrderStatus } from "@/lib/types";
 
-const DEFAULT_PATH = path.join(process.cwd(), "data", "orders.json");
 const COMPLETED_KEEP_MS = 45 * 60 * 1000;
 const COMPLETED_KEEP_COUNT = 12;
 const PRUNE_AFTER_MS = 24 * 60 * 60 * 1000;
@@ -188,7 +188,7 @@ function byCreated(a: Order, b: Order): number {
 }
 
 export function createOrderStore(
-  filePath = DEFAULT_PATH,
+  filePath = resolveOrdersPath(),
   events = getOrderEvents(),
 ): OrderStore {
   return new OrderStore(filePath, events);
@@ -200,7 +200,9 @@ export function getOrderStore(): OrderStore {
   };
 
   if (!globalForStore.__baristaOrderStore) {
-    globalForStore.__baristaOrderStore = createOrderStore();
+    const filePath = resolveOrdersPath();
+    console.info(`[barista-orders] Saving the live queue to ${filePath}`);
+    globalForStore.__baristaOrderStore = createOrderStore(filePath);
   }
 
   return globalForStore.__baristaOrderStore;
