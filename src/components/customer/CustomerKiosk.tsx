@@ -316,7 +316,8 @@ function CustomiseSheet({
   return (
     <div className="fixed inset-0 z-40 flex items-end justify-center bg-espresso/45 p-3 sm:items-center">
       <button className="absolute inset-0" type="button" aria-label="Close" onClick={onClose} />
-      <section className="relative max-h-[92dvh] w-full max-w-2xl overflow-y-auto rounded-[2rem] bg-foam p-6 shadow-2xl">
+      <section className="relative flex max-h-[92dvh] w-full max-w-2xl flex-col overflow-hidden rounded-[2rem] bg-foam p-6 shadow-2xl">
+        <div className="min-h-0 flex-1 overflow-y-auto pr-1">
         <div className="flex items-start gap-4">
           {isDonut ? (
             <DonutIcon donut={draft.product} className="h-16 w-16" />
@@ -395,7 +396,7 @@ function CustomiseSheet({
             <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-coffee">
               Syrup flavour
             </h3>
-            <div className="mt-3 grid grid-cols-2 gap-3">
+            <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
               <ChoiceChip
                 label="None"
                 hint="No syrup"
@@ -437,8 +438,9 @@ function CustomiseSheet({
             </div>
           </>
         ) : null}
+        </div>
 
-        <div className="mt-8 flex items-center justify-between gap-4">
+        <div className="mt-6 flex shrink-0 items-center justify-between gap-4">
           <div className="flex items-center gap-3 rounded-2xl bg-cream p-2">
             <button
               type="button"
