@@ -86,7 +86,7 @@ Useful fields:
 - `cafeName` / `tagline` — shown on the home and kiosk screens
 - `drinks[].name`, `description`, `sizes[]` — most coffees are one size; espresso still has Single / Double
 - `drinks[].extras` — which extras from the shared `extras` list are allowed on that drink
-- `teas[]` — tea, decaf tea and green tea (one size at £3, no extras), shown in their own kiosk section
+- `teas[]` — tea, decaf tea, green tea, pure peppermint tea and earl grey (one size at £3, no extras), shown in their own kiosk section
 - `milkshakes[]` — strawberry, vanilla and chocolate (one size at £5), with or without cream at no extra charge
 - `bobas[]` — tropical with mango boba, mango and dragon fruit, raspberry and pineapple with pineapple boba (one size at £4, no extras)
 - `donuts[]` — topping/style plus pack sizes (`2 donuts`, `4 donuts`, `6 donuts`) matching the truck
@@ -100,7 +100,7 @@ Starter prices (GBP):
 | Americano | £3.50 |
 | Latte, Cappuccino, Flat white | £4.00 |
 | Mocha | £4.50 |
-| Tea, Decaf tea, Green tea | £3.00 |
+| Tea, Decaf tea, Green tea, Pure peppermint tea, Earl grey | £3.00 |
 | Strawberry, Vanilla, Chocolate milkshake | £5.00 |
 | Tropical with mango boba; Mango and dragon fruit; Raspberry and pineapple with pineapple boba | £4.00 |
 

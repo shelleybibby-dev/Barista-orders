@@ -239,17 +239,29 @@ describe("café menu syrup flavours", () => {
     }
   });
 
-  it("offers tea, decaf tea and green tea at a single £3 price with no extras", () => {
+  it("offers five teas at a single £3 price with no extras", () => {
     const cafeMenu = getMenu();
     expect(cafeMenu.drinks.some((drink) => drink.id.includes("tea"))).toBe(false);
 
-    const teas = ["tea", "decaf-tea", "green-tea"].map((id) => {
+    const teas = [
+      "tea",
+      "decaf-tea",
+      "green-tea",
+      "peppermint-tea",
+      "earl-grey",
+    ].map((id) => {
       const drink = (cafeMenu.teas ?? []).find((item) => item.id === id);
       expect(drink).toBeDefined();
       return drink!;
     });
 
-    expect(teas.map((drink) => drink.name)).toEqual(["Tea", "Decaf tea", "Green tea"]);
+    expect(teas.map((drink) => drink.name)).toEqual([
+      "Tea",
+      "Decaf tea",
+      "Green tea",
+      "Pure peppermint tea",
+      "Earl grey",
+    ]);
 
     for (const tea of teas) {
       expect(tea.extras).toEqual([]);

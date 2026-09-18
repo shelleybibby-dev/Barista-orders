@@ -154,6 +154,28 @@
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 300 }
       ]
+    },
+    {
+      "id": "peppermint-tea",
+      "name": "Pure peppermint tea",
+      "description": "Cool, refreshing and caffeine-free",
+      "accent": "#3c7a58",
+      "foam": "#d0ebe0",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 300 }
+      ]
+    },
+    {
+      "id": "earl-grey",
+      "name": "Earl grey",
+      "description": "Bergamot-scented black tea",
+      "accent": "#5a5a72",
+      "foam": "#e4e4ec",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 300 }
+      ]
     }
   ],
   "milkshakes": [
