@@ -109,7 +109,7 @@ Donut packs (no singles — same bundles as the truck):
 | Style | 2 | 4 | 6 |
 | --- | --- | --- | --- |
 | Sugared, Cinnamon | £3 | £5 | £8 |
-| Nutella topped, Oreo & Nutella topped, Biscoff topped | £4 | £7 | £11 |
+| Nutella topped, Oreo & Nutella topped, Biscoff topped | £5 | £7 | £9 |
 
 ## Production (local or a café computer)
 

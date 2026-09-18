@@ -75,9 +75,9 @@ const menu: Menu = {
       foam: "#e0b07a",
       extras: [],
       sizes: [
-        { id: "pack-2", name: "2 donuts", pricePence: 400 },
+        { id: "pack-2", name: "2 donuts", pricePence: 500 },
         { id: "pack-4", name: "4 donuts", pricePence: 700 },
-        { id: "pack-6", name: "6 donuts", pricePence: 1100 },
+        { id: "pack-6", name: "6 donuts", pricePence: 900 },
       ],
     },
   ],
@@ -154,9 +154,9 @@ describe("pricing", () => {
     expect(priceUnitPence(menu.donuts[0], "pack-2", [], menu.extras)).toBe(300);
     expect(priceUnitPence(menu.donuts[0], "pack-4", [], menu.extras)).toBe(500);
     expect(priceUnitPence(menu.donuts[0], "pack-6", [], menu.extras)).toBe(800);
-    expect(priceUnitPence(menu.donuts[1], "pack-2", [], menu.extras)).toBe(400);
+    expect(priceUnitPence(menu.donuts[1], "pack-2", [], menu.extras)).toBe(500);
     expect(priceUnitPence(menu.donuts[1], "pack-4", [], menu.extras)).toBe(700);
-    expect(priceUnitPence(menu.donuts[1], "pack-6", [], menu.extras)).toBe(1100);
+    expect(priceUnitPence(menu.donuts[1], "pack-6", [], menu.extras)).toBe(900);
   });
 
   it("builds a donut pack line", () => {
@@ -315,6 +315,32 @@ describe("café menu syrup flavours", () => {
         cafeMenu.extras,
       ),
     ).toThrow(OrderValidationError);
+  });
+
+  it("prices topped donut packs at £5 / £7 / £9 and leaves sugared and cinnamon unchanged", () => {
+    const cafeMenu = getMenu();
+    const plain = ["sugared", "cinnamon"].map((id) =>
+      cafeMenu.donuts.find((donut) => donut.id === id),
+    );
+    const topped = ["nutella", "oreo-nutella", "biscoff"].map((id) =>
+      cafeMenu.donuts.find((donut) => donut.id === id),
+    );
+
+    for (const donut of plain) {
+      expect(donut?.sizes.map((size) => [size.id, size.pricePence])).toEqual([
+        ["pack-2", 300],
+        ["pack-4", 500],
+        ["pack-6", 800],
+      ]);
+    }
+
+    for (const donut of topped) {
+      expect(donut?.sizes.map((size) => [size.id, size.pricePence])).toEqual([
+        ["pack-2", 500],
+        ["pack-4", 700],
+        ["pack-6", 900],
+      ]);
+    }
   });
 });
 
