@@ -14,32 +14,32 @@ export function MilkshakeIcon({
       aria-hidden="true"
       focusable="false"
     >
-      <ellipse cx="46" cy="82" rx="22" ry="5" fill="rgba(42,24,16,0.12)" />
+      <ellipse cx="44" cy="84" rx="20" ry="4.5" fill="rgba(42,24,16,0.12)" />
       <path
-        d="M28 38h36l-5 38c-1 8-8 12-13 12s-12-4-13-12l-5-38Z"
+        d="M26 40h36c1 4 2 10 1 22-.8 10-3 16-7 18-3 1.6-8 2.4-12 2.4s-9-.8-12-2.4c-4-2-6.2-8-7-18-1-12 0-18 1-22Z"
         fill={shake.accent}
       />
       <path
-        d="M32 40h28l-4 34c-.7 6-6 9-10 9s-9.3-3-10-9l-4-34Z"
+        d="M29 42h30c.8 4 1.4 9 .6 20-.6 8-2.4 13-5.6 14.6-2.4 1.2-6.4 1.8-9.8 1.8s-7.4-.6-9.8-1.8c-3.2-1.6-5-6.6-5.6-14.6-.8-11-.2-16 .6-20Z"
+        fill="#fffaf4"
+        opacity="0.22"
+      />
+      <path
+        d="M24 38h40v6H24z"
+        fill={shake.accent}
+      />
+      <path
+        d="M28 24c6-10 16-10 16-2 0 5 8 4 12-2 4 10 1 16-6 18-6 2-10-1-14 2-4 3-10 0-8-16Z"
         fill={shake.foam}
-        opacity="0.35"
       />
+      <circle cx="36" cy="22" r="5" fill={shake.foam} />
+      <circle cx="48" cy="18" r="6" fill={shake.foam} />
+      <circle cx="58" cy="24" r="4.5" fill={shake.foam} />
       <path
-        d="M30 36c4-10 12-14 16-8 3 5 8 1 12-3 3 8 1 14-4 16-5 2-10-1-14 2-3 2-8 1-10-7Z"
-        fill={shake.foam}
-      />
-      <path
-        d="M58 18c1 16 0 28-2 40"
+        d="M56 14c2 18 1 32-1 48"
         fill="none"
-        stroke="#7a4630"
-        strokeWidth="3.5"
-        strokeLinecap="round"
-      />
-      <path
-        d="M56 16c6 1 8 5 6 9"
-        fill="none"
-        stroke="#7a4630"
-        strokeWidth="3"
+        stroke="#6b3f2a"
+        strokeWidth="3.2"
         strokeLinecap="round"
       />
     </svg>
