@@ -239,7 +239,7 @@ describe("café menu syrup flavours", () => {
     }
   });
 
-  it("offers five teas at a single £3 price with no extras", () => {
+  it("offers six teas at a single £3 price with no extras", () => {
     const cafeMenu = getMenu();
     expect(cafeMenu.drinks.some((drink) => drink.id.includes("tea"))).toBe(false);
 
@@ -249,6 +249,7 @@ describe("café menu syrup flavours", () => {
       "green-tea",
       "peppermint-tea",
       "earl-grey",
+      "strawberry-raspberry-tea",
     ].map((id) => {
       const drink = (cafeMenu.teas ?? []).find((item) => item.id === id);
       expect(drink).toBeDefined();
@@ -261,6 +262,7 @@ describe("café menu syrup flavours", () => {
       "Green tea",
       "Pure peppermint tea",
       "Earl grey",
+      "Strawberry & raspberry tea",
     ]);
 
     for (const tea of teas) {

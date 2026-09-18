@@ -176,6 +176,17 @@
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 300 }
       ]
+    },
+    {
+      "id": "strawberry-raspberry-tea",
+      "name": "Strawberry & raspberry tea",
+      "description": "Fruity strawberry and raspberry infusion",
+      "accent": "#b44a62",
+      "foam": "#f6d8e0",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 300 }
+      ]
     }
   ],
   "milkshakes": [
