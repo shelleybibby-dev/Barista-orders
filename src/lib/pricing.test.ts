@@ -334,6 +334,8 @@ describe("café menu syrup flavours", () => {
       "Mango and dragon fruit",
       "Raspberry and pineapple with pineapple boba",
     ]);
+    expect(bobas[1].description.toLowerCase()).toMatch(/boba/);
+    expect(bobas[1].description.toLowerCase()).toMatch(/fruit tea/);
 
     for (const boba of bobas) {
       expect(boba.extras).toEqual([]);
