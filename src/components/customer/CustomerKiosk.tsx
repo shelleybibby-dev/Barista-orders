@@ -201,7 +201,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
         </p>
 
         <h2 className="mt-10 font-display text-3xl font-semibold">Drinks</h2>
-        <p className="mt-1 text-base text-coffee">Tap a coffee, then pick a size.</p>
+        <p className="mt-1 text-base text-coffee">Espresso has Single or Double. Other coffees are one size.</p>
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {menu.drinks.map((drink) => (
             <DrinkCard key={drink.id} product={drink} onOpen={() => openProduct(drink, "drink")} />

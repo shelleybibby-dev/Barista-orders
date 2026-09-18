@@ -217,6 +217,28 @@ describe("café menu syrup flavours", () => {
     }
   });
 
+  it("gives each coffee one size except espresso Single and Double", () => {
+    const cafeMenu = getMenu();
+    const espresso = cafeMenu.drinks.find((drink) => drink.id === "espresso");
+    expect(espresso?.sizes.map((size) => [size.id, size.pricePence])).toEqual([
+      ["single", 220],
+      ["double", 260],
+    ]);
+
+    const oneSize = [
+      ["americano", 320],
+      ["latte", 380],
+      ["cappuccino", 380],
+      ["flat-white", 380],
+      ["mocha", 400],
+    ] as const;
+
+    for (const [id, price] of oneSize) {
+      const drink = cafeMenu.drinks.find((item) => item.id === id);
+      expect(drink?.sizes).toEqual([{ id: "standard", name: "", pricePence: price }]);
+    }
+  });
+
   it("offers tea, decaf tea and green tea at a single £3 price with no extras", () => {
     const cafeMenu = getMenu();
     expect(cafeMenu.drinks.some((drink) => drink.id.includes("tea"))).toBe(false);
@@ -330,7 +352,7 @@ describe("order store", () => {
 
     const first = store.create({
       customerName: "  Alex  ",
-      items: [{ drinkId: "latte", sizeId: "regular", extraIds: ["oat"], quantity: 1 }],
+      items: [{ drinkId: "latte", sizeId: "standard", extraIds: ["oat"], quantity: 1 }],
     });
     const second = store.create({
       customerName: "Sam",
@@ -353,7 +375,7 @@ describe("order store", () => {
   it("moves tickets from queued to ready to completed", () => {
     const store = tempStore();
     const order = store.create({
-      items: [{ drinkId: "americano", sizeId: "small", extraIds: [], quantity: 1 }],
+      items: [{ drinkId: "americano", sizeId: "standard", extraIds: [], quantity: 1 }],
     });
 
     expect(store.updateStatus(order.id, "ready").status).toBe("ready");
@@ -371,7 +393,7 @@ describe("order store", () => {
     const order = store.create({
       customerName: "Maya",
       items: [
-        { drinkId: "latte", sizeId: "regular", extraIds: ["oat"], quantity: 1 },
+        { drinkId: "latte", sizeId: "standard", extraIds: ["oat"], quantity: 1 },
         { drinkId: "biscoff", sizeId: "pack-4", extraIds: [], quantity: 1 },
       ],
     });

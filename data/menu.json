@@ -33,9 +33,7 @@
         "syrup-orange"
       ],
       "sizes": [
-        { "id": "small", "name": "Small", "pricePence": 280 },
-        { "id": "regular", "name": "Regular", "pricePence": 320 },
-        { "id": "large", "name": "Large", "pricePence": 360 }
+        { "id": "standard", "name": "", "pricePence": 320 }
       ]
     },
     {
@@ -56,9 +54,7 @@
         "syrup-orange"
       ],
       "sizes": [
-        { "id": "small", "name": "Small", "pricePence": 340 },
-        { "id": "regular", "name": "Regular", "pricePence": 380 },
-        { "id": "large", "name": "Large", "pricePence": 420 }
+        { "id": "standard", "name": "", "pricePence": 380 }
       ]
     },
     {
@@ -79,9 +75,7 @@
         "syrup-orange"
       ],
       "sizes": [
-        { "id": "small", "name": "Small", "pricePence": 340 },
-        { "id": "regular", "name": "Regular", "pricePence": 380 },
-        { "id": "large", "name": "Large", "pricePence": 420 }
+        { "id": "standard", "name": "", "pricePence": 380 }
       ]
     },
     {
@@ -102,9 +96,7 @@
         "syrup-orange"
       ],
       "sizes": [
-        { "id": "small", "name": "Small", "pricePence": 340 },
-        { "id": "regular", "name": "Regular", "pricePence": 380 },
-        { "id": "large", "name": "Large", "pricePence": 420 }
+        { "id": "standard", "name": "", "pricePence": 380 }
       ]
     },
     {
@@ -125,9 +117,7 @@
         "syrup-orange"
       ],
       "sizes": [
-        { "id": "small", "name": "Small", "pricePence": 360 },
-        { "id": "regular", "name": "Regular", "pricePence": 400 },
-        { "id": "large", "name": "Large", "pricePence": 440 }
+        { "id": "standard", "name": "", "pricePence": 400 }
       ]
     }
   ],

@@ -84,7 +84,7 @@ Amounts are in **pence** (`380` = £3.80). After a change, refresh the customer 
 Useful fields:
 
 - `cafeName` / `tagline` — shown on the home and kiosk screens
-- `drinks[].name`, `description`, `sizes[]` — coffee drinks; size `name` is what customers see (`Small`, `Regular`, `Large`, or `Single` / `Double` for espresso)
+- `drinks[].name`, `description`, `sizes[]` — most coffees are one size; espresso still has Single / Double
 - `drinks[].extras` — which extras from the shared `extras` list are allowed on that drink
 - `teas[]` — tea, decaf tea and green tea (one size at £3, no extras), shown in their own kiosk section
 - `milkshakes[]` — strawberry, vanilla and chocolate (one size at £5), with or without cream at no extra charge
@@ -93,12 +93,12 @@ Useful fields:
 
 Starter prices (GBP):
 
-| Drink | Sizes |
+| Drink | Price |
 | --- | --- |
 | Espresso | Single £2.20 / Double £2.60 |
-| Americano | Small £2.80 / Regular £3.20 / Large £3.60 |
-| Latte, Cappuccino, Flat white | £3.40 / £3.80 / £4.20 |
-| Mocha | £3.60 / £4.00 / £4.40 |
+| Americano | £3.20 |
+| Latte, Cappuccino, Flat white | £3.80 |
+| Mocha | £4.00 |
 | Tea, Decaf tea, Green tea | £3.00 |
 | Strawberry, Vanilla, Chocolate milkshake | £5.00 |
 
