@@ -102,7 +102,7 @@ Starter prices (GBP):
 | Tea, Decaf tea, Green tea | £3.00 |
 | Strawberry, Vanilla, Chocolate milkshake | £5.00 |
 
-Extras: oat milk +£0.40, extra shot +£0.50, syrup flavour +£0.50 (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, cherry or orange — one per drink). Milkshakes: with cream or no cream, no extra charge.
+Extras: oat milk +£0.50, extra shot +£0.50, syrup flavour +£0.50 (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, cherry or orange — one per drink). Milkshakes: with cream or no cream, no extra charge.
 
 Donut packs (no singles — same bundles as the truck):
 
