@@ -79,7 +79,7 @@ All drinks, donuts, sizes, extras and prices live in one file:
 data/menu.json
 ```
 
-Amounts are in **pence** (`380` = £3.80). After a change, refresh the customer iPad (in production, redeploy or restart the server).
+Amounts are in **pence** (`400` = £4.00). After a change, refresh the customer iPad (in production, redeploy or restart the server).
 
 Useful fields:
 
@@ -95,10 +95,10 @@ Starter prices (GBP):
 
 | Drink | Price |
 | --- | --- |
-| Espresso | Single £2.20 / Double £2.60 |
-| Americano | £3.20 |
-| Latte, Cappuccino, Flat white | £3.80 |
-| Mocha | £4.00 |
+| Espresso | Single £2.50 / Double £3.00 |
+| Americano | £3.50 |
+| Latte, Cappuccino, Flat white | £4.00 |
+| Mocha | £4.50 |
 | Tea, Decaf tea, Green tea | £3.00 |
 | Strawberry, Vanilla, Chocolate milkshake | £5.00 |
 

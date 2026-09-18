@@ -221,16 +221,16 @@ describe("café menu syrup flavours", () => {
     const cafeMenu = getMenu();
     const espresso = cafeMenu.drinks.find((drink) => drink.id === "espresso");
     expect(espresso?.sizes.map((size) => [size.id, size.pricePence])).toEqual([
-      ["single", 220],
-      ["double", 260],
+      ["single", 250],
+      ["double", 300],
     ]);
 
     const oneSize = [
-      ["americano", 320],
-      ["latte", 380],
-      ["cappuccino", 380],
-      ["flat-white", 380],
-      ["mocha", 400],
+      ["americano", 350],
+      ["latte", 400],
+      ["cappuccino", 400],
+      ["flat-white", 400],
+      ["mocha", 450],
     ] as const;
 
     for (const [id, price] of oneSize) {
@@ -361,7 +361,7 @@ describe("order store", () => {
 
     expect(first.ticketNumber).toBe(1);
     expect(first.customerName).toBe("Alex");
-    expect(first.totalPence).toBe(420);
+    expect(first.totalPence).toBe(440);
     expect(second.ticketNumber).toBe(2);
 
     const listed = store.list();
@@ -403,7 +403,7 @@ describe("order store", () => {
     expect(order.items[1].kind).toBe("donut");
     expect(order.items[1].drinkName).toBe("Biscoff topped");
     expect(order.items[1].sizeName).toBe("4 donuts");
-    expect(order.totalPence).toBe(420 + 700);
+    expect(order.totalPence).toBe(440 + 700);
   });
 
   it("places tea with the chosen size on a ticket", () => {

@@ -11,8 +11,8 @@
       "foam": "#d9c4b0",
       "extras": ["extra-shot"],
       "sizes": [
-        { "id": "single", "name": "Single", "pricePence": 220 },
-        { "id": "double", "name": "Double", "pricePence": 260 }
+        { "id": "single", "name": "Single", "pricePence": 250 },
+        { "id": "double", "name": "Double", "pricePence": 300 }
       ]
     },
     {
@@ -33,7 +33,7 @@
         "syrup-orange"
       ],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 320 }
+        { "id": "standard", "name": "", "pricePence": 350 }
       ]
     },
     {
@@ -54,7 +54,7 @@
         "syrup-orange"
       ],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 380 }
+        { "id": "standard", "name": "", "pricePence": 400 }
       ]
     },
     {
@@ -75,7 +75,7 @@
         "syrup-orange"
       ],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 380 }
+        { "id": "standard", "name": "", "pricePence": 400 }
       ]
     },
     {
@@ -96,7 +96,7 @@
         "syrup-orange"
       ],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 380 }
+        { "id": "standard", "name": "", "pricePence": 400 }
       ]
     },
     {
@@ -117,7 +117,7 @@
         "syrup-orange"
       ],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 400 }
+        { "id": "standard", "name": "", "pricePence": 450 }
       ]
     }
   ],
