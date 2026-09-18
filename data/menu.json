@@ -211,49 +211,49 @@
     {
       "id": "extra-shot",
       "name": "Extra shot",
-      "pricePence": 60,
+      "pricePence": 50,
       "group": "shot"
     },
     {
       "id": "syrup-caramel",
       "name": "Caramel syrup",
-      "pricePence": 40,
+      "pricePence": 50,
       "group": "syrup"
     },
     {
       "id": "syrup-hazelnut",
       "name": "Hazelnut syrup",
-      "pricePence": 40,
+      "pricePence": 50,
       "group": "syrup"
     },
     {
       "id": "syrup-vanilla",
       "name": "Vanilla syrup",
-      "pricePence": 40,
+      "pricePence": 50,
       "group": "syrup"
     },
     {
       "id": "syrup-toasted-marshmallow",
       "name": "Toasted marshmallow syrup",
-      "pricePence": 40,
+      "pricePence": 50,
       "group": "syrup"
     },
     {
       "id": "syrup-pistachio",
       "name": "Pistachio syrup",
-      "pricePence": 40,
+      "pricePence": 50,
       "group": "syrup"
     },
     {
       "id": "syrup-cherry",
       "name": "Cherry syrup",
-      "pricePence": 40,
+      "pricePence": 50,
       "group": "syrup"
     },
     {
       "id": "syrup-orange",
       "name": "Orange syrup",
-      "pricePence": 40,
+      "pricePence": 50,
       "group": "syrup"
     },
     {

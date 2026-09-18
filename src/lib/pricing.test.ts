@@ -49,9 +49,9 @@ const menu: Menu = {
   extras: [
     { id: "oat", name: "Oat milk", pricePence: 40, group: "milk" },
     { id: "soya", name: "Soya milk", pricePence: 40, group: "milk" },
-    { id: "extra-shot", name: "Extra shot", pricePence: 60, group: "shot" },
-    { id: "syrup-vanilla", name: "Vanilla syrup", pricePence: 40, group: "syrup" },
-    { id: "syrup-caramel", name: "Caramel syrup", pricePence: 40, group: "syrup" },
+    { id: "extra-shot", name: "Extra shot", pricePence: 50, group: "shot" },
+    { id: "syrup-vanilla", name: "Vanilla syrup", pricePence: 50, group: "syrup" },
+    { id: "syrup-caramel", name: "Caramel syrup", pricePence: 50, group: "syrup" },
   ],
   donuts: [
     {
@@ -103,7 +103,7 @@ describe("pricing", () => {
         ["oat", "extra-shot", "syrup-vanilla"],
         menu.extras,
       ),
-    ).toBe(380 + 40 + 60 + 40);
+    ).toBe(380 + 40 + 50 + 50);
   });
 
   it("rejects two milk alternatives on one drink", () => {
@@ -147,7 +147,7 @@ describe("pricing", () => {
       "line-2",
     );
     expect(item.extras.map((extra) => extra.name)).toEqual(["Vanilla syrup"]);
-    expect(item.unitPricePence).toBe(380 + 40);
+    expect(item.unitPricePence).toBe(380 + 50);
   });
 
   it("prices donut packs from the truck menu", () => {
@@ -186,7 +186,9 @@ describe("café menu syrup flavours", () => {
       "Cherry",
       "Orange",
     ]);
-    expect(syrups.every((extra) => extra.pricePence === 40)).toBe(true);
+    expect(syrups.every((extra) => extra.pricePence === 50)).toBe(true);
+    expect(cafeMenu.extras.find((extra) => extra.id === "extra-shot")?.pricePence).toBe(50);
+    expect(cafeMenu.extras.find((extra) => extra.id === "oat")?.pricePence).toBe(40);
     expect(syrups.map((extra) => extra.name)).toEqual([
       "Caramel syrup",
       "Hazelnut syrup",
