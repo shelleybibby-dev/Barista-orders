@@ -64,7 +64,7 @@ const menu: Menu = {
       sizes: [
         { id: "pack-2", name: "2 donuts", pricePence: 300 },
         { id: "pack-4", name: "4 donuts", pricePence: 500 },
-        { id: "pack-6", name: "6 donuts", pricePence: 800 },
+        { id: "pack-6", name: "6 donuts", pricePence: 600 },
       ],
     },
     {
@@ -153,7 +153,7 @@ describe("pricing", () => {
   it("prices donut packs from the truck menu", () => {
     expect(priceUnitPence(menu.donuts[0], "pack-2", [], menu.extras)).toBe(300);
     expect(priceUnitPence(menu.donuts[0], "pack-4", [], menu.extras)).toBe(500);
-    expect(priceUnitPence(menu.donuts[0], "pack-6", [], menu.extras)).toBe(800);
+    expect(priceUnitPence(menu.donuts[0], "pack-6", [], menu.extras)).toBe(600);
     expect(priceUnitPence(menu.donuts[1], "pack-2", [], menu.extras)).toBe(500);
     expect(priceUnitPence(menu.donuts[1], "pack-4", [], menu.extras)).toBe(700);
     expect(priceUnitPence(menu.donuts[1], "pack-6", [], menu.extras)).toBe(900);
@@ -317,7 +317,7 @@ describe("café menu syrup flavours", () => {
     ).toThrow(OrderValidationError);
   });
 
-  it("prices topped donut packs at £5 / £7 / £9 and leaves sugared and cinnamon unchanged", () => {
+  it("prices sugared and cinnamon packs at £3 / £5 / £6 and topped packs at £5 / £7 / £9", () => {
     const cafeMenu = getMenu();
     const plain = ["sugared", "cinnamon"].map((id) =>
       cafeMenu.donuts.find((donut) => donut.id === id),
@@ -330,7 +330,7 @@ describe("café menu syrup flavours", () => {
       expect(donut?.sizes.map((size) => [size.id, size.pricePence])).toEqual([
         ["pack-2", 300],
         ["pack-4", 500],
-        ["pack-6", 800],
+        ["pack-6", 600],
       ]);
     }
 

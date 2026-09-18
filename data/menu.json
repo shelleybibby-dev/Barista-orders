@@ -270,7 +270,7 @@
       "sizes": [
         { "id": "pack-2", "name": "2 donuts", "pricePence": 300 },
         { "id": "pack-4", "name": "4 donuts", "pricePence": 500 },
-        { "id": "pack-6", "name": "6 donuts", "pricePence": 800 }
+        { "id": "pack-6", "name": "6 donuts", "pricePence": 600 }
       ]
     },
     {
@@ -283,7 +283,7 @@
       "sizes": [
         { "id": "pack-2", "name": "2 donuts", "pricePence": 300 },
         { "id": "pack-4", "name": "4 donuts", "pricePence": 500 },
-        { "id": "pack-6", "name": "6 donuts", "pricePence": 800 }
+        { "id": "pack-6", "name": "6 donuts", "pricePence": 600 }
       ]
     },
     {
