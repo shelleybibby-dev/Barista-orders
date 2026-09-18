@@ -166,6 +166,41 @@
       ]
     }
   ],
+  "milkshakes": [
+    {
+      "id": "milkshake-strawberry",
+      "name": "Strawberry milkshake",
+      "description": "Creamy strawberry shake",
+      "accent": "#d45a7a",
+      "foam": "#fff4f6",
+      "extras": ["no-cream", "with-cream"],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 500 }
+      ]
+    },
+    {
+      "id": "milkshake-vanilla",
+      "name": "Vanilla milkshake",
+      "description": "Classic vanilla shake",
+      "accent": "#e6c56a",
+      "foam": "#fff8e6",
+      "extras": ["no-cream", "with-cream"],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 500 }
+      ]
+    },
+    {
+      "id": "milkshake-chocolate",
+      "name": "Chocolate milkshake",
+      "description": "Rich chocolate shake",
+      "accent": "#5a2e1c",
+      "foam": "#f3e6d4",
+      "extras": ["no-cream", "with-cream"],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 500 }
+      ]
+    }
+  ],
   "extras": [
     {
       "id": "oat",
@@ -220,6 +255,18 @@
       "name": "Orange syrup",
       "pricePence": 40,
       "group": "syrup"
+    },
+    {
+      "id": "no-cream",
+      "name": "No cream",
+      "pricePence": 0,
+      "group": "cream"
+    },
+    {
+      "id": "with-cream",
+      "name": "With cream",
+      "pricePence": 0,
+      "group": "cream"
     }
   ],
   "donuts": [

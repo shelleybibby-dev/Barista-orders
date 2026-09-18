@@ -244,6 +244,54 @@ describe("café menu syrup flavours", () => {
     expect(item.lineTotalPence).toBe(300);
     expect(item.extras).toEqual([]);
   });
+
+  it("offers strawberry, vanilla and chocolate milkshakes at £5 with a cream choice", () => {
+    const cafeMenu = getMenu();
+    const shakes = ["milkshake-strawberry", "milkshake-vanilla", "milkshake-chocolate"].map(
+      (id) => {
+        const drink = (cafeMenu.milkshakes ?? []).find((item) => item.id === id);
+        expect(drink).toBeDefined();
+        return drink!;
+      },
+    );
+
+    expect(shakes.map((drink) => drink.name)).toEqual([
+      "Strawberry milkshake",
+      "Vanilla milkshake",
+      "Chocolate milkshake",
+    ]);
+
+    for (const shake of shakes) {
+      expect(shake.extras).toEqual(["no-cream", "with-cream"]);
+      expect(shake.sizes).toEqual([{ id: "standard", name: "", pricePence: 500 }]);
+      expect(priceUnitPence(shake, "standard", ["no-cream"], cafeMenu.extras)).toBe(500);
+      expect(priceUnitPence(shake, "standard", ["with-cream"], cafeMenu.extras)).toBe(500);
+    }
+
+    const withCream = buildOrderItem(
+      cafeMenu,
+      {
+        drinkId: "milkshake-vanilla",
+        sizeId: "standard",
+        extraIds: ["with-cream"],
+        quantity: 1,
+      },
+      "shake-1",
+    );
+    expect(withCream.kind).toBe("milkshake");
+    expect(withCream.drinkName).toBe("Vanilla milkshake");
+    expect(withCream.extras.map((extra) => extra.name)).toEqual(["With cream"]);
+    expect(withCream.lineTotalPence).toBe(500);
+
+    expect(() =>
+      priceUnitPence(
+        shakes[1],
+        "standard",
+        ["no-cream", "with-cream"],
+        cafeMenu.extras,
+      ),
+    ).toThrow(OrderValidationError);
+  });
 });
 
 describe("status transitions", () => {
@@ -345,5 +393,25 @@ describe("order store", () => {
     expect(order.items[0].sizeName).toBe("");
     expect(order.items[0].extras).toEqual([]);
     expect(order.totalPence).toBe(300);
+  });
+
+  it("places a vanilla milkshake with cream on a ticket", () => {
+    const store = tempStore();
+    const order = store.create({
+      customerName: "Jules",
+      items: [
+        {
+          drinkId: "milkshake-vanilla",
+          sizeId: "standard",
+          extraIds: ["with-cream"],
+          quantity: 1,
+        },
+      ],
+    });
+
+    expect(order.items[0].kind).toBe("milkshake");
+    expect(order.items[0].drinkName).toBe("Vanilla milkshake");
+    expect(order.items[0].extras.map((extra) => extra.name)).toEqual(["With cream"]);
+    expect(order.totalPence).toBe(500);
   });
 });

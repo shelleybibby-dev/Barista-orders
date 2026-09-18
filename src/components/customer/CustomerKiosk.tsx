@@ -4,12 +4,15 @@ import { useEffect, useMemo, useState } from "react";
 import { CoffeeCup } from "@/components/CoffeeCup";
 import { BrandLockup } from "@/components/CoffeeBeansLogo";
 import { DonutIcon } from "@/components/DonutIcon";
+import { MilkshakeIcon } from "@/components/MilkshakeIcon";
 import {
+  defaultExtraIds,
   defaultSizeId,
   extraChoiceLabel,
   extrasForDrink,
   findProduct,
   lowestPricePence,
+  productCardName,
 } from "@/lib/menu-helpers";
 import { formatGbp } from "@/lib/money";
 import { cartKey, priceUnitPence } from "@/lib/pricing";
@@ -68,7 +71,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
       product,
       kind,
       sizeId: defaultSizeId(product, kind),
-      extraIds: [],
+      extraIds: defaultExtraIds(menu, product),
       quantity: 1,
     });
     setError(null);
@@ -82,6 +85,9 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
         return match?.group !== extra.group;
       });
       const alreadyOn = current.extraIds.includes(extra.id);
+      if (alreadyOn && extra.group === "cream") {
+        return current;
+      }
       return {
         ...current,
         extraIds: alreadyOn ? withoutGroup : [...withoutGroup, extra.id],
@@ -191,7 +197,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
       <main className="mx-auto max-w-5xl px-5 py-6 pb-44">
         <h1 className="font-display text-4xl font-semibold">Order here</h1>
         <p className="mt-2 text-lg text-coffee">
-          Add coffee, tea and donut packs to the same tray. No payment needed.
+          Add coffee, tea, milkshakes and donut packs to the same tray. No payment needed.
         </p>
 
         <h2 className="mt-10 font-display text-3xl font-semibold">Drinks</h2>
@@ -209,6 +215,23 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {(menu.teas ?? []).map((tea) => (
                 <DrinkCard key={tea.id} product={tea} onOpen={() => openProduct(tea, "drink")} />
+              ))}
+            </div>
+          </>
+        ) : null}
+
+        {(menu.milkshakes ?? []).length > 0 ? (
+          <>
+            <h2 className="mt-12 font-display text-3xl font-semibold">Milkshakes</h2>
+            <p className="mt-1 text-base text-coffee">£5. Choose with or without cream.</p>
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {(menu.milkshakes ?? []).map((shake) => (
+                <DrinkCard
+                  key={shake.id}
+                  product={shake}
+                  kind="milkshake"
+                  onOpen={() => openProduct(shake, "milkshake")}
+                />
               ))}
             </div>
           </>
@@ -286,9 +309,11 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
 
 function DrinkCard({
   product,
+  kind = "drink",
   onOpen,
 }: {
   product: MenuDrink;
+  kind?: ProductKind;
   onOpen: () => void;
 }) {
   return (
@@ -297,10 +322,14 @@ function DrinkCard({
       onClick={onOpen}
       className="tap flex min-h-36 items-center gap-4 rounded-3xl bg-foam p-5 text-left shadow-[0_10px_30px_rgba(42,24,16,0.08)] ring-1 ring-espresso/5"
     >
-      <CoffeeCup drink={product} className="h-20 w-20 shrink-0" />
+      {kind === "milkshake" ? (
+        <MilkshakeIcon shake={product} className="h-20 w-20 shrink-0" />
+      ) : (
+        <CoffeeCup drink={product} className="h-20 w-20 shrink-0" />
+      )}
       <span>
         <span className="block font-display text-3xl font-semibold leading-tight">
-          {product.name}
+          {productCardName(product)}
         </span>
         <span className="mt-1 block text-base text-coffee">{product.description}</span>
         <span className="mt-3 inline-flex rounded-full bg-caramel/15 px-3 py-1 text-sm font-semibold text-mocha">
@@ -333,9 +362,13 @@ function CustomiseSheet({
   const extras = extrasForDrink(menu, draft.product);
   const milks = extras.filter((extra) => extra.group === "milk");
   const syrups = extras.filter((extra) => extra.group === "syrup");
-  const others = extras.filter((extra) => extra.group !== "milk" && extra.group !== "syrup");
+  const creams = extras.filter((extra) => extra.group === "cream");
+  const others = extras.filter(
+    (extra) => extra.group !== "milk" && extra.group !== "syrup" && extra.group !== "cream",
+  );
   const unitPrice = priceUnitPence(draft.product, draft.sizeId, draft.extraIds, menu.extras);
   const isDonut = draft.kind === "donut";
+  const isMilkshake = draft.kind === "milkshake";
   const sizeLabel = isDonut ? "Pack" : "Size";
 
   return (
@@ -346,11 +379,13 @@ function CustomiseSheet({
         <div className="flex items-start gap-4">
           {isDonut ? (
             <DonutIcon donut={draft.product} className="h-16 w-16" />
+          ) : isMilkshake ? (
+            <MilkshakeIcon shake={draft.product} className="h-16 w-16" />
           ) : (
             <CoffeeCup drink={draft.product} className="h-16 w-16" />
           )}
           <div className="flex-1">
-            <h2 className="font-display text-4xl font-semibold">{draft.product.name}</h2>
+            <h2 className="font-display text-4xl font-semibold">{productCardName(draft.product)}</h2>
             <p className="text-lg text-coffee">{draft.product.description}</p>
           </div>
           <button
@@ -414,6 +449,25 @@ function CustomiseSheet({
                   hint={`+ ${formatGbp(milk.pricePence)}`}
                   selected={draft.extraIds.includes(milk.id)}
                   onClick={() => onExtra(milk)}
+                />
+              ))}
+            </div>
+          </>
+        ) : null}
+
+        {creams.length > 0 ? (
+          <>
+            <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-coffee">
+              Cream
+            </h3>
+            <div className="mt-3 grid grid-cols-2 gap-3">
+              {creams.map((cream) => (
+                <ChoiceChip
+                  key={cream.id}
+                  label={cream.name}
+                  hint="No extra charge"
+                  selected={draft.extraIds.includes(cream.id)}
+                  onClick={() => onExtra(cream)}
                 />
               ))}
             </div>

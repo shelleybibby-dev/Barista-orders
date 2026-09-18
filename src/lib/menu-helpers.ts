@@ -14,6 +14,9 @@ export function findProduct(
   const drink = findDrink(menu, productId);
   if (drink) return { product: drink, kind: "drink" };
 
+  const milkshake = (menu.milkshakes ?? []).find((item) => item.id === productId);
+  if (milkshake) return { product: milkshake, kind: "milkshake" };
+
   const donut = (menu.donuts ?? []).find((item) => item.id === productId);
   if (donut) return { product: donut, kind: "donut" };
 
@@ -34,6 +37,21 @@ export function extraChoiceLabel(extra: MenuExtra): string {
     return extra.name.slice(0, -" syrup".length);
   }
   return extra.name;
+}
+
+export function productCardName(product: MenuDrink): string {
+  if (product.name.endsWith(" milkshake")) {
+    return product.name.slice(0, -" milkshake".length);
+  }
+  return product.name;
+}
+
+export function defaultExtraIds(menu: Menu, product: MenuDrink): string[] {
+  const creams = extrasForDrink(menu, product).filter((extra) => extra.group === "cream");
+  if (creams.some((extra) => extra.id === "no-cream")) {
+    return ["no-cream"];
+  }
+  return [];
 }
 
 export function lowestPricePence(drink: MenuDrink): number {
