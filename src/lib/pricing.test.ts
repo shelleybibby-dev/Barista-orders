@@ -329,12 +329,13 @@ describe("café menu syrup flavours", () => {
     ).toThrow(OrderValidationError);
   });
 
-  it("offers three boba drinks at a single £4 price with no extras", () => {
+  it("offers four boba drinks at a single £4 price with no extras", () => {
     const cafeMenu = getMenu();
     const bobas = [
       "boba-tropical-mango",
       "boba-mango-dragon-fruit",
       "boba-raspberry-pineapple",
+      "boba-strawberry-basil-cucumber",
     ].map((id) => {
       const drink = (cafeMenu.bobas ?? []).find((item) => item.id === id);
       expect(drink).toBeDefined();
@@ -345,6 +346,7 @@ describe("café menu syrup flavours", () => {
       "Tropical with mango boba",
       "Mango and dragon fruit",
       "Raspberry and pineapple with pineapple boba",
+      "Strawberry basil and cucumber boba",
     ]);
     expect(bobas[1].description.toLowerCase()).toMatch(/boba/);
     expect(bobas[1].description.toLowerCase()).toMatch(/fruit tea/);

@@ -246,6 +246,17 @@
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
       ]
+    },
+    {
+      "id": "boba-strawberry-basil-cucumber",
+      "name": "Strawberry basil and cucumber boba",
+      "description": "Strawberry and basil fruit tea with cucumber boba",
+      "accent": "#c45a6a",
+      "foam": "#c8e8c4",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 400 }
+      ]
     }
   ],
   "extras": [
