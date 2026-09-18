@@ -88,6 +88,7 @@ Useful fields:
 - `drinks[].extras` — which extras from the shared `extras` list are allowed on that drink
 - `teas[]` — tea, decaf tea and green tea (one size at £3, no extras), shown in their own kiosk section
 - `milkshakes[]` — strawberry, vanilla and chocolate (one size at £5), with or without cream at no extra charge
+- `bobas[]` — tropical with mango boba, mango and dragon fruit, raspberry and pineapple with pineapple boba (one size at £4, no extras)
 - `donuts[]` — topping/style plus pack sizes (`2 donuts`, `4 donuts`, `6 donuts`) matching the truck
 - `extras[].pricePence` and `group` — `milk` options are mutually exclusive; syrup flavours are mutually exclusive; `cream` is a yes/no choice on milkshakes; `shot` and a syrup flavour can combine with milk
 
@@ -101,6 +102,7 @@ Starter prices (GBP):
 | Mocha | £4.50 |
 | Tea, Decaf tea, Green tea | £3.00 |
 | Strawberry, Vanilla, Chocolate milkshake | £5.00 |
+| Tropical with mango boba; Mango and dragon fruit; Raspberry and pineapple with pineapple boba | £4.00 |
 
 Extras: oat milk +£0.50, extra shot +£0.50, syrup flavour +£0.50 (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, cherry or orange — one per drink). Milkshakes: with cream or no cream, no extra charge.
 

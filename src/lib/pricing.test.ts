@@ -317,6 +317,47 @@ describe("café menu syrup flavours", () => {
     ).toThrow(OrderValidationError);
   });
 
+  it("offers three boba drinks at a single £4 price with no extras", () => {
+    const cafeMenu = getMenu();
+    const bobas = [
+      "boba-tropical-mango",
+      "boba-mango-dragon-fruit",
+      "boba-raspberry-pineapple",
+    ].map((id) => {
+      const drink = (cafeMenu.bobas ?? []).find((item) => item.id === id);
+      expect(drink).toBeDefined();
+      return drink!;
+    });
+
+    expect(bobas.map((drink) => drink.name)).toEqual([
+      "Tropical with mango boba",
+      "Mango and dragon fruit",
+      "Raspberry and pineapple with pineapple boba",
+    ]);
+
+    for (const boba of bobas) {
+      expect(boba.extras).toEqual([]);
+      expect(boba.sizes).toEqual([{ id: "standard", name: "", pricePence: 400 }]);
+      expect(priceUnitPence(boba, "standard", [], cafeMenu.extras)).toBe(400);
+    }
+
+    const item = buildOrderItem(
+      cafeMenu,
+      {
+        drinkId: "boba-mango-dragon-fruit",
+        sizeId: "standard",
+        extraIds: [],
+        quantity: 1,
+      },
+      "boba-1",
+    );
+    expect(item.kind).toBe("boba");
+    expect(item.drinkName).toBe("Mango and dragon fruit");
+    expect(item.sizeName).toBe("");
+    expect(item.lineTotalPence).toBe(400);
+    expect(item.extras).toEqual([]);
+  });
+
   it("prices sugared and cinnamon packs at £3 / £5 / £6 and topped packs at £5 / £7 / £9", () => {
     const cafeMenu = getMenu();
     const plain = ["sugared", "cinnamon"].map((id) =>
@@ -463,5 +504,26 @@ describe("order store", () => {
     expect(order.items[0].drinkName).toBe("Vanilla milkshake");
     expect(order.items[0].extras.map((extra) => extra.name)).toEqual(["With cream"]);
     expect(order.totalPence).toBe(500);
+  });
+
+  it("places a boba drink with the full name on a ticket", () => {
+    const store = tempStore();
+    const order = store.create({
+      customerName: "Rae",
+      items: [
+        {
+          drinkId: "boba-raspberry-pineapple",
+          sizeId: "standard",
+          extraIds: [],
+          quantity: 1,
+        },
+      ],
+    });
+
+    expect(order.items[0].kind).toBe("boba");
+    expect(order.items[0].drinkName).toBe("Raspberry and pineapple with pineapple boba");
+    expect(order.items[0].sizeName).toBe("");
+    expect(order.items[0].extras).toEqual([]);
+    expect(order.totalPence).toBe(400);
   });
 });

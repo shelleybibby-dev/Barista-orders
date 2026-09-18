@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { BobaIcon } from "@/components/BobaIcon";
 import { CoffeeCup } from "@/components/CoffeeCup";
 import { BrandLockup } from "@/components/CoffeeBeansLogo";
 import { DonutIcon } from "@/components/DonutIcon";
@@ -197,7 +198,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
       <main className="mx-auto max-w-5xl px-5 py-6 pb-44">
         <h1 className="font-display text-4xl font-semibold">Order here</h1>
         <p className="mt-2 text-lg text-coffee">
-          Add coffee, tea, milkshakes and donut packs to the same tray. No payment needed.
+          Add coffee, tea, milkshakes, boba and donut packs to the same tray. No payment needed.
         </p>
 
         <h2 className="mt-10 font-display text-3xl font-semibold">Drinks</h2>
@@ -231,6 +232,23 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
                   product={shake}
                   kind="milkshake"
                   onOpen={() => openProduct(shake, "milkshake")}
+                />
+              ))}
+            </div>
+          </>
+        ) : null}
+
+        {(menu.bobas ?? []).length > 0 ? (
+          <>
+            <h2 className="mt-12 font-display text-3xl font-semibold">Boba</h2>
+            <p className="mt-1 text-base text-coffee">£4. One size.</p>
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {(menu.bobas ?? []).map((boba) => (
+                <DrinkCard
+                  key={boba.id}
+                  product={boba}
+                  kind="boba"
+                  onOpen={() => openProduct(boba, "boba")}
                 />
               ))}
             </div>
@@ -324,6 +342,8 @@ function DrinkCard({
     >
       {kind === "milkshake" ? (
         <MilkshakeIcon shake={product} className="h-20 w-20 shrink-0" />
+      ) : kind === "boba" ? (
+        <BobaIcon drink={product} className="h-20 w-20 shrink-0" />
       ) : (
         <CoffeeCup drink={product} className="h-20 w-20 shrink-0" />
       )}
@@ -369,6 +389,7 @@ function CustomiseSheet({
   const unitPrice = priceUnitPence(draft.product, draft.sizeId, draft.extraIds, menu.extras);
   const isDonut = draft.kind === "donut";
   const isMilkshake = draft.kind === "milkshake";
+  const isBoba = draft.kind === "boba";
   const sizeLabel = isDonut ? "Pack" : "Size";
 
   return (
@@ -381,6 +402,8 @@ function CustomiseSheet({
             <DonutIcon donut={draft.product} className="h-16 w-16" />
           ) : isMilkshake ? (
             <MilkshakeIcon shake={draft.product} className="h-16 w-16" />
+          ) : isBoba ? (
+            <BobaIcon drink={draft.product} className="h-16 w-16" />
           ) : (
             <CoffeeCup drink={draft.product} className="h-16 w-16" />
           )}

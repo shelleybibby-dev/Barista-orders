@@ -252,6 +252,8 @@ function OrderTicket({
           <li key={item.id} className="border-t border-espresso/10 pt-3">
             {item.kind === "donut" ? (
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-mocha">Donuts</p>
+            ) : item.kind === "boba" ? (
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-mocha">Boba</p>
             ) : null}
             <p className="text-xl font-semibold">
               {item.quantity > 1 ? `${item.quantity}× ` : ""}

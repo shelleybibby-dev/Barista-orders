@@ -191,6 +191,41 @@
       ]
     }
   ],
+  "bobas": [
+    {
+      "id": "boba-tropical-mango",
+      "name": "Tropical with mango boba",
+      "description": "Tropical fruit tea with mango pearls",
+      "accent": "#e08a2a",
+      "foam": "#ffe7b8",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 400 }
+      ]
+    },
+    {
+      "id": "boba-mango-dragon-fruit",
+      "name": "Mango and dragon fruit",
+      "description": "Mango and dragon fruit tea",
+      "accent": "#d45a8a",
+      "foam": "#ffd6e8",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 400 }
+      ]
+    },
+    {
+      "id": "boba-raspberry-pineapple",
+      "name": "Raspberry and pineapple with pineapple boba",
+      "description": "Raspberry and pineapple tea with pineapple pearls",
+      "accent": "#c43a5a",
+      "foam": "#ffe0a8",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 400 }
+      ]
+    }
+  ],
   "extras": [
     {
       "id": "oat",
