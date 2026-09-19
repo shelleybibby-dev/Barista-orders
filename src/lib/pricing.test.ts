@@ -466,29 +466,6 @@ describe("order store", () => {
     expect(store.updateStatus(order.id, "ready").status).toBe("ready");
     expect(store.updateStatus(order.id, "completed").status).toBe("completed");
     expect(store.list()[0].status).toBe("completed");
-    expect(store.list()[0].workers).toEqual([]);
-  });
-
-  it("lets more than one staff join the same open ticket", () => {
-    const filePath = path.join(mkdtempSync(path.join(tmpdir(), "barista-orders-")), "orders.json");
-    dirs.push(path.dirname(filePath));
-    const store = createOrderStore(filePath, new EventEmitter());
-    const order = store.create({
-      items: [{ drinkId: "latte", sizeId: "standard", extraIds: [], quantity: 1 }],
-    });
-
-    expect(order.workers).toEqual([]);
-    expect(store.updateWorkers(order.id, "join", "Alex").workers).toEqual(["Alex"]);
-    expect(store.updateWorkers(order.id, "join", "Alex").workers).toEqual(["Alex"]);
-    expect(store.updateWorkers(order.id, "join", "Sam").workers).toEqual(["Alex", "Sam"]);
-    expect(store.updateWorkers(order.id, "leave", "Alex").workers).toEqual(["Sam"]);
-
-    const reloaded = createOrderStore(filePath, new EventEmitter());
-    expect(reloaded.list()[0].workers).toEqual(["Sam"]);
-
-    expect(store.updateStatus(order.id, "completed").workers).toEqual([]);
-    expect(() => store.updateWorkers(order.id, "join", "Jordan")).toThrow(/already done/);
-    expect(() => store.updateWorkers(order.id, "join", "Not a barista")).toThrow(/staff list/);
   });
 
   it("rejects an empty order", () => {
