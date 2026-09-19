@@ -9,8 +9,9 @@ import {
   buildOrderItem,
   canTransition,
 } from "@/lib/pricing";
+import { isKnownStaff, sanitiseStaffName } from "@/lib/staff";
 import { resolveOrdersPath } from "@/lib/storage-path";
-import type { CreateOrderInput, Order, OrderStatus } from "@/lib/types";
+import type { CreateOrderInput, Order, OrderStatus, WorkerAction } from "@/lib/types";
 
 const COMPLETED_KEEP_MS = 45 * 60 * 1000;
 const COMPLETED_KEEP_COUNT = 12;
@@ -62,6 +63,7 @@ export class OrderStore {
       items,
       totalPence: items.reduce((sum, item) => sum + item.lineTotalPence, 0),
       status: "queued",
+      workers: [],
       createdAt: now,
       readyAt: null,
       completedAt: null,
@@ -99,10 +101,43 @@ export class OrderStore {
     }
     if (status === "completed") {
       order.completedAt = now;
+      order.workers = [];
     }
     if (status === "queued") {
       order.readyAt = null;
       order.completedAt = null;
+    }
+
+    this.persist();
+    this.events.emit("change");
+    return order;
+  }
+
+  updateWorkers(id: string, action: WorkerAction, rawName: string): Order {
+    const store = this.ensureLoaded();
+    const order = store.orders.find((item) => item.id === id);
+    if (!order) {
+      throw new OrderNotFoundError(id);
+    }
+
+    const name = sanitiseStaffName(rawName);
+    if (!name) {
+      throw new OrderValidationError("Choose a staff name.");
+    }
+    if (!isKnownStaff(name)) {
+      throw new OrderValidationError(`${name} is not on the staff list.`);
+    }
+    if (order.status === "completed") {
+      throw new OrderValidationError("This order is already done.");
+    }
+
+    const workers = order.workers ?? [];
+    if (action === "join") {
+      if (workers.includes(name)) return order;
+      order.workers = [...workers, name];
+    } else {
+      if (!workers.includes(name)) return order;
+      order.workers = workers.filter((worker) => worker !== name);
     }
 
     this.persist();
@@ -153,7 +188,7 @@ export class OrderStore {
       const parsed = JSON.parse(raw) as PersistedStore;
       this.cache = {
         nextTicket: parsed.nextTicket || 1,
-        orders: Array.isArray(parsed.orders) ? parsed.orders : [],
+        orders: Array.isArray(parsed.orders) ? parsed.orders.map(withWorkers) : [],
       };
     } catch {
       this.cache = { nextTicket: 1, orders: [] };
@@ -176,6 +211,13 @@ export class OrderNotFoundError extends Error {
     super(`Order ${id} was not found.`);
     this.name = "OrderNotFoundError";
   }
+}
+
+function withWorkers(order: Order): Order {
+  const workers = Array.isArray(order.workers)
+    ? [...new Set(order.workers.map(sanitiseStaffName).filter(Boolean))]
+    : [];
+  return { ...order, workers };
 }
 
 function sanitiseName(value: string | undefined): string {

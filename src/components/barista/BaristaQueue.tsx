@@ -1,17 +1,26 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { BrandLockup } from "@/components/CoffeeBeansLogo";
 import { useOrderStream } from "@/hooks/useOrderStream";
 import { formatGbp } from "@/lib/money";
 import { formatClock, formatRelative } from "@/lib/time";
 import type { Order, OrderStatus } from "@/lib/types";
 
-export function BaristaQueue({ cafeName }: { cafeName: string }) {
+const STAFF_STORAGE_KEY = "coffee-beans-staff";
+
+export function BaristaQueue({
+  cafeName,
+  staff,
+}: {
+  cafeName: string;
+  staff: string[];
+}) {
   const { orders, connected, error, newOrderIds } = useOrderStream();
   const [busyId, setBusyId] = useState<string | null>(null);
   const [soundOn, setSoundOn] = useState(false);
   const [now, setNow] = useState(0);
+  const me = useStaffIdentity(staff);
   const audioRef = useRef<AudioContext | null>(null);
 
   useEffect(() => {
@@ -27,6 +36,10 @@ export function BaristaQueue({ cafeName }: { cafeName: string }) {
     if (!soundOn || newOrderIds.length === 0) return;
     playChime(audioRef.current);
   }, [newOrderIds, soundOn]);
+
+  function chooseStaff(name: string) {
+    writeStaffIdentity(name);
+  }
 
   const queued = useMemo(
     () => orders.filter((order) => order.status === "queued"),
@@ -66,6 +79,20 @@ export function BaristaQueue({ cafeName }: { cafeName: string }) {
     }
   }
 
+  async function setWorker(id: string, action: "join" | "leave") {
+    if (!me) return;
+    setBusyId(id);
+    try {
+      await fetch(`/api/orders/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ worker: { action, name: me } }),
+      });
+    } finally {
+      setBusyId(null);
+    }
+  }
+
   return (
     <div className="min-h-dvh bg-espresso text-foam">
       <header className="sticky top-0 z-20 border-b border-white/10 bg-espresso/95 px-5 py-4 backdrop-blur safe-top">
@@ -80,6 +107,7 @@ export function BaristaQueue({ cafeName }: { cafeName: string }) {
             />
           </div>
           <div className="flex flex-wrap items-center gap-3">
+            <StaffPicker staff={staff} me={me} onChoose={chooseStaff} />
             <span
               className={`rounded-full px-4 py-2 text-sm font-semibold ${
                 connected ? "bg-leaf/20 text-leaf-soft" : "bg-white/10 text-foam/70"
@@ -121,8 +149,11 @@ export function BaristaQueue({ cafeName }: { cafeName: string }) {
                   now={now}
                   isNew={newOrderIds.includes(order.id)}
                   busy={busyId === order.id}
+                  me={me}
                   onReady={() => setStatus(order.id, "ready")}
                   onDone={() => setStatus(order.id, "completed")}
+                  onJoin={() => setWorker(order.id, "join")}
+                  onLeave={() => setWorker(order.id, "leave")}
                 />
               ))}
             </div>
@@ -142,9 +173,12 @@ export function BaristaQueue({ cafeName }: { cafeName: string }) {
                     order={order}
                     now={now}
                     busy={busyId === order.id}
+                    me={me}
                     ready
                     onDone={() => setStatus(order.id, "completed")}
                     onUndo={() => setStatus(order.id, "queued")}
+                    onJoin={() => setWorker(order.id, "join")}
+                    onLeave={() => setWorker(order.id, "leave")}
                   />
                 ))}
               </div>
@@ -195,6 +229,38 @@ function SectionTitle({
   );
 }
 
+function StaffPicker({
+  staff,
+  me,
+  onChoose,
+}: {
+  staff: string[];
+  me: string;
+  onChoose: (name: string) => void;
+}) {
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <span className="text-sm font-semibold text-foam/70">I am …</span>
+      {staff.map((name) => {
+        const selected = me === name;
+        return (
+          <button
+            key={name}
+            type="button"
+            onClick={() => onChoose(name)}
+            aria-pressed={selected}
+            className={`tap min-h-12 rounded-full px-4 font-semibold ${
+              selected ? "bg-caramel text-espresso" : "bg-white/10 text-foam"
+            }`}
+          >
+            {name}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 function EmptyState({ message, compact = false }: { message: string; compact?: boolean }) {
   return (
     <p
@@ -214,9 +280,12 @@ function OrderTicket({
   ready = false,
   compact = false,
   busy = false,
+  me = "",
   onReady,
   onDone,
   onUndo,
+  onJoin,
+  onLeave,
 }: {
   order: Order;
   now: number;
@@ -224,10 +293,15 @@ function OrderTicket({
   ready?: boolean;
   compact?: boolean;
   busy?: boolean;
+  me?: string;
   onReady?: () => void;
   onDone?: () => void;
   onUndo?: () => void;
+  onJoin?: () => void;
+  onLeave?: () => void;
 }) {
+  const workers = order.workers ?? [];
+  const joined = Boolean(me) && workers.includes(me);
   return (
     <article
       className={`rounded-[1.6rem] bg-foam p-5 text-espresso shadow-xl ${
@@ -272,6 +346,51 @@ function OrderTicket({
       </ul>
 
       <p className="mt-4 text-right text-xl font-semibold">{formatGbp(order.totalPence)}</p>
+
+      {!compact && onJoin && onLeave ? (
+        <div className="mt-4 rounded-2xl bg-cream/80 px-4 py-3">
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-mocha">
+            Who’s working this
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {workers.length === 0 ? (
+              <span className="text-base text-coffee">Nobody yet</span>
+            ) : (
+              workers.map((name) => (
+                <span
+                  key={name}
+                  className={`rounded-full px-3 py-1 text-base font-semibold ${
+                    name === me ? "bg-caramel text-espresso" : "bg-foam text-espresso"
+                  }`}
+                >
+                  {name}
+                </span>
+              ))
+            )}
+          </div>
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              disabled={busy || !me || joined}
+              onClick={onJoin}
+              className="tap min-h-12 rounded-2xl bg-caramel text-lg font-semibold text-espresso disabled:opacity-50"
+            >
+              Join
+            </button>
+            <button
+              type="button"
+              disabled={busy || !me || !joined}
+              onClick={onLeave}
+              className="tap min-h-12 rounded-2xl bg-foam text-lg font-semibold text-espresso disabled:opacity-50"
+            >
+              Leave
+            </button>
+          </div>
+          {!me ? (
+            <p className="mt-2 text-sm text-coffee">Choose your name above to join.</p>
+          ) : null}
+        </div>
+      ) : null}
 
       {!compact ? (
         <div className="mt-4 grid grid-cols-2 gap-3">
@@ -318,6 +437,35 @@ function OrderTicket({
         </button>
       ) : null}
     </article>
+  );
+}
+
+const STAFF_CHANGE_EVENT = "coffee-beans-staff-change";
+
+function subscribeStaffIdentity(onChange: () => void) {
+  window.addEventListener("storage", onChange);
+  window.addEventListener(STAFF_CHANGE_EVENT, onChange);
+  return () => {
+    window.removeEventListener("storage", onChange);
+    window.removeEventListener(STAFF_CHANGE_EVENT, onChange);
+  };
+}
+
+function readStaffIdentity(staff: string[]) {
+  const saved = window.localStorage.getItem(STAFF_STORAGE_KEY) ?? "";
+  return staff.includes(saved) ? saved : "";
+}
+
+function writeStaffIdentity(name: string) {
+  window.localStorage.setItem(STAFF_STORAGE_KEY, name);
+  window.dispatchEvent(new Event(STAFF_CHANGE_EVENT));
+}
+
+function useStaffIdentity(staff: string[]) {
+  return useSyncExternalStore(
+    subscribeStaffIdentity,
+    () => readStaffIdentity(staff),
+    () => "",
   );
 }
 

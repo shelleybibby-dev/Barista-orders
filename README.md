@@ -3,7 +3,7 @@
 A café kiosk web app for two iPads:
 
 - **Customer iPad** (`/customer`) — large-button drinks and donut packs, cart, and place order (no payment)
-- **Barista iPad** (`/barista`) — live FIFO queue, mark ready / done, short completed history
+- **Barista iPad** (`/barista`) — live FIFO queue, who is working each ticket, mark ready / done, short completed history
 
 Orders sync in real time over Server-Sent Events. The queue is saved to disk so a refresh does not lose tickets.
 
@@ -40,6 +40,10 @@ Use this when you are running the app on a laptop in the café. For hosting with
 Both iPads must talk to **the same host**. The barista screen updates as soon as a customer places an order — no pull-to-refresh.
 
 On first use, tap **Enable new-order chime** on the barista iPad if you want an audible cue (Safari requires a tap before sound).
+
+On the barista screen, tap **I am …** to choose your name (saved on that iPad). Open tickets show **Who’s working this**. **Join** / **Leave** add or remove your name. Several people can work the same ticket. Names clear when the ticket is marked **Done**.
+
+Barista names live in `data/staff.json` (`staff` array). Seeded with Alex, Sam and Jordan — edit that list any time, then refresh the barista page.
 
 If the iPads cannot connect, check the café firewall allows port 3000 on the host machine.
 
@@ -78,6 +82,8 @@ All drinks, donuts, sizes, extras and prices live in one file:
 ```text
 data/menu.json
 ```
+
+Barista names for the queue live in `data/staff.json`.
 
 Amounts are in **pence** (`400` = £4.00). After a change, refresh the customer iPad (in production, redeploy or restart the server).
 

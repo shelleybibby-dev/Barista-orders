@@ -68,6 +68,8 @@ export interface OrderItem {
   lineTotalPence: number;
 }
 
+export type WorkerAction = "join" | "leave";
+
 export interface Order {
   id: string;
   ticketNumber: number;
@@ -75,6 +77,7 @@ export interface Order {
   items: OrderItem[];
   totalPence: number;
   status: OrderStatus;
+  workers: string[];
   createdAt: string;
   readyAt: string | null;
   completedAt: string | null;
