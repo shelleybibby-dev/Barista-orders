@@ -381,7 +381,7 @@ function OrderTicket({
               type="button"
               disabled={busy || !me || !joined}
               onClick={onLeave}
-              className="tap min-h-12 rounded-2xl bg-foam text-lg font-semibold text-espresso disabled:opacity-50"
+              className="tap min-h-12 rounded-2xl bg-espresso text-lg font-semibold text-foam disabled:opacity-40"
             >
               Leave
             </button>
