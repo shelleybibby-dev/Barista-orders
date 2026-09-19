@@ -66,6 +66,7 @@ export interface OrderItem {
   quantity: number;
   unitPricePence: number;
   lineTotalPence: number;
+  made?: boolean;
 }
 
 export interface Order {

@@ -110,6 +110,30 @@ export class OrderStore {
     return order;
   }
 
+  updateItemMade(id: string, itemId: string, made: boolean): Order {
+    const store = this.ensureLoaded();
+    const order = store.orders.find((item) => item.id === id);
+    if (!order) {
+      throw new OrderNotFoundError(id);
+    }
+    if (order.status === "completed") {
+      throw new OrderValidationError("This order is already done.");
+    }
+
+    const item = order.items.find((line) => line.id === itemId);
+    if (!item) {
+      throw new OrderValidationError("That item is not on this order.");
+    }
+    if (Boolean(item.made) === made) {
+      return order;
+    }
+
+    item.made = made;
+    this.persist();
+    this.events.emit("change");
+    return order;
+  }
+
   private grouped() {
     const store = this.ensureLoaded();
     const queued = store.orders
@@ -153,13 +177,7 @@ export class OrderStore {
       const parsed = JSON.parse(raw) as PersistedStore;
       this.cache = {
         nextTicket: parsed.nextTicket || 1,
-        orders: Array.isArray(parsed.orders)
-          ? parsed.orders.map((order) => {
-              const cleaned = { ...order } as Order & { workers?: unknown };
-              delete cleaned.workers;
-              return cleaned as Order;
-            })
-          : [],
+        orders: Array.isArray(parsed.orders) ? parsed.orders.map(normaliseOrder) : [],
       };
     } catch {
       this.cache = { nextTicket: 1, orders: [] };
@@ -182,6 +200,16 @@ export class OrderNotFoundError extends Error {
     super(`Order ${id} was not found.`);
     this.name = "OrderNotFoundError";
   }
+}
+
+function normaliseOrder(order: Order): Order {
+  const cleaned = { ...order } as Order & { workers?: unknown };
+  delete cleaned.workers;
+  cleaned.items = (cleaned.items ?? []).map((item) => ({
+    ...item,
+    made: Boolean(item.made),
+  }));
+  return cleaned;
 }
 
 function sanitiseName(value: string | undefined): string {

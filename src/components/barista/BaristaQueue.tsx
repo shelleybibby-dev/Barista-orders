@@ -10,6 +10,7 @@ import type { Order, OrderStatus } from "@/lib/types";
 export function BaristaQueue({ cafeName }: { cafeName: string }) {
   const { orders, connected, error, newOrderIds } = useOrderStream();
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [busyItemId, setBusyItemId] = useState<string | null>(null);
   const [soundOn, setSoundOn] = useState(false);
   const [now, setNow] = useState(0);
   const audioRef = useRef<AudioContext | null>(null);
@@ -63,6 +64,19 @@ export function BaristaQueue({ cafeName }: { cafeName: string }) {
       });
     } finally {
       setBusyId(null);
+    }
+  }
+
+  async function setItemMade(orderId: string, itemId: string, made: boolean) {
+    setBusyItemId(itemId);
+    try {
+      await fetch(`/api/orders/${orderId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ itemId, made }),
+      });
+    } finally {
+      setBusyItemId(null);
     }
   }
 
@@ -121,8 +135,10 @@ export function BaristaQueue({ cafeName }: { cafeName: string }) {
                   now={now}
                   isNew={newOrderIds.includes(order.id)}
                   busy={busyId === order.id}
+                  busyItemId={busyItemId}
                   onReady={() => setStatus(order.id, "ready")}
                   onDone={() => setStatus(order.id, "completed")}
+                  onToggleItem={(itemId, made) => setItemMade(order.id, itemId, made)}
                 />
               ))}
             </div>
@@ -142,9 +158,11 @@ export function BaristaQueue({ cafeName }: { cafeName: string }) {
                     order={order}
                     now={now}
                     busy={busyId === order.id}
+                    busyItemId={busyItemId}
                     ready
                     onDone={() => setStatus(order.id, "completed")}
                     onUndo={() => setStatus(order.id, "queued")}
+                    onToggleItem={(itemId, made) => setItemMade(order.id, itemId, made)}
                   />
                 ))}
               </div>
@@ -214,9 +232,11 @@ function OrderTicket({
   ready = false,
   compact = false,
   busy = false,
+  busyItemId = null,
   onReady,
   onDone,
   onUndo,
+  onToggleItem,
 }: {
   order: Order;
   now: number;
@@ -224,10 +244,13 @@ function OrderTicket({
   ready?: boolean;
   compact?: boolean;
   busy?: boolean;
+  busyItemId?: string | null;
   onReady?: () => void;
   onDone?: () => void;
   onUndo?: () => void;
+  onToggleItem?: (itemId: string, made: boolean) => void;
 }) {
+  const allMade = order.items.length > 0 && order.items.every((item) => item.made);
   return (
     <article
       className={`rounded-[1.6rem] bg-foam p-5 text-espresso shadow-xl ${
@@ -247,29 +270,82 @@ function OrderTicket({
         </div>
       </header>
 
-      <ul className="mt-4 space-y-3">
-        {order.items.map((item) => (
-          <li key={item.id} className="border-t border-espresso/10 pt-3">
-            {item.kind === "donut" ? (
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-mocha">Donuts</p>
-            ) : item.kind === "boba" ? (
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-mocha">Boba</p>
-            ) : null}
-            <p className="text-xl font-semibold">
-              {item.quantity > 1 ? `${item.quantity}× ` : ""}
-              {item.drinkName}
-              {item.sizeName ? (
-                <span className="ml-2 font-normal text-coffee">{item.sizeName}</span>
-              ) : null}
-            </p>
-            {item.extras.length > 0 ? (
-              <p className="text-base text-coffee">
-                {item.extras.map((extra) => extra.name).join(" · ")}
-              </p>
-            ) : null}
-          </li>
-        ))}
+      <ul className="mt-4 space-y-2">
+        {order.items.map((item) => {
+          const made = Boolean(item.made);
+          const label = `${item.quantity > 1 ? `${item.quantity}× ` : ""}${item.drinkName}${
+            item.sizeName ? ` ${item.sizeName}` : ""
+          }`;
+          const content = (
+            <>
+              <span
+                aria-hidden
+                className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border-2 text-lg font-bold ${
+                  made
+                    ? "border-leaf bg-leaf text-white"
+                    : "border-espresso/30 bg-foam text-transparent"
+                }`}
+              >
+                ✓
+              </span>
+              <span className="min-w-0 flex-1 text-left">
+                {item.kind === "donut" ? (
+                  <span className="block text-xs font-semibold uppercase tracking-[0.2em] text-mocha">
+                    Donuts
+                  </span>
+                ) : item.kind === "boba" ? (
+                  <span className="block text-xs font-semibold uppercase tracking-[0.2em] text-mocha">
+                    Boba
+                  </span>
+                ) : null}
+                <span className={`block text-xl font-semibold ${made ? "line-through" : ""}`}>
+                  {item.quantity > 1 ? `${item.quantity}× ` : ""}
+                  {item.drinkName}
+                  {item.sizeName ? (
+                    <span className="ml-2 font-normal text-coffee">{item.sizeName}</span>
+                  ) : null}
+                </span>
+                {item.extras.length > 0 ? (
+                  <span className={`block text-base text-coffee ${made ? "line-through" : ""}`}>
+                    {item.extras.map((extra) => extra.name).join(" · ")}
+                  </span>
+                ) : null}
+              </span>
+            </>
+          );
+
+          if (onToggleItem) {
+            return (
+              <li key={item.id} className="border-t border-espresso/10 pt-2">
+                <button
+                  type="button"
+                  aria-pressed={made}
+                  aria-label={made ? `Mark ${label} as not made` : `Mark ${label} as made`}
+                  disabled={busyItemId === item.id}
+                  onClick={() => onToggleItem(item.id, !made)}
+                  className={`tap flex min-h-16 w-full items-start gap-3 rounded-2xl px-2 py-2 text-left disabled:opacity-50 ${
+                    made ? "bg-leaf/10 text-coffee" : "bg-cream/70 text-espresso"
+                  }`}
+                >
+                  {content}
+                </button>
+              </li>
+            );
+          }
+
+          return (
+            <li key={item.id} className="flex items-start gap-3 border-t border-espresso/10 pt-3">
+              {content}
+            </li>
+          );
+        })}
       </ul>
+
+      {onToggleItem && allMade ? (
+        <p className="mt-3 text-base font-semibold text-leaf">
+          {ready ? "All items made." : "All items made — you can mark ready."}
+        </p>
+      ) : null}
 
       <p className="mt-4 text-right text-xl font-semibold">{formatGbp(order.totalPence)}</p>
 
@@ -280,7 +356,9 @@ function OrderTicket({
               type="button"
               disabled={busy}
               onClick={onReady}
-              className="tap min-h-16 rounded-2xl bg-leaf text-xl font-semibold text-white disabled:opacity-50"
+              className={`tap min-h-16 rounded-2xl text-xl font-semibold text-white disabled:opacity-50 ${
+                allMade ? "bg-leaf ring-4 ring-leaf/30" : "bg-leaf"
+              }`}
             >
               Mark ready
             </button>

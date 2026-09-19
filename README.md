@@ -3,7 +3,7 @@
 A café kiosk web app for two iPads:
 
 - **Customer iPad** (`/customer`) — large-button drinks and donut packs, cart, and place order (no payment)
-- **Barista iPad** (`/barista`) — live FIFO queue, mark ready / done, short completed history
+- **Barista iPad** (`/barista`) — live FIFO queue, tick off line items as they’re made, mark ready / done, short completed history
 
 Orders sync in real time over Server-Sent Events. The queue is saved to disk so a refresh does not lose tickets.
 
@@ -132,4 +132,5 @@ npm test
 
 - v1 has no payments, accounts, inventory, or printing.
 - Completed tickets stay on the barista screen for a short time so they do not vanish the instant you tap **Done**.
+- On the bar and ready tickets, tap a line to mark it **made** (tap again to undo). That does not mark the whole ticket ready.
 - British English throughout the UI.

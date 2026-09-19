@@ -100,6 +100,7 @@ export function buildOrderItem(
     quantity,
     unitPricePence,
     lineTotalPence: unitPricePence * quantity,
+    made: false,
   };
 }
 

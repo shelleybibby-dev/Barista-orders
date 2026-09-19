@@ -485,7 +485,9 @@ describe("order store", () => {
 
     expect(order.items).toHaveLength(2);
     expect(order.items[0].kind).toBe("drink");
+    expect(order.items[0].made).toBe(false);
     expect(order.items[1].kind).toBe("donut");
+    expect(order.items[1].made).toBe(false);
     expect(order.items[1].drinkName).toBe("Biscoff topped");
     expect(order.items[1].sizeName).toBe("4 donuts");
     expect(order.totalPence).toBe(450 + 700);
@@ -543,5 +545,39 @@ describe("order store", () => {
     expect(order.items[0].sizeName).toBe("");
     expect(order.items[0].extras).toEqual([]);
     expect(order.totalPence).toBe(400);
+  });
+
+  it("marks line items made independently and keeps them after reload", () => {
+    const filePath = path.join(mkdtempSync(path.join(tmpdir(), "barista-orders-")), "orders.json");
+    dirs.push(path.dirname(filePath));
+    const store = createOrderStore(filePath, new EventEmitter());
+    const order = store.create({
+      customerName: "Maya",
+      items: [
+        { drinkId: "latte", sizeId: "standard", extraIds: [], quantity: 1 },
+        { drinkId: "biscoff", sizeId: "pack-4", extraIds: [], quantity: 1 },
+      ],
+    });
+
+    const drinkId = order.items[0].id;
+    const donutId = order.items[1].id;
+
+    expect(store.updateItemMade(order.id, drinkId, true).items.map((item) => item.made)).toEqual([
+      true,
+      false,
+    ]);
+    expect(store.updateItemMade(order.id, donutId, true).items.every((item) => item.made)).toBe(
+      true,
+    );
+    expect(store.updateItemMade(order.id, drinkId, false).items.map((item) => item.made)).toEqual([
+      false,
+      true,
+    ]);
+
+    const reloaded = createOrderStore(filePath, new EventEmitter());
+    expect(reloaded.list()[0].items.map((item) => item.made)).toEqual([false, true]);
+
+    store.updateStatus(order.id, "completed");
+    expect(() => store.updateItemMade(order.id, donutId, false)).toThrow(/already done/);
   });
 });
