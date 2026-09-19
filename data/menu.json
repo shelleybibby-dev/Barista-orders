@@ -1,0 +1,408 @@
+{
+  "cafeName": "Coffee Beans",
+  "tagline": "Barista coffee and freshly made donuts",
+  "currency": "GBP",
+  "drinks": [
+    {
+      "id": "espresso",
+      "name": "Espresso",
+      "description": "Short, rich and intense",
+      "accent": "#3b2318",
+      "foam": "#d9c4b0",
+      "extras": ["extra-shot"],
+      "sizes": [
+        { "id": "single", "name": "Single", "pricePence": 250 },
+        { "id": "double", "name": "Double", "pricePence": 300 }
+      ]
+    },
+    {
+      "id": "americano",
+      "name": "Americano",
+      "description": "Espresso lengthened with hot water",
+      "accent": "#4a2c1f",
+      "foam": "#c4a484",
+      "extras": [
+        "oat",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-cherry",
+        "syrup-orange"
+      ],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 350 }
+      ]
+    },
+    {
+      "id": "latte",
+      "name": "Latte",
+      "description": "Silky steamed milk and espresso",
+      "accent": "#6b3f2a",
+      "foam": "#f3e6d4",
+      "extras": [
+        "oat",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-cherry",
+        "syrup-orange"
+      ],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 400 }
+      ]
+    },
+    {
+      "id": "cappuccino",
+      "name": "Cappuccino",
+      "description": "Equal parts espresso, milk and foam",
+      "accent": "#7a4630",
+      "foam": "#fff6ea",
+      "extras": [
+        "oat",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-cherry",
+        "syrup-orange"
+      ],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 400 }
+      ]
+    },
+    {
+      "id": "flat-white",
+      "name": "Flat white",
+      "description": "Velvety microfoam, stronger coffee",
+      "accent": "#8b5a3c",
+      "foam": "#efe0cc",
+      "extras": [
+        "oat",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-cherry",
+        "syrup-orange"
+      ],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 400 }
+      ]
+    },
+    {
+      "id": "mocha",
+      "name": "Mocha",
+      "description": "Chocolate, espresso and steamed milk",
+      "accent": "#4e2a1c",
+      "foam": "#e8d5c4",
+      "extras": [
+        "oat",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-cherry",
+        "syrup-orange"
+      ],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 450 }
+      ]
+    }
+  ],
+  "teas": [
+    {
+      "id": "tea",
+      "name": "Tea",
+      "description": "Classic breakfast tea",
+      "accent": "#8a5a28",
+      "foam": "#e8d5a8",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 300 }
+      ]
+    },
+    {
+      "id": "decaf-tea",
+      "name": "Decaf tea",
+      "description": "Breakfast tea without the caffeine",
+      "accent": "#9a7a58",
+      "foam": "#efe4c8",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 300 }
+      ]
+    },
+    {
+      "id": "green-tea",
+      "name": "Green tea",
+      "description": "Light, clean and fragrant",
+      "accent": "#5a7a3c",
+      "foam": "#d8e8c0",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 300 }
+      ]
+    },
+    {
+      "id": "peppermint-tea",
+      "name": "Pure peppermint tea",
+      "description": "Cool, refreshing and caffeine-free",
+      "accent": "#3c7a58",
+      "foam": "#d0ebe0",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 300 }
+      ]
+    },
+    {
+      "id": "earl-grey",
+      "name": "Earl grey",
+      "description": "Bergamot-scented black tea",
+      "accent": "#5a5a72",
+      "foam": "#e4e4ec",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 300 }
+      ]
+    },
+    {
+      "id": "strawberry-raspberry-tea",
+      "name": "Strawberry & raspberry tea",
+      "description": "Fruity strawberry and raspberry infusion",
+      "accent": "#b44a62",
+      "foam": "#f6d8e0",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 300 }
+      ]
+    }
+  ],
+  "milkshakes": [
+    {
+      "id": "milkshake-strawberry",
+      "name": "Strawberry milkshake",
+      "description": "Creamy strawberry shake",
+      "accent": "#d45a7a",
+      "foam": "#fff4f6",
+      "extras": ["no-cream", "with-cream"],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 500 }
+      ]
+    },
+    {
+      "id": "milkshake-vanilla",
+      "name": "Vanilla milkshake",
+      "description": "Classic vanilla shake",
+      "accent": "#e6c56a",
+      "foam": "#fff8e6",
+      "extras": ["no-cream", "with-cream"],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 500 }
+      ]
+    },
+    {
+      "id": "milkshake-chocolate",
+      "name": "Chocolate milkshake",
+      "description": "Rich chocolate shake",
+      "accent": "#5a2e1c",
+      "foam": "#f3e6d4",
+      "extras": ["no-cream", "with-cream"],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 500 }
+      ]
+    }
+  ],
+  "bobas": [
+    {
+      "id": "boba-tropical-mango",
+      "name": "Tropical with mango boba",
+      "description": "Tropical fruit tea with mango pearls",
+      "accent": "#e08a2a",
+      "foam": "#ffe7b8",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 400 }
+      ]
+    },
+    {
+      "id": "boba-mango-dragon-fruit",
+      "name": "Mango and dragon fruit",
+      "description": "Boba topped fruit tea",
+      "accent": "#d45a8a",
+      "foam": "#ffd6e8",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 400 }
+      ]
+    },
+    {
+      "id": "boba-raspberry-pineapple",
+      "name": "Raspberry and pineapple with pineapple boba",
+      "description": "Raspberry and pineapple tea with pineapple pearls",
+      "accent": "#c43a5a",
+      "foam": "#ffe0a8",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 400 }
+      ]
+    },
+    {
+      "id": "boba-strawberry-basil-cucumber",
+      "name": "Strawberry basil and cucumber boba",
+      "description": "Strawberry and basil fruit tea with cucumber boba",
+      "accent": "#c45a6a",
+      "foam": "#c8e8c4",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 400 }
+      ]
+    }
+  ],
+  "extras": [
+    {
+      "id": "oat",
+      "name": "Oat milk",
+      "pricePence": 50,
+      "group": "milk"
+    },
+    {
+      "id": "extra-shot",
+      "name": "Extra shot",
+      "pricePence": 50,
+      "group": "shot"
+    },
+    {
+      "id": "syrup-caramel",
+      "name": "Caramel syrup",
+      "pricePence": 50,
+      "group": "syrup"
+    },
+    {
+      "id": "syrup-hazelnut",
+      "name": "Hazelnut syrup",
+      "pricePence": 50,
+      "group": "syrup"
+    },
+    {
+      "id": "syrup-vanilla",
+      "name": "Vanilla syrup",
+      "pricePence": 50,
+      "group": "syrup"
+    },
+    {
+      "id": "syrup-toasted-marshmallow",
+      "name": "Toasted marshmallow syrup",
+      "pricePence": 50,
+      "group": "syrup"
+    },
+    {
+      "id": "syrup-pistachio",
+      "name": "Pistachio syrup",
+      "pricePence": 50,
+      "group": "syrup"
+    },
+    {
+      "id": "syrup-cherry",
+      "name": "Cherry syrup",
+      "pricePence": 50,
+      "group": "syrup"
+    },
+    {
+      "id": "syrup-orange",
+      "name": "Orange syrup",
+      "pricePence": 50,
+      "group": "syrup"
+    },
+    {
+      "id": "no-cream",
+      "name": "No cream",
+      "pricePence": 0,
+      "group": "cream"
+    },
+    {
+      "id": "with-cream",
+      "name": "With cream",
+      "pricePence": 0,
+      "group": "cream"
+    }
+  ],
+  "donuts": [
+    {
+      "id": "sugared",
+      "name": "Sugared",
+      "description": "Classic sugar-dusted donuts",
+      "accent": "#c9a227",
+      "foam": "#f7e7b4",
+      "extras": [],
+      "sizes": [
+        { "id": "pack-2", "name": "2 donuts", "pricePence": 300 },
+        { "id": "pack-4", "name": "4 donuts", "pricePence": 500 },
+        { "id": "pack-6", "name": "6 donuts", "pricePence": 600 }
+      ]
+    },
+    {
+      "id": "cinnamon",
+      "name": "Cinnamon",
+      "description": "Warm cinnamon sugar donuts",
+      "accent": "#8a4b24",
+      "foam": "#d4a574",
+      "extras": [],
+      "sizes": [
+        { "id": "pack-2", "name": "2 donuts", "pricePence": 300 },
+        { "id": "pack-4", "name": "4 donuts", "pricePence": 500 },
+        { "id": "pack-6", "name": "6 donuts", "pricePence": 600 }
+      ]
+    },
+    {
+      "id": "nutella",
+      "name": "Nutella topped",
+      "description": "Fresh donuts topped with Nutella",
+      "accent": "#4a2a18",
+      "foam": "#7a4630",
+      "extras": [],
+      "sizes": [
+        { "id": "pack-2", "name": "2 donuts", "pricePence": 500 },
+        { "id": "pack-4", "name": "4 donuts", "pricePence": 700 },
+        { "id": "pack-6", "name": "6 donuts", "pricePence": 900 }
+      ]
+    },
+    {
+      "id": "oreo-nutella",
+      "name": "Oreo & Nutella topped",
+      "description": "Nutella donuts with Oreo crumb",
+      "accent": "#2b211c",
+      "foam": "#6b4a32",
+      "extras": [],
+      "sizes": [
+        { "id": "pack-2", "name": "2 donuts", "pricePence": 500 },
+        { "id": "pack-4", "name": "4 donuts", "pricePence": 700 },
+        { "id": "pack-6", "name": "6 donuts", "pricePence": 900 }
+      ]
+    },
+    {
+      "id": "biscoff",
+      "name": "Biscoff topped",
+      "description": "Lotus Biscoff spread and crumb",
+      "accent": "#9a5a28",
+      "foam": "#e0b07a",
+      "extras": [],
+      "sizes": [
+        { "id": "pack-2", "name": "2 donuts", "pricePence": 500 },
+        { "id": "pack-4", "name": "4 donuts", "pricePence": 700 },
+        { "id": "pack-6", "name": "6 donuts", "pricePence": 900 }
+      ]
+    }
+  ]
+}
