@@ -35,7 +35,9 @@ Use this when you are running the app on a laptop in the café. For hosting with
    - Windows: `ipconfig` and use the IPv4 address
 3. On the **customer iPad**, open Safari to `http://YOUR-LAN-IP:3000/customer`.
 4. On the **barista iPad**, open Safari to `http://YOUR-LAN-IP:3000/barista`.
-5. Optional: Share → **Add to Home Screen** so each iPad opens like a kiosk app. Use the same address; do not use `localhost` on the iPads.
+5. Optional: Share → **Add to Home Screen** so each iPad opens like a standalone app (no Safari toolbar). Use the same address; do not use `localhost` on the iPads.
+
+If an old Home Screen icon was added before this standalone setup, **delete that icon and Add to Home Screen again**. iOS only reads the new web-app tags on a fresh add.
 
 Both iPads must talk to **the same host**. The barista screen updates as soon as a customer places an order — no pull-to-refresh.
 
@@ -56,7 +58,7 @@ Host the app so both iPads use Safari on a public HTTPS URL — no café laptop 
 7. On the **customer iPad**, open Safari to `https://YOUR-URL/customer`.
 8. On the **barista iPad**, open Safari to `https://YOUR-URL/barista`.
 
-Optional: Share → **Add to Home Screen** on each iPad.
+Optional: Share → **Add to Home Screen** on each iPad (barista from `/barista`, customer from `/customer`). After a deploy that adds Home Screen support, delete any old icon and add it again so iOS picks up the standalone tags.
 
 Check `https://YOUR-URL/api/health` — `durable` should be `true` and `ordersPath` should look like `/data/orders.json` once the volume is mounted.
 
@@ -134,3 +136,4 @@ npm test
 - Completed tickets stay on the barista screen for a short time so they do not vanish the instant you tap **Done**.
 - On the bar and ready tickets, tap a line to mark it **made** (tap again to undo). That does not mark the whole ticket ready.
 - British English throughout the UI.
+- After a deploy, delete an old Home Screen icon and **Add to Home Screen again** so iOS hides the Safari toolbar (standalone web app).

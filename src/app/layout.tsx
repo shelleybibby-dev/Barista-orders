@@ -15,14 +15,25 @@ const nunito = Nunito({
 export const metadata: Metadata = {
   title: "Coffee Beans — coffee orders",
   description: "Dual-iPad café ordering: customer kiosk and live barista queue.",
+  applicationName: "Coffee Beans",
   appleWebApp: {
     capable: true,
     title: "Coffee Beans",
     statusBarStyle: "black-translucent",
   },
   icons: {
-    icon: "/logo.svg",
-    apple: "/logo.svg",
+    icon: [
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+      { url: "/logo.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
+    "apple-mobile-web-app-title": "Coffee Beans",
   },
 };
 
