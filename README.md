@@ -113,7 +113,7 @@ Starter prices (GBP):
 | Tropical with mango boba; Strawberry and apple boba | £4.00 |
 | Coke, Pepsi Max, Orange Tango, Apple Tango, Bottle of water, Fruit Shoot | £2.00 |
 
-Extras: decaf free on every coffee, oat milk free, extra shot +£0.50, syrup flavour +£0.50 (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, cherry or orange — one per drink). Milkshakes and flavoured hot chocolates: with cream or no cream, no extra charge. Plain hot chocolate: optional cream & flake +£0.50. Kids hot chocolate has no add-ons.
+Extras: decaf free on every coffee, oat milk free, extra shot +£0.50, syrup flavour +£0.50 (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, pumpkin spice or maple spice — one per drink). Milkshakes and flavoured hot chocolates: with cream or no cream, no extra charge. Plain hot chocolate: optional cream & flake +£0.50. Kids hot chocolate has no add-ons.
 
 Donut packs (no singles — same bundles as the truck):
 

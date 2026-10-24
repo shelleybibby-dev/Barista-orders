@@ -184,8 +184,8 @@ describe("café menu syrup flavours", () => {
       "Vanilla",
       "Toasted marshmallow",
       "Pistachio",
-      "Cherry",
-      "Orange",
+      "Pumpkin spice",
+      "Maple spice",
     ]);
     expect(syrups.every((extra) => extra.pricePence === 50)).toBe(true);
     expect(cafeMenu.extras.find((extra) => extra.id === "extra-shot")?.pricePence).toBe(50);
@@ -201,9 +201,18 @@ describe("café menu syrup flavours", () => {
       "Vanilla syrup",
       "Toasted marshmallow syrup",
       "Pistachio syrup",
-      "Cherry syrup",
-      "Orange syrup",
+      "Pumpkin spice syrup",
+      "Maple spice syrup",
     ]);
+    expect(cafeMenu.extras.some((extra) => extra.id === "syrup-cherry" || extra.id === "syrup-orange")).toBe(
+      false,
+    );
+    const latte = cafeMenu.drinks.find((drink) => drink.id === "latte")!;
+    expect(priceUnitPence(latte, "standard", ["syrup-pumpkin-spice"], cafeMenu.extras)).toBe(450);
+    expect(priceUnitPence(latte, "standard", ["syrup-maple-spice"], cafeMenu.extras)).toBe(450);
+    expect(() =>
+      priceUnitPence(latte, "standard", ["syrup-pumpkin-spice", "syrup-maple-spice"], cafeMenu.extras),
+    ).toThrow(OrderValidationError);
 
     const flavourIds = syrups.map((extra) => extra.id);
     const coffeeWithSyrup = new Set([

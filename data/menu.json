@@ -30,8 +30,8 @@
         "syrup-vanilla",
         "syrup-toasted-marshmallow",
         "syrup-pistachio",
-        "syrup-cherry",
-        "syrup-orange"
+        "syrup-pumpkin-spice",
+        "syrup-maple-spice"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 350 }
@@ -52,8 +52,8 @@
         "syrup-vanilla",
         "syrup-toasted-marshmallow",
         "syrup-pistachio",
-        "syrup-cherry",
-        "syrup-orange"
+        "syrup-pumpkin-spice",
+        "syrup-maple-spice"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
@@ -74,8 +74,8 @@
         "syrup-vanilla",
         "syrup-toasted-marshmallow",
         "syrup-pistachio",
-        "syrup-cherry",
-        "syrup-orange"
+        "syrup-pumpkin-spice",
+        "syrup-maple-spice"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
@@ -96,8 +96,8 @@
         "syrup-vanilla",
         "syrup-toasted-marshmallow",
         "syrup-pistachio",
-        "syrup-cherry",
-        "syrup-orange"
+        "syrup-pumpkin-spice",
+        "syrup-maple-spice"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
@@ -118,8 +118,8 @@
         "syrup-vanilla",
         "syrup-toasted-marshmallow",
         "syrup-pistachio",
-        "syrup-cherry",
-        "syrup-orange"
+        "syrup-pumpkin-spice",
+        "syrup-maple-spice"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
@@ -472,14 +472,14 @@
       "group": "syrup"
     },
     {
-      "id": "syrup-cherry",
-      "name": "Cherry syrup",
+      "id": "syrup-pumpkin-spice",
+      "name": "Pumpkin spice syrup",
       "pricePence": 50,
       "group": "syrup"
     },
     {
-      "id": "syrup-orange",
-      "name": "Orange syrup",
+      "id": "syrup-maple-spice",
+      "name": "Maple spice syrup",
       "pricePence": 50,
       "group": "syrup"
     },
