@@ -89,11 +89,11 @@ Useful fields:
 - `drinks[].name`, `description`, `sizes[]` — most coffees are one size; espresso still has Single / Double
 - `drinks[].extras` — which extras from the shared `extras` list are allowed on that drink
 - `teas[]` — tea, decaf tea, green tea, pure peppermint tea, earl grey and strawberry & raspberry tea (one size at £3, no extras), shown in their own kiosk section
-- `hotChocolates[]` — hot chocolate (£4), and caramel, orange, Dubai, black forest and mint (£4.50); one size, no milk, syrup or shot; optional cream and flake at +£0.50 each (pick none, one, or both)
+- `hotChocolates[]` — hot chocolate (£4), and caramel, orange, Dubai, black forest and mint (£4.50); one size, no milk, syrup or shot; optional cream & flake at +£0.50
 - `milkshakes[]` — strawberry, vanilla and chocolate (one size at £5) and Oreo and Biscoff (one size at £5.50), with or without cream at no extra charge
 - `bobas[]` — tropical with mango boba and strawberry and apple boba (one size at £4, no extras)
 - `donuts[]` — topping/style plus pack sizes (`2 donuts`, `4 donuts`, `6 donuts`) matching the truck
-- `extras[].pricePence` and `group` — `milk` options are mutually exclusive; syrup flavours are mutually exclusive; milkshake `cream` is a yes/no choice at no charge; hot chocolate cream and flake are separate optional add-ons; `shot` and a syrup flavour can combine with milk
+- `extras[].pricePence` and `group` — `milk` options are mutually exclusive; syrup flavours are mutually exclusive; milkshake `cream` is a yes/no choice at no charge; hot chocolate has one optional cream & flake add-on; `shot` and a syrup flavour can combine with milk
 
 Starter prices (GBP):
 
@@ -110,7 +110,7 @@ Starter prices (GBP):
 | Oreo, Biscoff milkshake | £5.50 |
 | Tropical with mango boba; Strawberry and apple boba | £4.00 |
 
-Extras: oat milk +£0.50, extra shot +£0.50, syrup flavour +£0.50 (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, cherry or orange — one per drink). Milkshakes: with cream or no cream, no extra charge. Hot chocolate: cream +£0.50 and flake +£0.50, independently.
+Extras: oat milk +£0.50, extra shot +£0.50, syrup flavour +£0.50 (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, cherry or orange — one per drink). Milkshakes: with cream or no cream, no extra charge. Hot chocolate: optional cream & flake +£0.50.
 
 Donut packs (no singles — same bundles as the truck):
 

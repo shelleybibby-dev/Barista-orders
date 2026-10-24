@@ -196,7 +196,7 @@
       "description": "Rich hot chocolate",
       "accent": "#3d2418",
       "foam": "#fff6ee",
-      "extras": ["cream", "flake"],
+      "extras": ["cream-and-flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
       ]
@@ -207,7 +207,7 @@
       "description": "Caramel hot chocolate",
       "accent": "#d0894a",
       "foam": "#fff3e0",
-      "extras": ["cream", "flake"],
+      "extras": ["cream-and-flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -218,7 +218,7 @@
       "description": "Orange hot chocolate",
       "accent": "#e36a1e",
       "foam": "#fff4ea",
-      "extras": ["cream", "flake"],
+      "extras": ["cream-and-flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -229,7 +229,7 @@
       "description": "Pistachio and kataifi hot chocolate",
       "accent": "#3d9a62",
       "foam": "#f4f8ef",
-      "extras": ["cream", "flake"],
+      "extras": ["cream-and-flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -240,7 +240,7 @@
       "description": "Cherry black forest hot chocolate",
       "accent": "#c23b4a",
       "foam": "#fff3f4",
-      "extras": ["cream", "flake"],
+      "extras": ["cream-and-flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -251,7 +251,7 @@
       "description": "Mint hot chocolate",
       "accent": "#2fafa0",
       "foam": "#f3fbf8",
-      "extras": ["cream", "flake"],
+      "extras": ["cream-and-flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -406,16 +406,10 @@
       "group": "cream"
     },
     {
-      "id": "cream",
-      "name": "Cream",
+      "id": "cream-and-flake",
+      "name": "Cream & flake",
       "pricePence": 50,
       "group": "cream"
-    },
-    {
-      "id": "flake",
-      "name": "Flake",
-      "pricePence": 50,
-      "group": "flake"
     }
   ],
   "donuts": [
