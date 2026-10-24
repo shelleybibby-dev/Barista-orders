@@ -194,8 +194,8 @@
       "id": "hot-chocolate",
       "name": "Hot chocolate",
       "description": "Rich hot chocolate",
-      "accent": "#4a2a1c",
-      "foam": "#f0d2b0",
+      "accent": "#3d2418",
+      "foam": "#fff6ee",
       "extras": ["cream", "flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
@@ -205,8 +205,8 @@
       "id": "hot-chocolate-cadbury-caramel",
       "name": "Caramel Hot Chocolate",
       "description": "Caramel hot chocolate",
-      "accent": "#5c3d8a",
-      "foam": "#e8b86a",
+      "accent": "#d0894a",
+      "foam": "#fff3e0",
       "extras": ["cream", "flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
@@ -216,8 +216,8 @@
       "id": "hot-chocolate-orange",
       "name": "Orange Hot Chocolate",
       "description": "Orange hot chocolate",
-      "accent": "#d4652a",
-      "foam": "#ffe0c2",
+      "accent": "#e36a1e",
+      "foam": "#fff4ea",
       "extras": ["cream", "flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
@@ -227,8 +227,8 @@
       "id": "hot-chocolate-dubai",
       "name": "Dubai Hot Chocolate",
       "description": "Pistachio and kataifi hot chocolate",
-      "accent": "#2f6b45",
-      "foam": "#f3e0a8",
+      "accent": "#3d9a62",
+      "foam": "#f4f8ef",
       "extras": ["cream", "flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
@@ -238,8 +238,8 @@
       "id": "hot-chocolate-black-forest",
       "name": "Black Forest Hot Chocolate",
       "description": "Cherry black forest hot chocolate",
-      "accent": "#6b1d2a",
-      "foam": "#f6d0d6",
+      "accent": "#c23b4a",
+      "foam": "#fff3f4",
       "extras": ["cream", "flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
@@ -249,8 +249,8 @@
       "id": "hot-chocolate-mint",
       "name": "Mint Hot Chocolate",
       "description": "Mint hot chocolate",
-      "accent": "#1f7a6b",
-      "foam": "#d8f3ec",
+      "accent": "#2fafa0",
+      "foam": "#f3fbf8",
       "extras": ["cream", "flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { BobaIcon } from "@/components/BobaIcon";
 import { CoffeeCup } from "@/components/CoffeeCup";
+import { HotChocolateIcon } from "@/components/HotChocolateIcon";
 import { BrandLockup } from "@/components/CoffeeBeansLogo";
 import { DonutIcon } from "@/components/DonutIcon";
 import { MilkshakeIcon } from "@/components/MilkshakeIcon";
@@ -364,6 +365,8 @@ function DrinkCard({
         <MilkshakeIcon shake={product} className="h-20 w-20 shrink-0" />
       ) : kind === "boba" ? (
         <BobaIcon drink={product} className="h-20 w-20 shrink-0" />
+      ) : kind === "hot-chocolate" ? (
+        <HotChocolateIcon drink={product} className="h-20 w-20 shrink-0" />
       ) : (
         <CoffeeCup drink={product} className="h-20 w-20 shrink-0" />
       )}
@@ -410,6 +413,7 @@ function CustomiseSheet({
   const isDonut = draft.kind === "donut";
   const isMilkshake = draft.kind === "milkshake";
   const isBoba = draft.kind === "boba";
+  const isHotChocolate = draft.kind === "hot-chocolate";
   const sizeLabel = isDonut ? "Pack" : "Size";
 
   return (
@@ -424,6 +428,8 @@ function CustomiseSheet({
             <MilkshakeIcon shake={draft.product} className="h-16 w-16" />
           ) : isBoba ? (
             <BobaIcon drink={draft.product} className="h-16 w-16" />
+          ) : isHotChocolate ? (
+            <HotChocolateIcon drink={draft.product} className="h-16 w-16" />
           ) : (
             <CoffeeCup drink={draft.product} className="h-16 w-16" />
           )}
