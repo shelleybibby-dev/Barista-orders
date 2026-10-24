@@ -14,6 +14,9 @@ export function findProduct(
   const drink = findDrink(menu, productId);
   if (drink) return { product: drink, kind: "drink" };
 
+  const hotChocolate = (menu.hotChocolates ?? []).find((item) => item.id === productId);
+  if (hotChocolate) return { product: hotChocolate, kind: "hot-chocolate" };
+
   const milkshake = (menu.milkshakes ?? []).find((item) => item.id === productId);
   if (milkshake) return { product: milkshake, kind: "milkshake" };
 

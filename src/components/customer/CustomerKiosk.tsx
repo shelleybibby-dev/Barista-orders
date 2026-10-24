@@ -87,7 +87,10 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
       });
       const alreadyOn = current.extraIds.includes(extra.id);
       if (alreadyOn && extra.group === "cream") {
-        return current;
+        const creamChoices = extrasForDrink(menu, current.product).filter(
+          (item) => item.group === "cream",
+        );
+        if (creamChoices.length > 1) return current;
       }
       return {
         ...current,
@@ -198,7 +201,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
       <main className="mx-auto max-w-5xl px-5 py-6 pb-44">
         <h1 className="font-display text-4xl font-semibold">Order here</h1>
         <p className="mt-2 text-lg text-coffee">
-          Add coffee, tea, milkshakes, boba and donut packs to the same tray. No payment needed.
+          Add coffee, tea, hot chocolate, milkshakes, boba and donut packs to the same tray. No payment needed.
         </p>
 
         <h2 className="mt-10 font-display text-3xl font-semibold">Drinks</h2>
@@ -216,6 +219,23 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {(menu.teas ?? []).map((tea) => (
                 <DrinkCard key={tea.id} product={tea} onOpen={() => openProduct(tea, "drink")} />
+              ))}
+            </div>
+          </>
+        ) : null}
+
+        {(menu.hotChocolates ?? []).length > 0 ? (
+          <>
+            <h2 className="mt-12 font-display text-3xl font-semibold">Hot chocolates</h2>
+            <p className="mt-1 text-base text-coffee">£4 or £4.50. Optional cream, no extra charge.</p>
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {(menu.hotChocolates ?? []).map((drink) => (
+                <DrinkCard
+                  key={drink.id}
+                  product={drink}
+                  kind="hot-chocolate"
+                  onOpen={() => openProduct(drink, "hot-chocolate")}
+                />
               ))}
             </div>
           </>
