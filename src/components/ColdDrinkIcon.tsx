@@ -10,7 +10,7 @@ export function ColdDrinkIcon({
   const bottle = drink.description === "Bottle";
   return (
     <svg viewBox="0 0 96 96" className={className} aria-hidden="true" focusable="false">
-      <ellipse cx="48" cy="88" rx="16" ry="3.5" fill="rgba(42,24,16,0.12)" />
+      <ellipse cx="48" cy="90" rx="18" ry="3" fill="rgba(42,24,16,0.14)" />
       {bottle ? <Bottle drink={drink} /> : <Can drink={drink} />}
     </svg>
   );
@@ -19,39 +19,45 @@ export function ColdDrinkIcon({
 function Can({ drink }: { drink: MenuProduct }) {
   return (
     <>
-      <path
-        d="M30 32c0-7 8-11 18-11s18 4 18 11v44c0 7-8 12-18 12s-18-5-18-12V32Z"
-        fill={drink.accent}
-      />
-      <path d="M34 38c2 16 2 28 0 42" fill="none" stroke="#fff" strokeWidth="3" opacity="0.28" />
-      <rect x="30" y="46" width="36" height="14" fill={drink.foam} />
-      <ellipse cx="48" cy="32" rx="18" ry="7" fill="#d5d8de" />
-      <ellipse cx="48" cy="30" rx="11" ry="3.6" fill="#f7f8fa" />
-      <rect x="45" y="26" width="10" height="3" rx="1.2" fill="#9aa0a8" />
+      <path d="M28 36h40v40c0 7-9 12-20 12s-20-5-20-12V36Z" fill={drink.accent} />
+      <path d="M32 42v26" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" opacity="0.35" />
+      <rect x="28" y="48" width="40" height="16" fill={drink.foam} />
+      <ellipse cx="48" cy="36" rx="20" ry="7" fill="#c5cad1" />
+      <ellipse cx="48" cy="34" rx="15" ry="4.5" fill="#f4f6f8" />
+      <ellipse cx="48" cy="34" rx="6" ry="2.3" fill="none" stroke="#6f7680" strokeWidth="1.7" />
+      <path d="M48 31.5v-4" fill="none" stroke="#6f7680" strokeWidth="1.7" strokeLinecap="round" />
     </>
   );
 }
 
 function Bottle({ drink }: { drink: MenuProduct }) {
-  const sports = drink.id === "fruit-shoot";
-  if (sports) {
+  if (drink.id === "fruit-shoot") {
     return (
       <>
-        <rect x="42" y="16" width="12" height="7" rx="2" fill={drink.foam} />
-        <rect x="46" y="12" width="4" height="6" rx="2" fill="#2c6b34" />
-        <path d="M40 23h16l2 8h8c4 0 8 4 8 10v27c0 8-8 12-20 12s-20-4-20-12V41c0-6 4-10 8-10h8l2-8Z" fill={drink.accent} />
-        <path d="M38 44h20v8H38z" fill="#fff" opacity="0.28" />
-        <path d="M36 40c1.5 14 1.5 24 0 36" fill="none" stroke="#fff" strokeWidth="3" opacity="0.35" />
+        <rect x="44" y="18" width="8" height="6" rx="2" fill="#245c30" />
+        <path d="M40 24h16v6H40z" fill={drink.foam} />
+        <path
+          d="M40 30h16l4 8c8 2 10 8 10 14v22c0 8-8 12-18 12s-18-4-18-12V52c0-6 2-12 10-14l4-8Z"
+          fill={drink.accent}
+        />
+        <path d="M36 52h24v10H36z" fill="#fff" opacity="0.28" />
+        <path d="M34 46c1.4 12 1.4 22 0 34" fill="none" stroke="#fff" strokeWidth="2.5" opacity="0.4" />
       </>
     );
   }
 
   return (
     <>
-      <rect x="40" y="12" width="16" height="10" rx="2" fill={drink.foam} />
-      <path d="M42 22h12l3 10c8 3 13 10 13 18v22c0 8-7 12-16 12s-16-4-16-12V50c0-8 5-15 13-18l3-10Z" fill={drink.accent} />
-      <path d="M40 48h16c1 8 1 16 0 24H40c-1-8-1-16 0-24Z" fill="#fff" opacity="0.45" />
-      <path d="M38 36c1.4 16 1.4 28 0 42" fill="none" stroke="#fff" strokeWidth="3" opacity="0.55" />
+      <rect x="41" y="8" width="14" height="9" rx="1.5" fill={drink.foam} />
+      <path d="M44 17h8v12l-2 2h-4l-2-2V17Z" fill="#eef8fc" stroke="#7aa4be" strokeWidth="1.4" />
+      <path
+        d="M46 31c-12 4-16 12-16 20v22c0 8 7 11 18 11s18-3 18-11V51c0-8-4-16-16-20Z"
+        fill={drink.accent}
+        stroke="#7aa4be"
+        strokeWidth="1.6"
+      />
+      <path d="M36 58h24c.4 6 .4 12 0 18H36c-.4-6-.4-12 0-18Z" fill="#fff" opacity="0.55" />
+      <path d="M34 42c1.2 14 1.2 26 0 40" fill="none" stroke="#fff" strokeWidth="2.5" opacity="0.7" />
     </>
   );
 }
