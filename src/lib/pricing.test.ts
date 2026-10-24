@@ -352,11 +352,11 @@ describe("café menu syrup flavours", () => {
     expect(item.extras).toEqual([]);
   });
 
-  it("offers plain hot chocolate with cream and flake, and kids and flavoured hot chocolates with no add-ons", () => {
+  it("offers plain hot chocolate with cream and flake, kids with no add-ons, and flavoured hot chocolates with free cream", () => {
     const cafeMenu = getMenu();
     const plain = ["hot-chocolate", "Hot chocolate", 400] as const;
-    const withoutAddOns = [
-      ["hot-chocolate-kids", "Kids hot chocolate", 250],
+    const kidsSpec = ["hot-chocolate-kids", "Kids hot chocolate", 250] as const;
+    const flavoured = [
       ["hot-chocolate-cadbury-caramel", "Caramel Hot Chocolate", 450],
       ["hot-chocolate-orange", "Orange Hot Chocolate", 450],
       ["hot-chocolate-dubai", "Dubai Hot Chocolate", 450],
@@ -366,7 +366,8 @@ describe("café menu syrup flavours", () => {
 
     expect(cafeMenu.hotChocolates?.map((drink) => drink.id)).toEqual([
       plain[0],
-      ...withoutAddOns.map(([id]) => id),
+      kidsSpec[0],
+      ...flavoured.map(([id]) => id),
     ]);
     expect(cafeMenu.extras.find((extra) => extra.id === "cream-and-flake")).toMatchObject({
       name: "Cream & flake",
@@ -389,19 +390,39 @@ describe("café menu syrup flavours", () => {
       plain[2] + 50,
     );
 
-    for (const [id, name, pricePence] of withoutAddOns) {
+    const kidsDrink = cafeMenu.hotChocolates?.find((item) => item.id === kidsSpec[0]);
+    expect(kidsDrink?.name).toBe(kidsSpec[1]);
+    expect(kidsDrink?.extras).toEqual([]);
+    expect(kidsDrink?.sizes).toEqual([{ id: "standard", name: "", pricePence: kidsSpec[2] }]);
+    expect(priceUnitPence(kidsDrink!, "standard", [], cafeMenu.extras)).toBe(kidsSpec[2]);
+    for (const blocked of ["cream-and-flake", "no-cream", "with-cream"]) {
+      expect(() => priceUnitPence(kidsDrink!, "standard", [blocked], cafeMenu.extras)).toThrow(
+        OrderValidationError,
+      );
+    }
+    for (const blocked of ["no-cream", "with-cream"]) {
+      expect(() => priceUnitPence(hotChocolate!, "standard", [blocked], cafeMenu.extras)).toThrow(
+        OrderValidationError,
+      );
+    }
+
+    for (const [id, name, pricePence] of flavoured) {
       const drink = cafeMenu.hotChocolates?.find((item) => item.id === id);
       expect(drink?.name).toBe(name);
-      expect(drink?.extras).toEqual([]);
+      expect(drink?.extras).toEqual(["no-cream", "with-cream"]);
       expect(drink?.sizes).toEqual([{ id: "standard", name: "", pricePence }]);
-      expect(priceUnitPence(drink!, "standard", [], cafeMenu.extras)).toBe(pricePence);
+      expect(priceUnitPence(drink!, "standard", ["no-cream"], cafeMenu.extras)).toBe(pricePence);
+      expect(priceUnitPence(drink!, "standard", ["with-cream"], cafeMenu.extras)).toBe(pricePence);
       expect(() =>
         priceUnitPence(drink!, "standard", ["cream-and-flake"], cafeMenu.extras),
+      ).toThrow(OrderValidationError);
+      expect(() =>
+        priceUnitPence(drink!, "standard", ["no-cream", "with-cream"], cafeMenu.extras),
       ).toThrow(OrderValidationError);
     }
 
     for (const drink of cafeMenu.hotChocolates ?? []) {
-      for (const blocked of ["oat", "extra-shot", "syrup-caramel", "decaf", "with-cream", "cream", "flake"]) {
+      for (const blocked of ["oat", "extra-shot", "syrup-caramel", "decaf", "cream", "flake"]) {
         expect(() => priceUnitPence(drink, "standard", [blocked], cafeMenu.extras)).toThrow(
           OrderValidationError,
         );
@@ -440,6 +461,20 @@ describe("café menu syrup flavours", () => {
     expect(plainOrder.drinkName).toBe("Hot chocolate");
     expect(plainOrder.extras).toEqual([]);
     expect(plainOrder.lineTotalPence).toBe(400);
+
+    const caramel = buildOrderItem(
+      cafeMenu,
+      {
+        drinkId: "hot-chocolate-cadbury-caramel",
+        sizeId: "standard",
+        extraIds: ["with-cream"],
+        quantity: 1,
+      },
+      "cocoa-caramel",
+    );
+    expect(caramel.drinkName).toBe("Caramel Hot Chocolate");
+    expect(caramel.extras).toEqual([{ id: "with-cream", name: "With cream", pricePence: 0 }]);
+    expect(caramel.lineTotalPence).toBe(450);
   });
 
   it("offers fruit milkshakes at £5 and Oreo and Biscoff at £5.50 with a cream choice", () => {
