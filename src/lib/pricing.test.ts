@@ -188,7 +188,7 @@ describe("café menu syrup flavours", () => {
     ]);
     expect(syrups.every((extra) => extra.pricePence === 50)).toBe(true);
     expect(cafeMenu.extras.find((extra) => extra.id === "extra-shot")?.pricePence).toBe(50);
-    expect(cafeMenu.extras.find((extra) => extra.id === "oat")?.pricePence).toBe(50);
+    expect(cafeMenu.extras.find((extra) => extra.id === "oat")?.pricePence).toBe(0);
     expect(syrups.map((extra) => extra.name)).toEqual([
       "Caramel syrup",
       "Hazelnut syrup",
@@ -558,7 +558,8 @@ describe("order store", () => {
 
     expect(first.ticketNumber).toBe(1);
     expect(first.customerName).toBe("Alex");
-    expect(first.totalPence).toBe(450);
+    expect(first.totalPence).toBe(400);
+    expect(first.items[0].extras).toEqual([{ id: "oat", name: "Oat milk", pricePence: 0 }]);
     expect(second.ticketNumber).toBe(2);
 
     const listed = store.list();
@@ -602,7 +603,7 @@ describe("order store", () => {
     expect(order.items[1].made).toBe(false);
     expect(order.items[1].drinkName).toBe("Biscoff topped");
     expect(order.items[1].sizeName).toBe("4 donuts");
-    expect(order.totalPence).toBe(450 + 700);
+    expect(order.totalPence).toBe(400 + 700);
   });
 
   it("places tea with the chosen size on a ticket", () => {

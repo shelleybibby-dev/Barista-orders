@@ -111,7 +111,7 @@ Starter prices (GBP):
 | Oreo, Biscoff milkshake | £5.50 |
 | Tropical with mango boba; Strawberry and apple boba | £4.00 |
 
-Extras: oat milk +£0.50, extra shot +£0.50, syrup flavour +£0.50 (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, cherry or orange — one per drink). Milkshakes: with cream or no cream, no extra charge. Plain hot chocolate: optional cream & flake +£0.50. Kids and flavoured hot chocolates have no add-ons.
+Extras: oat milk free, extra shot +£0.50, syrup flavour +£0.50 (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, cherry or orange — one per drink). Milkshakes: with cream or no cream, no extra charge. Plain hot chocolate: optional cream & flake +£0.50. Kids and flavoured hot chocolates have no add-ons.
 
 Donut packs (no singles — same bundles as the truck):
 

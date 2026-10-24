@@ -495,7 +495,9 @@ function CustomiseSheet({
                 <ChoiceChip
                   key={milk.id}
                   label={milk.name}
-                  hint={`+ ${formatGbp(milk.pricePence)}`}
+                  hint={
+                    milk.pricePence === 0 ? "No extra charge" : `+ ${formatGbp(milk.pricePence)}`
+                  }
                   selected={draft.extraIds.includes(milk.id)}
                   onClick={() => onExtra(milk)}
                 />

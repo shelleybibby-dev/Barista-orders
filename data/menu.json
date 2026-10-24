@@ -353,7 +353,7 @@
     {
       "id": "oat",
       "name": "Oat milk",
-      "pricePence": 50,
+      "pricePence": 0,
       "group": "milk"
     },
     {
