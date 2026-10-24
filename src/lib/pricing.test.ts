@@ -602,23 +602,27 @@ describe("café menu syrup flavours", () => {
     expect(item.extras).toEqual([]);
   });
 
-  it("offers six cold drinks at £2 with no add-ons", () => {
+  it("offers eight cold drinks at £2 with no add-ons", () => {
     const cafeMenu = getMenu();
     const expected = [
-      ["coke", "Coke", "Can"],
-      ["pepsi-max", "Pepsi Max", "Can"],
-      ["orange-tango", "Orange Tango", "Can"],
-      ["apple-tango", "Apple Tango", "Can"],
-      ["bottle-of-water", "Bottle of water", "Bottle"],
-      ["fruit-shoot", "Fruit Shoot", "Bottle"],
+      ["coke", "Coke", "Can", "#c8102e"],
+      ["pepsi-max", "Pepsi Max", "Can", "#0b1f4b"],
+      ["orange-tango", "Orange Tango", "Can", "#f26522"],
+      ["apple-tango", "Apple Tango", "Can", "#6fbf3a"],
+      ["bottle-of-water", "Bottle of water", "Bottle", "#d7eef8"],
+      ["fruit-shoot-orange", "Orange Fruit Shoot", "Bottle", "#f07820"],
+      ["fruit-shoot-strawberry", "Strawberry Fruit Shoot", "Bottle", "#e23b5a"],
+      ["fruit-shoot-apple", "Apple Fruit Shoot", "Bottle", "#3d9a4a"],
     ] as const;
 
     expect(cafeMenu.coldDrinks?.map((drink) => drink.id)).toEqual(expected.map(([id]) => id));
+    expect(cafeMenu.coldDrinks?.some((drink) => drink.id === "fruit-shoot")).toBe(false);
 
-    for (const [id, name, container] of expected) {
+    for (const [id, name, container, accent] of expected) {
       const drink = cafeMenu.coldDrinks?.find((item) => item.id === id);
       expect(drink?.name).toBe(name);
       expect(drink?.description).toBe(container);
+      expect(drink?.accent).toBe(accent);
       expect(drink?.extras).toEqual([]);
       expect(drink?.sizes).toEqual([{ id: "standard", name: container, pricePence: 200 }]);
       expect(priceUnitPence(drink!, "standard", [], cafeMenu.extras)).toBe(200);
@@ -848,18 +852,18 @@ describe("order store", () => {
       customerName: "Sam",
       items: [
         { drinkId: "pepsi-max", sizeId: "standard", extraIds: [], quantity: 1 },
-        { drinkId: "fruit-shoot", sizeId: "standard", extraIds: [], quantity: 1 },
+        { drinkId: "fruit-shoot-strawberry", sizeId: "standard", extraIds: [], quantity: 1 },
       ],
     });
 
     expect(order.items.map((item) => [item.kind, item.drinkName, item.sizeName, item.lineTotalPence])).toEqual([
       ["cold-drink", "Pepsi Max", "Can", 200],
-      ["cold-drink", "Fruit Shoot", "Bottle", 200],
+      ["cold-drink", "Strawberry Fruit Shoot", "Bottle", 200],
     ]);
     expect(order.items.every((item) => item.extras.length === 0)).toBe(true);
     expect(order.totalPence).toBe(400);
     expect(ticketAriaLabel(order.items[0])).toBe("Pepsi Max Can");
-    expect(ticketAriaLabel(order.items[1])).toBe("Fruit Shoot Bottle");
+    expect(ticketAriaLabel(order.items[1])).toBe("Strawberry Fruit Shoot Bottle");
   });
 
   it("places plain hot chocolate with cream and flake on a ticket", () => {

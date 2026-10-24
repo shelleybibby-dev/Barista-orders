@@ -31,10 +31,10 @@ function Can({ drink }: { drink: MenuProduct }) {
 }
 
 function Bottle({ drink }: { drink: MenuProduct }) {
-  if (drink.id === "fruit-shoot") {
+  if (drink.id.startsWith("fruit-shoot")) {
     return (
       <>
-        <rect x="44" y="18" width="8" height="6" rx="2" fill="#245c30" />
+        <rect x="44" y="18" width="8" height="6" rx="2" fill={drink.accent} />
         <path d="M40 24h16v6H40z" fill={drink.foam} />
         <path
           d="M40 30h16l4 8c8 2 10 8 10 14v22c0 8-8 12-18 12s-18-4-18-12V52c0-6 2-12 10-14l4-8Z"

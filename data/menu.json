@@ -411,11 +411,33 @@
       ]
     },
     {
-      "id": "fruit-shoot",
-      "name": "Fruit Shoot",
+      "id": "fruit-shoot-orange",
+      "name": "Orange Fruit Shoot",
       "description": "Bottle",
-      "accent": "#e85d4c",
-      "foam": "#3d9a4a",
+      "accent": "#f07820",
+      "foam": "#ffd7a8",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "Bottle", "pricePence": 200 }
+      ]
+    },
+    {
+      "id": "fruit-shoot-strawberry",
+      "name": "Strawberry Fruit Shoot",
+      "description": "Bottle",
+      "accent": "#e23b5a",
+      "foam": "#ffd0dc",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "Bottle", "pricePence": 200 }
+      ]
+    },
+    {
+      "id": "fruit-shoot-apple",
+      "name": "Apple Fruit Shoot",
+      "description": "Bottle",
+      "accent": "#3d9a4a",
+      "foam": "#dff5c8",
       "extras": [],
       "sizes": [
         { "id": "standard", "name": "Bottle", "pricePence": 200 }
