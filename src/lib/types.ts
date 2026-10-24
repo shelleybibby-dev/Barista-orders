@@ -1,4 +1,4 @@
-export type ExtraGroup = "milk" | "shot" | "syrup" | "cream";
+export type ExtraGroup = "milk" | "shot" | "syrup" | "cream" | "flake";
 
 export type OrderStatus = "queued" | "ready" | "completed";
 

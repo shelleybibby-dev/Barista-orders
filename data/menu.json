@@ -196,18 +196,18 @@
       "description": "Rich hot chocolate",
       "accent": "#4a2a1c",
       "foam": "#f0d2b0",
-      "extras": ["cream"],
+      "extras": ["cream", "flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
       ]
     },
     {
       "id": "hot-chocolate-cadbury-caramel",
-      "name": "Cadbury Caramel Hot Chocolate",
-      "description": "Cadbury caramel hot chocolate",
+      "name": "Caramel Hot Chocolate",
+      "description": "Caramel hot chocolate",
       "accent": "#5c3d8a",
       "foam": "#e8b86a",
-      "extras": ["cream"],
+      "extras": ["cream", "flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -218,7 +218,7 @@
       "description": "Orange hot chocolate",
       "accent": "#d4652a",
       "foam": "#ffe0c2",
-      "extras": ["cream"],
+      "extras": ["cream", "flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -229,7 +229,7 @@
       "description": "Pistachio and kataifi hot chocolate",
       "accent": "#2f6b45",
       "foam": "#f3e0a8",
-      "extras": ["cream"],
+      "extras": ["cream", "flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -240,7 +240,7 @@
       "description": "Cherry black forest hot chocolate",
       "accent": "#6b1d2a",
       "foam": "#f6d0d6",
-      "extras": ["cream"],
+      "extras": ["cream", "flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -251,7 +251,7 @@
       "description": "Mint hot chocolate",
       "accent": "#1f7a6b",
       "foam": "#d8f3ec",
-      "extras": ["cream"],
+      "extras": ["cream", "flake"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -408,8 +408,14 @@
     {
       "id": "cream",
       "name": "Cream",
-      "pricePence": 0,
+      "pricePence": 50,
       "group": "cream"
+    },
+    {
+      "id": "flake",
+      "name": "Flake",
+      "pricePence": 50,
+      "group": "flake"
     }
   ],
   "donuts": [

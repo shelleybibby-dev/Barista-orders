@@ -283,11 +283,11 @@ describe("café menu syrup flavours", () => {
     expect(item.extras).toEqual([]);
   });
 
-  it("offers hot chocolate at £4 and flavoured hot chocolates at £4.50 with optional free cream", () => {
+  it("offers hot chocolate at £4 and flavoured hot chocolates at £4.50 with cream and flake at £0.50 each", () => {
     const cafeMenu = getMenu();
     const drinks = [
       ["hot-chocolate", "Hot chocolate", 400],
-      ["hot-chocolate-cadbury-caramel", "Cadbury Caramel Hot Chocolate", 450],
+      ["hot-chocolate-cadbury-caramel", "Caramel Hot Chocolate", 450],
       ["hot-chocolate-orange", "Orange Hot Chocolate", 450],
       ["hot-chocolate-dubai", "Dubai Hot Chocolate", 450],
       ["hot-chocolate-black-forest", "Black Forest Hot Chocolate", 450],
@@ -295,16 +295,30 @@ describe("café menu syrup flavours", () => {
     ] as const;
 
     expect(cafeMenu.hotChocolates).toHaveLength(drinks.length);
-    const cream = cafeMenu.extras.find((extra) => extra.id === "cream");
-    expect(cream).toMatchObject({ name: "Cream", pricePence: 0, group: "cream" });
+    expect(cafeMenu.extras.find((extra) => extra.id === "cream")).toMatchObject({
+      name: "Cream",
+      pricePence: 50,
+      group: "cream",
+    });
+    expect(cafeMenu.extras.find((extra) => extra.id === "flake")).toMatchObject({
+      name: "Flake",
+      pricePence: 50,
+      group: "flake",
+    });
+    expect(cafeMenu.extras.find((extra) => extra.id === "with-cream")?.pricePence).toBe(0);
+    expect(cafeMenu.extras.find((extra) => extra.id === "no-cream")?.pricePence).toBe(0);
 
     for (const [id, name, pricePence] of drinks) {
       const drink = cafeMenu.hotChocolates?.find((item) => item.id === id);
       expect(drink?.name).toBe(name);
-      expect(drink?.extras).toEqual(["cream"]);
+      expect(drink?.extras).toEqual(["cream", "flake"]);
       expect(drink?.sizes).toEqual([{ id: "standard", name: "", pricePence }]);
       expect(priceUnitPence(drink!, "standard", [], cafeMenu.extras)).toBe(pricePence);
-      expect(priceUnitPence(drink!, "standard", ["cream"], cafeMenu.extras)).toBe(pricePence);
+      expect(priceUnitPence(drink!, "standard", ["cream"], cafeMenu.extras)).toBe(pricePence + 50);
+      expect(priceUnitPence(drink!, "standard", ["flake"], cafeMenu.extras)).toBe(pricePence + 50);
+      expect(priceUnitPence(drink!, "standard", ["cream", "flake"], cafeMenu.extras)).toBe(
+        pricePence + 100,
+      );
       for (const blocked of ["oat", "extra-shot", "syrup-caramel", "with-cream"]) {
         expect(() => priceUnitPence(drink!, "standard", [blocked], cafeMenu.extras)).toThrow(
           OrderValidationError,
@@ -312,20 +326,23 @@ describe("café menu syrup flavours", () => {
       }
     }
 
-    const withCream = buildOrderItem(
+    const withBoth = buildOrderItem(
       cafeMenu,
       {
         drinkId: "hot-chocolate-dubai",
         sizeId: "standard",
-        extraIds: ["cream"],
+        extraIds: ["flake", "cream"],
         quantity: 1,
       },
       "cocoa-1",
     );
-    expect(withCream.kind).toBe("hot-chocolate");
-    expect(withCream.drinkName).toBe("Dubai Hot Chocolate");
-    expect(withCream.extras).toEqual([{ id: "cream", name: "Cream", pricePence: 0 }]);
-    expect(withCream.lineTotalPence).toBe(450);
+    expect(withBoth.kind).toBe("hot-chocolate");
+    expect(withBoth.drinkName).toBe("Dubai Hot Chocolate");
+    expect(withBoth.extras).toEqual([
+      { id: "flake", name: "Flake", pricePence: 50 },
+      { id: "cream", name: "Cream", pricePence: 50 },
+    ]);
+    expect(withBoth.lineTotalPence).toBe(550);
 
     const plain = buildOrderItem(
       cafeMenu,
@@ -623,24 +640,27 @@ describe("order store", () => {
     expect(order.totalPence).toBe(400);
   });
 
-  it("places mint hot chocolate with free cream on a ticket", () => {
+  it("places caramel hot chocolate with cream and flake on a ticket", () => {
     const store = tempStore();
     const order = store.create({
       customerName: "Noor",
       items: [
         {
-          drinkId: "hot-chocolate-mint",
+          drinkId: "hot-chocolate-cadbury-caramel",
           sizeId: "standard",
-          extraIds: ["cream"],
+          extraIds: ["cream", "flake"],
           quantity: 1,
         },
       ],
     });
 
     expect(order.items[0].kind).toBe("hot-chocolate");
-    expect(order.items[0].drinkName).toBe("Mint Hot Chocolate");
-    expect(order.items[0].extras).toEqual([{ id: "cream", name: "Cream", pricePence: 0 }]);
-    expect(order.totalPence).toBe(450);
+    expect(order.items[0].drinkName).toBe("Caramel Hot Chocolate");
+    expect(order.items[0].extras).toEqual([
+      { id: "cream", name: "Cream", pricePence: 50 },
+      { id: "flake", name: "Flake", pricePence: 50 },
+    ]);
+    expect(order.totalPence).toBe(550);
   });
 
   it("marks line items made independently and keeps them after reload", () => {

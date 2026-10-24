@@ -227,7 +227,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
         {(menu.hotChocolates ?? []).length > 0 ? (
           <>
             <h2 className="mt-12 font-display text-3xl font-semibold">Hot chocolates</h2>
-            <p className="mt-1 text-base text-coffee">£4 or £4.50. Optional cream, no extra charge.</p>
+            <p className="mt-1 text-base text-coffee">£4 or £4.50. Add cream and flake, +£0.50 each.</p>
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {(menu.hotChocolates ?? []).map((drink) => (
                 <DrinkCard
@@ -508,7 +508,9 @@ function CustomiseSheet({
                 <ChoiceChip
                   key={cream.id}
                   label={cream.name}
-                  hint="No extra charge"
+                  hint={
+                    cream.pricePence === 0 ? "No extra charge" : `+ ${formatGbp(cream.pricePence)}`
+                  }
                   selected={draft.extraIds.includes(cream.id)}
                   onClick={() => onExtra(cream)}
                 />
