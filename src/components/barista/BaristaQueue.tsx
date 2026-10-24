@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { BrandLockup } from "@/components/CoffeeBeansLogo";
 import { useOrderStream } from "@/hooks/useOrderStream";
 import { formatGbp } from "@/lib/money";
+import { ticketAriaLabel, ticketExtras } from "@/lib/ticket-display";
 import { formatClock, formatRelative } from "@/lib/time";
 import type { Order, OrderStatus } from "@/lib/types";
 
@@ -273,9 +274,8 @@ function OrderTicket({
       <ul className="mt-4 space-y-2">
         {order.items.map((item) => {
           const made = Boolean(item.made);
-          const label = `${item.quantity > 1 ? `${item.quantity}× ` : ""}${item.drinkName}${
-            item.sizeName ? ` ${item.sizeName}` : ""
-          }`;
+          const { decaf, detail } = ticketExtras(item.extras);
+          const label = ticketAriaLabel(item);
           const content = (
             <>
               <span
@@ -298,6 +298,11 @@ function OrderTicket({
                     Boba
                   </span>
                 ) : null}
+                {decaf ? (
+                  <span className="mb-1 inline-block rounded-full bg-espresso px-3 py-1 text-sm font-bold uppercase tracking-[0.18em] text-foam">
+                    Decaf
+                  </span>
+                ) : null}
                 <span className={`block text-xl font-semibold ${made ? "line-through" : ""}`}>
                   {item.quantity > 1 ? `${item.quantity}× ` : ""}
                   {item.drinkName}
@@ -305,9 +310,9 @@ function OrderTicket({
                     <span className="ml-2 font-normal text-coffee">{item.sizeName}</span>
                   ) : null}
                 </span>
-                {item.extras.length > 0 ? (
+                {detail.length > 0 ? (
                   <span className={`block text-base text-coffee ${made ? "line-through" : ""}`}>
-                    {item.extras.map((extra) => extra.name).join(" · ")}
+                    {detail.map((extra) => extra.name).join(" · ")}
                   </span>
                 ) : null}
               </span>

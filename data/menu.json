@@ -9,7 +9,7 @@
       "description": "Short, rich and intense",
       "accent": "#3b2318",
       "foam": "#d9c4b0",
-      "extras": ["extra-shot"],
+      "extras": ["decaf", "extra-shot"],
       "sizes": [
         { "id": "single", "name": "Single", "pricePence": 250 },
         { "id": "double", "name": "Double", "pricePence": 300 }
@@ -22,6 +22,7 @@
       "accent": "#4a2c1f",
       "foam": "#c4a484",
       "extras": [
+        "decaf",
         "oat",
         "extra-shot",
         "syrup-caramel",
@@ -43,6 +44,7 @@
       "accent": "#6b3f2a",
       "foam": "#f3e6d4",
       "extras": [
+        "decaf",
         "oat",
         "extra-shot",
         "syrup-caramel",
@@ -64,6 +66,7 @@
       "accent": "#7a4630",
       "foam": "#fff6ea",
       "extras": [
+        "decaf",
         "oat",
         "extra-shot",
         "syrup-caramel",
@@ -85,6 +88,7 @@
       "accent": "#8b5a3c",
       "foam": "#efe0cc",
       "extras": [
+        "decaf",
         "oat",
         "extra-shot",
         "syrup-caramel",
@@ -106,6 +110,7 @@
       "accent": "#4e2a1c",
       "foam": "#e8d5c4",
       "extras": [
+        "decaf",
         "oat",
         "extra-shot",
         "syrup-caramel",
@@ -209,7 +214,7 @@
       "foam": "#fff6ee",
       "extras": [],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 350 }
+        { "id": "standard", "name": "", "pricePence": 250 }
       ]
     },
     {
@@ -350,6 +355,12 @@
     }
   ],
   "extras": [
+    {
+      "id": "decaf",
+      "name": "Decaf",
+      "pricePence": 0,
+      "group": "decaf"
+    },
     {
       "id": "oat",
       "name": "Oat milk",
