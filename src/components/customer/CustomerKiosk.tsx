@@ -224,7 +224,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
         {(menu.milkshakes ?? []).length > 0 ? (
           <>
             <h2 className="mt-12 font-display text-3xl font-semibold">Milkshakes</h2>
-            <p className="mt-1 text-base text-coffee">£5. Choose with or without cream.</p>
+            <p className="mt-1 text-base text-coffee">£5 or £5.50. Choose with or without cream.</p>
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {(menu.milkshakes ?? []).map((shake) => (
                 <DrinkCard

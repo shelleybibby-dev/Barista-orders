@@ -222,20 +222,31 @@
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 500 }
       ]
+    },
+    {
+      "id": "milkshake-oreo",
+      "name": "Oreo milkshake",
+      "description": "Cookies and cream shake",
+      "accent": "#2c241f",
+      "foam": "#f6f1e8",
+      "extras": ["no-cream", "with-cream"],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 550 }
+      ]
+    },
+    {
+      "id": "milkshake-biscoff",
+      "name": "Biscoff milkshake",
+      "description": "Biscoff biscuit shake",
+      "accent": "#c46a2a",
+      "foam": "#ffe4c2",
+      "extras": ["no-cream", "with-cream"],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 550 }
+      ]
     }
   ],
   "bobas": [
-    {
-      "id": "boba-tropical-mango",
-      "name": "Tropical with mango boba",
-      "description": "Tropical fruit tea with mango pearls",
-      "accent": "#e08a2a",
-      "foam": "#ffe7b8",
-      "extras": [],
-      "sizes": [
-        { "id": "standard", "name": "", "pricePence": 400 }
-      ]
-    },
     {
       "id": "boba-mango-dragon-fruit",
       "name": "Mango and dragon fruit",
@@ -248,22 +259,11 @@
       ]
     },
     {
-      "id": "boba-raspberry-pineapple",
-      "name": "Raspberry and pineapple with pineapple boba",
-      "description": "Raspberry and pineapple tea with pineapple pearls",
-      "accent": "#c43a5a",
-      "foam": "#ffe0a8",
-      "extras": [],
-      "sizes": [
-        { "id": "standard", "name": "", "pricePence": 400 }
-      ]
-    },
-    {
-      "id": "boba-strawberry-basil-cucumber",
-      "name": "Strawberry basil and cucumber boba",
-      "description": "Strawberry and basil fruit tea with cucumber boba",
-      "accent": "#c45a6a",
-      "foam": "#c8e8c4",
+      "id": "boba-strawberry-apple",
+      "name": "Strawberry and apple boba",
+      "description": "Boba topped fruit tea",
+      "accent": "#c4454a",
+      "foam": "#e7f6d4",
       "extras": [],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
