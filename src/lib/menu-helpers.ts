@@ -23,6 +23,9 @@ export function findProduct(
   const boba = (menu.bobas ?? []).find((item) => item.id === productId);
   if (boba) return { product: boba, kind: "boba" };
 
+  const coldDrink = (menu.coldDrinks ?? []).find((item) => item.id === productId);
+  if (coldDrink) return { product: coldDrink, kind: "cold-drink" };
+
   const donut = (menu.donuts ?? []).find((item) => item.id === productId);
   if (donut) return { product: donut, kind: "donut" };
 

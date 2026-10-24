@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { BobaIcon } from "@/components/BobaIcon";
+import { ColdDrinkIcon } from "@/components/ColdDrinkIcon";
 import { CoffeeCup } from "@/components/CoffeeCup";
 import { HotChocolateIcon } from "@/components/HotChocolateIcon";
 import { BrandLockup } from "@/components/CoffeeBeansLogo";
@@ -202,7 +203,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
       <main className="mx-auto max-w-5xl px-5 py-6 pb-44">
         <h1 className="font-display text-4xl font-semibold">Order here</h1>
         <p className="mt-2 text-lg text-coffee">
-          Add coffee, tea, hot chocolate, milkshakes, boba and donut packs to the same tray. No payment needed.
+          Add coffee, tea, hot chocolate, milkshakes, boba, cold drinks and donut packs to the same tray. No payment needed.
         </p>
 
         <h2 className="mt-10 font-display text-3xl font-semibold">Drinks</h2>
@@ -275,6 +276,23 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
                   product={boba}
                   kind="boba"
                   onOpen={() => openProduct(boba, "boba")}
+                />
+              ))}
+            </div>
+          </>
+        ) : null}
+
+        {(menu.coldDrinks ?? []).length > 0 ? (
+          <>
+            <h2 className="mt-12 font-display text-3xl font-semibold">Cold drinks</h2>
+            <p className="mt-1 text-base text-coffee">£2. Cans and bottles. No extras.</p>
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {(menu.coldDrinks ?? []).map((drink) => (
+                <DrinkCard
+                  key={drink.id}
+                  product={drink}
+                  kind="cold-drink"
+                  onOpen={() => openProduct(drink, "cold-drink")}
                 />
               ))}
             </div>
@@ -370,6 +388,8 @@ function DrinkCard({
         <MilkshakeIcon shake={product} className="h-20 w-20 shrink-0" />
       ) : kind === "boba" ? (
         <BobaIcon drink={product} className="h-20 w-20 shrink-0" />
+      ) : kind === "cold-drink" ? (
+        <ColdDrinkIcon drink={product} className="h-20 w-20 shrink-0" />
       ) : kind === "hot-chocolate" ? (
         <HotChocolateIcon drink={product} className="h-20 w-20 shrink-0" />
       ) : (
@@ -423,6 +443,7 @@ function CustomiseSheet({
   const isDonut = draft.kind === "donut";
   const isMilkshake = draft.kind === "milkshake";
   const isBoba = draft.kind === "boba";
+  const isColdDrink = draft.kind === "cold-drink";
   const isHotChocolate = draft.kind === "hot-chocolate";
   const sizeLabel = isDonut ? "Pack" : "Size";
 
@@ -438,6 +459,8 @@ function CustomiseSheet({
             <MilkshakeIcon shake={draft.product} className="h-16 w-16" />
           ) : isBoba ? (
             <BobaIcon drink={draft.product} className="h-16 w-16" />
+          ) : isColdDrink ? (
+            <ColdDrinkIcon drink={draft.product} className="h-16 w-16" />
           ) : isHotChocolate ? (
             <HotChocolateIcon drink={draft.product} className="h-16 w-16" />
           ) : (

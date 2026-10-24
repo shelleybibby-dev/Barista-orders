@@ -354,6 +354,74 @@
       ]
     }
   ],
+  "coldDrinks": [
+    {
+      "id": "coke",
+      "name": "Coke",
+      "description": "Can",
+      "accent": "#c8102e",
+      "foam": "#f2f2f2",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "Can", "pricePence": 200 }
+      ]
+    },
+    {
+      "id": "pepsi-max",
+      "name": "Pepsi Max",
+      "description": "Can",
+      "accent": "#0b1f4b",
+      "foam": "#d5dde8",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "Can", "pricePence": 200 }
+      ]
+    },
+    {
+      "id": "orange-tango",
+      "name": "Orange Tango",
+      "description": "Can",
+      "accent": "#f26522",
+      "foam": "#ffd24a",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "Can", "pricePence": 200 }
+      ]
+    },
+    {
+      "id": "apple-tango",
+      "name": "Apple Tango",
+      "description": "Can",
+      "accent": "#6fbf3a",
+      "foam": "#e7f6c8",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "Can", "pricePence": 200 }
+      ]
+    },
+    {
+      "id": "bottle-of-water",
+      "name": "Bottle of water",
+      "description": "Bottle",
+      "accent": "#d7eef8",
+      "foam": "#2f6fad",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "Bottle", "pricePence": 200 }
+      ]
+    },
+    {
+      "id": "fruit-shoot",
+      "name": "Fruit Shoot",
+      "description": "Bottle",
+      "accent": "#e85d4c",
+      "foam": "#3d9a4a",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "Bottle", "pricePence": 200 }
+      ]
+    }
+  ],
   "extras": [
     {
       "id": "decaf",

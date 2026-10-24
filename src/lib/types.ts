@@ -2,7 +2,7 @@ export type ExtraGroup = "milk" | "shot" | "syrup" | "cream" | "decaf";
 
 export type OrderStatus = "queued" | "ready" | "completed";
 
-export type ProductKind = "drink" | "donut" | "milkshake" | "boba" | "hot-chocolate";
+export type ProductKind = "drink" | "donut" | "milkshake" | "boba" | "hot-chocolate" | "cold-drink";
 
 export interface MenuSize {
   id: string;
@@ -39,6 +39,7 @@ export interface Menu {
   hotChocolates?: MenuDrink[];
   milkshakes?: MenuDrink[];
   bobas?: MenuDrink[];
+  coldDrinks?: MenuDrink[];
   donuts: MenuDonut[];
   extras: MenuExtra[];
 }

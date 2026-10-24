@@ -297,6 +297,7 @@ describe("café menu syrup flavours", () => {
       ...(cafeMenu.hotChocolates ?? []),
       ...(cafeMenu.milkshakes ?? []),
       ...(cafeMenu.bobas ?? []),
+      ...(cafeMenu.coldDrinks ?? []),
       ...cafeMenu.donuts,
     ];
     for (const product of blocked) {
@@ -592,6 +593,57 @@ describe("café menu syrup flavours", () => {
     expect(item.extras).toEqual([]);
   });
 
+  it("offers six cold drinks at £2 with no add-ons", () => {
+    const cafeMenu = getMenu();
+    const expected = [
+      ["coke", "Coke", "Can"],
+      ["pepsi-max", "Pepsi Max", "Can"],
+      ["orange-tango", "Orange Tango", "Can"],
+      ["apple-tango", "Apple Tango", "Can"],
+      ["bottle-of-water", "Bottle of water", "Bottle"],
+      ["fruit-shoot", "Fruit Shoot", "Bottle"],
+    ] as const;
+
+    expect(cafeMenu.coldDrinks?.map((drink) => drink.id)).toEqual(expected.map(([id]) => id));
+
+    for (const [id, name, container] of expected) {
+      const drink = cafeMenu.coldDrinks?.find((item) => item.id === id);
+      expect(drink?.name).toBe(name);
+      expect(drink?.description).toBe(container);
+      expect(drink?.extras).toEqual([]);
+      expect(drink?.sizes).toEqual([{ id: "standard", name: container, pricePence: 200 }]);
+      expect(priceUnitPence(drink!, "standard", [], cafeMenu.extras)).toBe(200);
+      for (const blocked of ["decaf", "oat", "extra-shot", "syrup-caramel", "with-cream", "cream-and-flake"]) {
+        expect(() => priceUnitPence(drink!, "standard", [blocked], cafeMenu.extras)).toThrow(
+          OrderValidationError,
+        );
+      }
+    }
+
+    const coke = buildOrderItem(
+      cafeMenu,
+      { drinkId: "coke", sizeId: "standard", extraIds: [], quantity: 1 },
+      "cold-1",
+    );
+    expect(coke.kind).toBe("cold-drink");
+    expect(coke.drinkName).toBe("Coke");
+    expect(coke.sizeName).toBe("Can");
+    expect(coke.extras).toEqual([]);
+    expect(coke.lineTotalPence).toBe(200);
+    expect(ticketAriaLabel(coke)).toBe("Coke Can");
+
+    const water = buildOrderItem(
+      cafeMenu,
+      { drinkId: "bottle-of-water", sizeId: "standard", extraIds: [], quantity: 1 },
+      "cold-2",
+    );
+    expect(water.kind).toBe("cold-drink");
+    expect(water.drinkName).toBe("Bottle of water");
+    expect(water.sizeName).toBe("Bottle");
+    expect(water.lineTotalPence).toBe(200);
+    expect(ticketAriaLabel(water)).toBe("Bottle of water Bottle");
+  });
+
   it("prices sugared and cinnamon packs at £3 / £5 / £6 and topped packs at £5 / £7 / £9", () => {
     const cafeMenu = getMenu();
     const plain = ["sugared", "cinnamon"].map((id) =>
@@ -779,6 +831,26 @@ describe("order store", () => {
     expect(order.items[0].sizeName).toBe("");
     expect(order.items[0].extras).toEqual([]);
     expect(order.totalPence).toBe(400);
+  });
+
+  it("places a can and a bottle on the same ticket", () => {
+    const store = tempStore();
+    const order = store.create({
+      customerName: "Sam",
+      items: [
+        { drinkId: "pepsi-max", sizeId: "standard", extraIds: [], quantity: 1 },
+        { drinkId: "fruit-shoot", sizeId: "standard", extraIds: [], quantity: 1 },
+      ],
+    });
+
+    expect(order.items.map((item) => [item.kind, item.drinkName, item.sizeName, item.lineTotalPence])).toEqual([
+      ["cold-drink", "Pepsi Max", "Can", 200],
+      ["cold-drink", "Fruit Shoot", "Bottle", 200],
+    ]);
+    expect(order.items.every((item) => item.extras.length === 0)).toBe(true);
+    expect(order.totalPence).toBe(400);
+    expect(ticketAriaLabel(order.items[0])).toBe("Pepsi Max Can");
+    expect(ticketAriaLabel(order.items[1])).toBe("Fruit Shoot Bottle");
   });
 
   it("places plain hot chocolate with cream and flake on a ticket", () => {

@@ -297,6 +297,10 @@ function OrderTicket({
                   <span className="block text-xs font-semibold uppercase tracking-[0.2em] text-mocha">
                     Boba
                   </span>
+                ) : item.kind === "cold-drink" ? (
+                  <span className="block text-xs font-semibold uppercase tracking-[0.2em] text-mocha">
+                    Cold drink
+                  </span>
                 ) : null}
                 {decaf ? (
                   <span className="mb-1 inline-block rounded-full bg-espresso px-3 py-1 text-sm font-bold uppercase tracking-[0.18em] text-foam">

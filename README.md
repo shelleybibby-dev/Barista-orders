@@ -92,6 +92,7 @@ Useful fields:
 - `hotChocolates[]` — hot chocolate (£4, optional cream & flake +£0.50), kids hot chocolate (£2.50, no add-ons), and caramel, orange, Dubai, black forest and mint (£4.50, free with cream or no cream); one size, no milk, syrup or shot
 - `milkshakes[]` — strawberry, vanilla and chocolate (one size at £5) and Oreo and Biscoff (one size at £5.50), with or without cream at no extra charge
 - `bobas[]` — tropical with mango boba and strawberry and apple boba (one size at £4, no extras)
+- `coldDrinks[]` — Coke, Pepsi Max, Orange Tango and Apple Tango cans, plus a bottle of water and Fruit Shoot (one size at £2, no extras)
 - `donuts[]` — topping/style plus pack sizes (`2 donuts`, `4 donuts`, `6 donuts`) matching the truck
 - `extras[].pricePence` and `group` — `milk` options are mutually exclusive; syrup flavours are mutually exclusive; milkshake and flavoured hot chocolate `cream` is a yes/no choice at no charge; plain hot chocolate has one optional cream & flake add-on; `decaf`, `shot` and a syrup flavour can combine with milk
 
@@ -110,6 +111,7 @@ Starter prices (GBP):
 | Strawberry, Vanilla, Chocolate milkshake | £5.00 |
 | Oreo, Biscoff milkshake | £5.50 |
 | Tropical with mango boba; Strawberry and apple boba | £4.00 |
+| Coke, Pepsi Max, Orange Tango, Apple Tango, Bottle of water, Fruit Shoot | £2.00 |
 
 Extras: decaf free on every coffee, oat milk free, extra shot +£0.50, syrup flavour +£0.50 (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, cherry or orange — one per drink). Milkshakes and flavoured hot chocolates: with cream or no cream, no extra charge. Plain hot chocolate: optional cream & flake +£0.50. Kids hot chocolate has no add-ons.
 
