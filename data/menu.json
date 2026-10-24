@@ -202,6 +202,17 @@
       ]
     },
     {
+      "id": "hot-chocolate-kids",
+      "name": "Kids hot chocolate",
+      "description": "A smaller hot chocolate",
+      "accent": "#3d2418",
+      "foam": "#fff6ee",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 350 }
+      ]
+    },
+    {
       "id": "hot-chocolate-cadbury-caramel",
       "name": "Caramel Hot Chocolate",
       "description": "Caramel hot chocolate",

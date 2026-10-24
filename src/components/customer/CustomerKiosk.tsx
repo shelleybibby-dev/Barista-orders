@@ -228,7 +228,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
         {(menu.hotChocolates ?? []).length > 0 ? (
           <>
             <h2 className="mt-12 font-display text-3xl font-semibold">Hot chocolates</h2>
-            <p className="mt-1 text-base text-coffee">£4 or £4.50. Cream & flake on hot chocolate, +£0.50.</p>
+            <p className="mt-1 text-base text-coffee">£3.50, £4 or £4.50. Cream & flake on hot chocolate, +£0.50.</p>
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {(menu.hotChocolates ?? []).map((drink) => (
                 <DrinkCard

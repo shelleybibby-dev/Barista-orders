@@ -89,7 +89,7 @@ Useful fields:
 - `drinks[].name`, `description`, `sizes[]` — most coffees are one size; espresso still has Single / Double
 - `drinks[].extras` — which extras from the shared `extras` list are allowed on that drink
 - `teas[]` — tea, decaf tea, green tea, pure peppermint tea, earl grey and strawberry & raspberry tea (one size at £3, no extras), shown in their own kiosk section
-- `hotChocolates[]` — hot chocolate (£4, optional cream & flake +£0.50), and caramel, orange, Dubai, black forest and mint (£4.50, no add-ons); one size, no milk, syrup or shot
+- `hotChocolates[]` — hot chocolate (£4, optional cream & flake +£0.50), kids hot chocolate (£3.50, no add-ons), and caramel, orange, Dubai, black forest and mint (£4.50, no add-ons); one size, no milk, syrup or shot
 - `milkshakes[]` — strawberry, vanilla and chocolate (one size at £5) and Oreo and Biscoff (one size at £5.50), with or without cream at no extra charge
 - `bobas[]` — tropical with mango boba and strawberry and apple boba (one size at £4, no extras)
 - `donuts[]` — topping/style plus pack sizes (`2 donuts`, `4 donuts`, `6 donuts`) matching the truck
@@ -104,13 +104,14 @@ Starter prices (GBP):
 | Latte, Cappuccino, Flat white | £4.00 |
 | Mocha | £4.50 |
 | Tea, Decaf tea, Green tea, Pure peppermint tea, Earl grey, Strawberry & raspberry tea | £3.00 |
+| Kids hot chocolate | £3.50 |
 | Hot chocolate | £4.00 |
 | Caramel, Orange, Dubai, Black Forest, Mint hot chocolate | £4.50 |
 | Strawberry, Vanilla, Chocolate milkshake | £5.00 |
 | Oreo, Biscoff milkshake | £5.50 |
 | Tropical with mango boba; Strawberry and apple boba | £4.00 |
 
-Extras: oat milk +£0.50, extra shot +£0.50, syrup flavour +£0.50 (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, cherry or orange — one per drink). Milkshakes: with cream or no cream, no extra charge. Plain hot chocolate: optional cream & flake +£0.50. Flavoured hot chocolates have no add-ons.
+Extras: oat milk +£0.50, extra shot +£0.50, syrup flavour +£0.50 (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, cherry or orange — one per drink). Milkshakes: with cream or no cream, no extra charge. Plain hot chocolate: optional cream & flake +£0.50. Kids and flavoured hot chocolates have no add-ons.
 
 Donut packs (no singles — same bundles as the truck):
 
