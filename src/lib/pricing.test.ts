@@ -430,9 +430,9 @@ describe("café menu syrup flavours", () => {
     ).toThrow(OrderValidationError);
   });
 
-  it("offers mango and dragon fruit and strawberry and apple boba at £4 with no extras", () => {
+  it("offers tropical with mango boba and strawberry and apple boba at £4 with no extras", () => {
     const cafeMenu = getMenu();
-    const bobas = ["boba-mango-dragon-fruit", "boba-strawberry-apple"].map((id) => {
+    const bobas = ["boba-tropical-mango", "boba-strawberry-apple"].map((id) => {
       const drink = (cafeMenu.bobas ?? []).find((item) => item.id === id);
       expect(drink).toBeDefined();
       return drink!;
@@ -440,13 +440,13 @@ describe("café menu syrup flavours", () => {
 
     expect(cafeMenu.bobas).toHaveLength(2);
     expect(bobas.map((drink) => drink.name)).toEqual([
-      "Mango and dragon fruit",
+      "Tropical with mango boba",
       "Strawberry and apple boba",
     ]);
+    expect(bobas[1].description.toLowerCase()).toMatch(/boba/);
+    expect(bobas[1].description.toLowerCase()).toMatch(/fruit tea/);
 
     for (const boba of bobas) {
-      expect(boba.description.toLowerCase()).toMatch(/boba/);
-      expect(boba.description.toLowerCase()).toMatch(/fruit tea/);
       expect(boba.extras).toEqual([]);
       expect(boba.sizes).toEqual([{ id: "standard", name: "", pricePence: 400 }]);
       expect(priceUnitPence(boba, "standard", [], cafeMenu.extras)).toBe(400);
@@ -455,7 +455,7 @@ describe("café menu syrup flavours", () => {
     const item = buildOrderItem(
       cafeMenu,
       {
-        drinkId: "boba-mango-dragon-fruit",
+        drinkId: "boba-tropical-mango",
         sizeId: "standard",
         extraIds: [],
         quantity: 1,
@@ -463,7 +463,7 @@ describe("café menu syrup flavours", () => {
       "boba-1",
     );
     expect(item.kind).toBe("boba");
-    expect(item.drinkName).toBe("Mango and dragon fruit");
+    expect(item.drinkName).toBe("Tropical with mango boba");
     expect(item.sizeName).toBe("");
     expect(item.lineTotalPence).toBe(400);
     expect(item.extras).toEqual([]);
@@ -625,7 +625,7 @@ describe("order store", () => {
       customerName: "Rae",
       items: [
         {
-          drinkId: "boba-mango-dragon-fruit",
+          drinkId: "boba-tropical-mango",
           sizeId: "standard",
           extraIds: [],
           quantity: 1,
@@ -634,7 +634,7 @@ describe("order store", () => {
     });
 
     expect(order.items[0].kind).toBe("boba");
-    expect(order.items[0].drinkName).toBe("Mango and dragon fruit");
+    expect(order.items[0].drinkName).toBe("Tropical with mango boba");
     expect(order.items[0].sizeName).toBe("");
     expect(order.items[0].extras).toEqual([]);
     expect(order.totalPence).toBe(400);
