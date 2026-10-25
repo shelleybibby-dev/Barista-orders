@@ -96,7 +96,8 @@
         "syrup-pumpkin-spice",
         "syrup-maple-spice",
         "syrup-maple-pecan-pie",
-        "syrup-cinnamon-roll"
+        "syrup-cinnamon-roll",
+        "cream-on-top"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }

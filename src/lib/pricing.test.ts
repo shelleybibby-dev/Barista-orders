@@ -310,9 +310,8 @@ describe("café menu syrup flavours", () => {
     const iced = cafeMenu.drinks.find((drink) => drink.id === "iced-latte")!;
     const hotLatte = cafeMenu.drinks.find((drink) => drink.id === "latte")!;
     expect(iced.name).toBe("Iced latte");
-    expect(hotLatte.extras).toContain("cream-on-top");
-    expect(iced.extras).toEqual(hotLatte.extras.filter((id) => id !== "cream-on-top"));
-    expect(iced.extras).not.toContain("cream-on-top");
+    expect(iced.extras).toEqual(hotLatte.extras);
+    expect(iced.extras).toContain("cream-on-top");
     expect(iced.sizes).toEqual([{ id: "standard", name: "", pricePence: 400 }]);
     expect(priceUnitPence(iced, "standard", [], cafeMenu.extras)).toBe(400);
     expect(priceUnitPence(iced, "standard", ["decaf", "oat"], cafeMenu.extras)).toBe(400);
@@ -419,7 +418,7 @@ describe("café menu syrup flavours", () => {
     }
   });
 
-  it("offers optional free cream on top on the hot latte only", () => {
+  it("offers optional free cream on top on the hot latte and iced latte", () => {
     const cafeMenu = getMenu();
     expect(cafeMenu.extras.find((extra) => extra.id === "cream-on-top")).toMatchObject({
       name: "Cream on top",
@@ -466,8 +465,37 @@ describe("café menu syrup flavours", () => {
     });
     expect(ticketAriaLabel(withCream)).toBe("Latte, Cream on top, Oat milk");
 
+    const iced = cafeMenu.drinks.find((drink) => drink.id === "iced-latte")!;
+    expect(iced.extras.at(-1)).toBe("cream-on-top");
+    expect(iced.extras).toEqual(latte.extras);
+    expect(defaultExtraIds(cafeMenu, iced)).toEqual([]);
+    expect(priceUnitPence(iced, "standard", ["cream-on-top"], cafeMenu.extras)).toBe(400);
+    expect(
+      priceUnitPence(
+        iced,
+        "standard",
+        ["cream-on-top", "decaf", "oat", "extra-shot", "syrup-vanilla"],
+        cafeMenu.extras,
+      ),
+    ).toBe(500);
+    const icedCream = buildOrderItem(
+      cafeMenu,
+      {
+        drinkId: "iced-latte",
+        sizeId: "standard",
+        extraIds: ["cream-on-top"],
+        quantity: 1,
+      },
+      "iced-cream",
+    );
+    expect(icedCream.lineTotalPence).toBe(400);
+    expect(ticketExtras(icedCream.extras).detail).toEqual([
+      { id: "cream-on-top", name: "Cream on top", pricePence: 0 },
+    ]);
+    expect(ticketAriaLabel(icedCream)).toBe("Iced latte, Cream on top");
+
     const products = [
-      ...cafeMenu.drinks.filter((drink) => drink.id !== "latte"),
+      ...cafeMenu.drinks.filter((drink) => drink.id !== "latte" && drink.id !== "iced-latte"),
       ...(cafeMenu.teas ?? []),
       ...(cafeMenu.hotChocolates ?? []),
       ...(cafeMenu.milkshakes ?? []),
