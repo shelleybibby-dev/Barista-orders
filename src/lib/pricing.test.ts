@@ -174,7 +174,7 @@ describe("pricing", () => {
 });
 
 describe("café menu syrup flavours", () => {
-  it("lists eight named syrups and no generic syrup extra", () => {
+  it("lists nine named syrups and no generic syrup extra", () => {
     const cafeMenu = getMenu();
     const syrups = cafeMenu.extras.filter((extra) => extra.group === "syrup");
     expect(cafeMenu.extras.some((extra) => extra.id === "syrup")).toBe(false);
@@ -187,6 +187,7 @@ describe("café menu syrup flavours", () => {
       "Pumpkin spice",
       "Maple spice",
       "Maple pecan pie",
+      "Cinnamon roll",
     ]);
     expect(syrups.every((extra) => extra.pricePence === 50)).toBe(true);
     expect(cafeMenu.extras.find((extra) => extra.id === "extra-shot")?.pricePence).toBe(50);
@@ -205,6 +206,7 @@ describe("café menu syrup flavours", () => {
       "Pumpkin spice syrup",
       "Maple spice syrup",
       "Maple pecan pie syrup",
+      "Cinnamon roll syrup",
     ]);
     expect(cafeMenu.extras.some((extra) => extra.id === "syrup-cherry" || extra.id === "syrup-orange")).toBe(
       false,
@@ -213,6 +215,7 @@ describe("café menu syrup flavours", () => {
     expect(priceUnitPence(latte, "standard", ["syrup-pumpkin-spice"], cafeMenu.extras)).toBe(450);
     expect(priceUnitPence(latte, "standard", ["syrup-maple-spice"], cafeMenu.extras)).toBe(450);
     expect(priceUnitPence(latte, "standard", ["syrup-maple-pecan-pie"], cafeMenu.extras)).toBe(450);
+    expect(priceUnitPence(latte, "standard", ["syrup-cinnamon-roll"], cafeMenu.extras)).toBe(450);
     expect(() =>
       priceUnitPence(latte, "standard", ["syrup-pumpkin-spice", "syrup-maple-spice"], cafeMenu.extras),
     ).toThrow(OrderValidationError);
@@ -279,6 +282,8 @@ describe("café menu syrup flavours", () => {
     expect(chai.extras).toContain("oat");
     expect(chai.sizes).toEqual([{ id: "standard", name: "", pricePence: 400 }]);
     expect(priceUnitPence(chai, "standard", ["oat", "syrup-maple-pecan-pie"], cafeMenu.extras)).toBe(450);
+    expect(chai.extras).toContain("syrup-cinnamon-roll");
+    expect(priceUnitPence(chai, "standard", ["syrup-cinnamon-roll"], cafeMenu.extras)).toBe(450);
     expect(() => priceUnitPence(chai, "standard", ["decaf"], cafeMenu.extras)).toThrow(
       OrderValidationError,
     );

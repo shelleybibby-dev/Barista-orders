@@ -32,7 +32,8 @@
         "syrup-pistachio",
         "syrup-pumpkin-spice",
         "syrup-maple-spice",
-        "syrup-maple-pecan-pie"
+        "syrup-maple-pecan-pie",
+        "syrup-cinnamon-roll"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 350 }
@@ -55,7 +56,8 @@
         "syrup-pistachio",
         "syrup-pumpkin-spice",
         "syrup-maple-spice",
-        "syrup-maple-pecan-pie"
+        "syrup-maple-pecan-pie",
+        "syrup-cinnamon-roll"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
@@ -78,7 +80,8 @@
         "syrup-pistachio",
         "syrup-pumpkin-spice",
         "syrup-maple-spice",
-        "syrup-maple-pecan-pie"
+        "syrup-maple-pecan-pie",
+        "syrup-cinnamon-roll"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
@@ -101,7 +104,8 @@
         "syrup-pistachio",
         "syrup-pumpkin-spice",
         "syrup-maple-spice",
-        "syrup-maple-pecan-pie"
+        "syrup-maple-pecan-pie",
+        "syrup-cinnamon-roll"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
@@ -124,7 +128,8 @@
         "syrup-pistachio",
         "syrup-pumpkin-spice",
         "syrup-maple-spice",
-        "syrup-maple-pecan-pie"
+        "syrup-maple-pecan-pie",
+        "syrup-cinnamon-roll"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
@@ -145,7 +150,8 @@
         "syrup-pistachio",
         "syrup-pumpkin-spice",
         "syrup-maple-spice",
-        "syrup-maple-pecan-pie"
+        "syrup-maple-pecan-pie",
+        "syrup-cinnamon-roll"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
@@ -534,6 +540,12 @@
     {
       "id": "syrup-maple-pecan-pie",
       "name": "Maple pecan pie syrup",
+      "pricePence": 50,
+      "group": "syrup"
+    },
+    {
+      "id": "syrup-cinnamon-roll",
+      "name": "Cinnamon roll syrup",
       "pricePence": 50,
       "group": "syrup"
     },
