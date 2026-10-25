@@ -31,7 +31,8 @@
         "syrup-toasted-marshmallow",
         "syrup-pistachio",
         "syrup-pumpkin-spice",
-        "syrup-maple-spice"
+        "syrup-maple-spice",
+        "syrup-maple-pecan-pie"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 350 }
@@ -53,7 +54,8 @@
         "syrup-toasted-marshmallow",
         "syrup-pistachio",
         "syrup-pumpkin-spice",
-        "syrup-maple-spice"
+        "syrup-maple-spice",
+        "syrup-maple-pecan-pie"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
@@ -75,7 +77,8 @@
         "syrup-toasted-marshmallow",
         "syrup-pistachio",
         "syrup-pumpkin-spice",
-        "syrup-maple-spice"
+        "syrup-maple-spice",
+        "syrup-maple-pecan-pie"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
@@ -97,7 +100,8 @@
         "syrup-toasted-marshmallow",
         "syrup-pistachio",
         "syrup-pumpkin-spice",
-        "syrup-maple-spice"
+        "syrup-maple-spice",
+        "syrup-maple-pecan-pie"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
@@ -119,10 +123,32 @@
         "syrup-toasted-marshmallow",
         "syrup-pistachio",
         "syrup-pumpkin-spice",
-        "syrup-maple-spice"
+        "syrup-maple-spice",
+        "syrup-maple-pecan-pie"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
+      ]
+    },
+    {
+      "id": "chai-latte",
+      "name": "Chai latte",
+      "description": "Spiced tea and steamed milk",
+      "accent": "#b86a32",
+      "foam": "#f8e6c4",
+      "extras": [
+        "oat",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-pumpkin-spice",
+        "syrup-maple-spice",
+        "syrup-maple-pecan-pie"
+      ],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 400 }
       ]
     }
   ],
@@ -502,6 +528,12 @@
     {
       "id": "syrup-maple-spice",
       "name": "Maple spice syrup",
+      "pricePence": 50,
+      "group": "syrup"
+    },
+    {
+      "id": "syrup-maple-pecan-pie",
+      "name": "Maple pecan pie syrup",
       "pricePence": 50,
       "group": "syrup"
     },

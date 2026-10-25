@@ -208,7 +208,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
 
         <h2 className="mt-10 font-display text-3xl font-semibold">Drinks</h2>
         <p className="mt-1 text-base text-coffee">
-          Espresso has Single or Double. Other coffees are one size. Decaf is free.
+          Espresso has Single or Double. Other drinks are one size. Decaf is free on coffee.
         </p>
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {menu.drinks.map((drink) => (
