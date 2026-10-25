@@ -71,7 +71,8 @@
         "syrup-pumpkin-spice",
         "syrup-maple-spice",
         "syrup-maple-pecan-pie",
-        "syrup-cinnamon-roll"
+        "syrup-cinnamon-roll",
+        "cream-on-top"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
@@ -615,6 +616,12 @@
       "id": "cream-and-flake",
       "name": "Cream & flake",
       "pricePence": 50,
+      "group": "cream"
+    },
+    {
+      "id": "cream-on-top",
+      "name": "Cream on top",
+      "pricePence": 0,
       "group": "cream"
     }
   ],
