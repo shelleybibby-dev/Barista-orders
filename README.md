@@ -102,7 +102,7 @@ Starter prices (GBP):
 | --- | --- |
 | Espresso | Single £2.50 / Double £3.00 |
 | Americano | £3.50 |
-| Latte, Cappuccino, Flat white, Chai latte | £4.00 |
+| Latte, Iced latte, Cappuccino, Flat white, Chai latte | £4.00 |
 | Mocha | £4.50 |
 | Tea, Decaf tea, Green tea, Pure peppermint tea, Earl grey, Strawberry & raspberry tea | £3.00 |
 | Kids hot chocolate | £2.50 |

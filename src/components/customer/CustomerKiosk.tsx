@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { BobaIcon } from "@/components/BobaIcon";
 import { ColdDrinkIcon } from "@/components/ColdDrinkIcon";
 import { CoffeeCup } from "@/components/CoffeeCup";
+import { IcedCoffeeCup } from "@/components/IcedCoffeeCup";
 import { HotChocolateIcon } from "@/components/HotChocolateIcon";
 import { BrandLockup } from "@/components/CoffeeBeansLogo";
 import { DonutIcon } from "@/components/DonutIcon";
@@ -392,6 +393,8 @@ function DrinkCard({
         <ColdDrinkIcon drink={product} className="h-20 w-20 shrink-0" />
       ) : kind === "hot-chocolate" ? (
         <HotChocolateIcon drink={product} className="h-20 w-20 shrink-0" />
+      ) : product.id.startsWith("iced-") ? (
+        <IcedCoffeeCup drink={product} className="h-20 w-20 shrink-0" />
       ) : (
         <CoffeeCup drink={product} className="h-20 w-20 shrink-0" />
       )}
@@ -463,6 +466,8 @@ function CustomiseSheet({
             <ColdDrinkIcon drink={draft.product} className="h-16 w-16" />
           ) : isHotChocolate ? (
             <HotChocolateIcon drink={draft.product} className="h-16 w-16" />
+          ) : draft.product.id.startsWith("iced-") ? (
+            <IcedCoffeeCup drink={draft.product} className="h-16 w-16" />
           ) : (
             <CoffeeCup drink={draft.product} className="h-16 w-16" />
           )}

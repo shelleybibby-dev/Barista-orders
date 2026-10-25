@@ -225,6 +225,7 @@ describe("café menu syrup flavours", () => {
       "espresso",
       "americano",
       "latte",
+      "iced-latte",
       "cappuccino",
       "flat-white",
       "mocha",
@@ -261,6 +262,7 @@ describe("café menu syrup flavours", () => {
     const oneSize = [
       ["americano", 350],
       ["latte", 400],
+      ["iced-latte", 400],
       ["cappuccino", 400],
       ["flat-white", 400],
       ["mocha", 450],
@@ -275,7 +277,7 @@ describe("café menu syrup flavours", () => {
 
   it("offers free decaf on coffees except chai latte, and nowhere else", () => {
     const cafeMenu = getMenu();
-    const coffeeIds = ["espresso", "americano", "latte", "cappuccino", "flat-white", "mocha", "chai-latte"];
+    const coffeeIds = ["espresso", "americano", "latte", "iced-latte", "cappuccino", "flat-white", "mocha", "chai-latte"];
     expect(cafeMenu.drinks.map((drink) => drink.id)).toEqual(coffeeIds);
 
     for (const drink of cafeMenu.drinks) {
@@ -301,6 +303,15 @@ describe("café menu syrup flavours", () => {
     expect(() => priceUnitPence(chai, "standard", ["extra-shot"], cafeMenu.extras)).toThrow(
       OrderValidationError,
     );
+
+    const iced = cafeMenu.drinks.find((drink) => drink.id === "iced-latte")!;
+    const hotLatte = cafeMenu.drinks.find((drink) => drink.id === "latte")!;
+    expect(iced.name).toBe("Iced latte");
+    expect(iced.extras).toEqual(hotLatte.extras);
+    expect(iced.sizes).toEqual([{ id: "standard", name: "", pricePence: 400 }]);
+    expect(priceUnitPence(iced, "standard", [], cafeMenu.extras)).toBe(400);
+    expect(priceUnitPence(iced, "standard", ["decaf", "oat"], cafeMenu.extras)).toBe(400);
+    expect(priceUnitPence(iced, "standard", ["extra-shot", "syrup-vanilla"], cafeMenu.extras)).toBe(500);
 
     const latte = cafeMenu.drinks.find((drink) => drink.id === "latte")!;
     expect(priceUnitPence(latte, "standard", ["decaf", "oat", "syrup-vanilla"], cafeMenu.extras)).toBe(
