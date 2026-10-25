@@ -222,6 +222,7 @@ describe("café menu syrup flavours", () => {
 
     const flavourIds = syrups.map((extra) => extra.id);
     const coffeeWithSyrup = new Set([
+      "espresso",
       "americano",
       "latte",
       "cappuccino",
@@ -237,6 +238,16 @@ describe("café menu syrup flavours", () => {
       }
       expect(drink.extras.some((id) => id.startsWith("syrup-"))).toBe(false);
     }
+
+    const espresso = cafeMenu.drinks.find((drink) => drink.id === "espresso")!;
+    expect(espresso.extras).toContain("decaf");
+    expect(espresso.extras).toContain("extra-shot");
+    expect(espresso.extras).not.toContain("oat");
+    expect(priceUnitPence(espresso, "single", ["syrup-cinnamon-roll"], cafeMenu.extras)).toBe(300);
+    expect(priceUnitPence(espresso, "double", ["decaf", "syrup-vanilla"], cafeMenu.extras)).toBe(350);
+    expect(() => priceUnitPence(espresso, "single", ["oat"], cafeMenu.extras)).toThrow(
+      OrderValidationError,
+    );
   });
 
   it("gives each coffee one size except espresso Single and Double", () => {

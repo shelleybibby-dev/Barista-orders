@@ -9,7 +9,19 @@
       "description": "Short, rich and intense",
       "accent": "#3b2318",
       "foam": "#d9c4b0",
-      "extras": ["decaf", "extra-shot"],
+      "extras": [
+        "decaf",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-pumpkin-spice",
+        "syrup-maple-spice",
+        "syrup-maple-pecan-pie",
+        "syrup-cinnamon-roll"
+      ],
       "sizes": [
         { "id": "single", "name": "Single", "pricePence": 250 },
         { "id": "double", "name": "Double", "pricePence": 300 }
