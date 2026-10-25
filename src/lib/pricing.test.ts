@@ -283,8 +283,11 @@ describe("café menu syrup flavours", () => {
     for (const drink of cafeMenu.drinks) {
       if (drink.id === "chai-latte") continue;
       expect(drink.extras).toContain("decaf");
+      const withDecaf = drink.extras.includes("americano-black")
+        ? ["decaf", "americano-black"]
+        : ["decaf"];
       for (const size of drink.sizes) {
-        expect(priceUnitPence(drink, size.id, ["decaf"], cafeMenu.extras)).toBe(size.pricePence);
+        expect(priceUnitPence(drink, size.id, withDecaf, cafeMenu.extras)).toBe(size.pricePence);
       }
     }
 
@@ -313,6 +316,54 @@ describe("café menu syrup flavours", () => {
     expect(priceUnitPence(iced, "standard", ["decaf", "oat"], cafeMenu.extras)).toBe(400);
     expect(priceUnitPence(iced, "standard", ["extra-shot", "syrup-vanilla"], cafeMenu.extras)).toBe(500);
 
+    const americano = cafeMenu.drinks.find((drink) => drink.id === "americano")!;
+    expect(americano.extras.slice(0, 2)).toEqual(["americano-black", "americano-white"]);
+    expect(americano.extras).toEqual(
+      expect.arrayContaining(["decaf", "oat", "extra-shot", "syrup-cinnamon-roll"]),
+    );
+    expect(cafeMenu.extras.find((extra) => extra.id === "americano-black")).toMatchObject({
+      name: "Black",
+      pricePence: 0,
+      group: "serve",
+    });
+    expect(cafeMenu.extras.find((extra) => extra.id === "americano-white")).toMatchObject({
+      name: "White",
+      pricePence: 0,
+      group: "serve",
+    });
+    expect(priceUnitPence(americano, "standard", ["americano-black"], cafeMenu.extras)).toBe(350);
+    expect(priceUnitPence(americano, "standard", ["americano-white", "oat"], cafeMenu.extras)).toBe(350);
+    expect(() => priceUnitPence(americano, "standard", [], cafeMenu.extras)).toThrow(
+      OrderValidationError,
+    );
+    expect(() =>
+      priceUnitPence(americano, "standard", ["americano-black", "americano-white"], cafeMenu.extras),
+    ).toThrow(OrderValidationError);
+    for (const drink of cafeMenu.drinks) {
+      if (drink.id === "americano") continue;
+      expect(drink.extras).not.toContain("americano-black");
+      expect(() => priceUnitPence(drink, drink.sizes[0].id, ["americano-white"], cafeMenu.extras)).toThrow(
+        OrderValidationError,
+      );
+    }
+    const whiteOrder = buildOrderItem(
+      cafeMenu,
+      {
+        drinkId: "americano",
+        sizeId: "standard",
+        extraIds: ["americano-white", "decaf"],
+        quantity: 1,
+      },
+      "americano-white",
+    );
+    expect(whiteOrder.lineTotalPence).toBe(350);
+    expect(whiteOrder.extras).toEqual([
+      { id: "americano-white", name: "White", pricePence: 0 },
+      { id: "decaf", name: "Decaf", pricePence: 0 },
+    ]);
+    expect(ticketExtras(whiteOrder.extras)).toMatchObject({ decaf: true, serve: "White", detail: [] });
+    expect(ticketAriaLabel(whiteOrder)).toBe("Americano, White, Decaf");
+
     const latte = cafeMenu.drinks.find((drink) => drink.id === "latte")!;
     expect(priceUnitPence(latte, "standard", ["decaf", "oat", "syrup-vanilla"], cafeMenu.extras)).toBe(
       450,
@@ -336,6 +387,7 @@ describe("café menu syrup flavours", () => {
     ]);
     expect(ticketExtras(combined.extras)).toEqual({
       decaf: true,
+      serve: null,
       detail: combined.extras.filter((extra) => extra.id !== "decaf"),
     });
     expect(ticketAriaLabel(combined)).toBe("Latte, Decaf, Oat milk, Extra shot, Vanilla syrup");
@@ -789,7 +841,7 @@ describe("order store", () => {
   it("moves tickets from queued to ready to completed", () => {
     const store = tempStore();
     const order = store.create({
-      items: [{ drinkId: "americano", sizeId: "standard", extraIds: [], quantity: 1 }],
+      items: [{ drinkId: "americano", sizeId: "standard", extraIds: ["americano-black"], quantity: 1 }],
     });
 
     expect(store.updateStatus(order.id, "ready").status).toBe("ready");

@@ -56,11 +56,11 @@ export function productCardName(product: MenuDrink): string {
 }
 
 export function defaultExtraIds(menu: Menu, product: MenuDrink): string[] {
-  const creams = extrasForDrink(menu, product).filter((extra) => extra.group === "cream");
-  if (creams.some((extra) => extra.id === "no-cream")) {
-    return ["no-cream"];
-  }
-  return [];
+  const available = extrasForDrink(menu, product);
+  const selected: string[] = [];
+  if (available.some((extra) => extra.id === "americano-black")) selected.push("americano-black");
+  if (available.some((extra) => extra.id === "no-cream")) selected.push("no-cream");
+  return selected;
 }
 
 export function lowestPricePence(drink: MenuDrink): number {

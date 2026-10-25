@@ -45,6 +45,13 @@ function resolveExtras(
     selected.push(extra);
   }
 
+  const serveChoices = extras.filter(
+    (extra) => drink.extras.includes(extra.id) && extra.group === "serve",
+  );
+  if (serveChoices.length > 0 && !selected.some((extra) => extra.group === "serve")) {
+    throw new OrderValidationError(`Choose black or white for ${drink.name}.`);
+  }
+
   return selected;
 }
 

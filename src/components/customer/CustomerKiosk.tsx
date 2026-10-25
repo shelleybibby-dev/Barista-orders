@@ -89,11 +89,11 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
         return match?.group !== extra.group;
       });
       const alreadyOn = current.extraIds.includes(extra.id);
-      if (alreadyOn && extra.group === "cream") {
-        const creamChoices = extrasForDrink(menu, current.product).filter(
-          (item) => item.group === "cream",
+      if (alreadyOn && (extra.group === "cream" || extra.group === "serve")) {
+        const choices = extrasForDrink(menu, current.product).filter(
+          (item) => item.group === extra.group,
         );
-        if (creamChoices.length > 1) return current;
+        if (choices.length > 1) return current;
       }
       return {
         ...current,
@@ -209,7 +209,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
 
         <h2 className="mt-10 font-display text-3xl font-semibold">Drinks</h2>
         <p className="mt-1 text-base text-coffee">
-          Espresso has Single or Double. Other drinks are one size. Decaf is free on coffee.
+          Espresso has Single or Double. Other drinks are one size. Americano is black or white. Decaf is free on coffee.
         </p>
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {menu.drinks.map((drink) => (
@@ -431,6 +431,7 @@ function CustomiseSheet({
   onAdd: () => void;
 }) {
   const extras = extrasForDrink(menu, draft.product);
+  const serves = extras.filter((extra) => extra.group === "serve");
   const decafs = extras.filter((extra) => extra.group === "decaf");
   const milks = extras.filter((extra) => extra.group === "milk");
   const syrups = extras.filter((extra) => extra.group === "syrup");
@@ -440,7 +441,8 @@ function CustomiseSheet({
       extra.group !== "milk" &&
       extra.group !== "syrup" &&
       extra.group !== "cream" &&
-      extra.group !== "decaf",
+      extra.group !== "decaf" &&
+      extra.group !== "serve",
   );
   const unitPrice = priceUnitPence(draft.product, draft.sizeId, draft.extraIds, menu.extras);
   const isDonut = draft.kind === "donut";
@@ -511,6 +513,25 @@ function CustomiseSheet({
                   </button>
                 );
               })}
+            </div>
+          </>
+        ) : null}
+
+        {serves.length > 0 ? (
+          <>
+            <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-coffee">
+              Black or white
+            </h3>
+            <div className="mt-3 grid grid-cols-2 gap-3">
+              {serves.map((option) => (
+                <ChoiceChip
+                  key={option.id}
+                  label={option.name}
+                  hint={option.pricePence === 0 ? "No extra charge" : `+ ${formatGbp(option.pricePence)}`}
+                  selected={draft.extraIds.includes(option.id)}
+                  onClick={() => onExtra(option)}
+                />
+              ))}
             </div>
           </>
         ) : null}

@@ -4,13 +4,21 @@ export function isDecafExtra(extra: Pick<OrderItemExtra, "id">): boolean {
   return extra.id === "decaf";
 }
 
+export function serveName(extra: Pick<OrderItemExtra, "id">): "Black" | "White" | null {
+  if (extra.id === "americano-black") return "Black";
+  if (extra.id === "americano-white") return "White";
+  return null;
+}
+
 export function ticketExtras(extras: OrderItemExtra[]): {
   decaf: boolean;
+  serve: "Black" | "White" | null;
   detail: OrderItemExtra[];
 } {
   return {
     decaf: extras.some(isDecafExtra),
-    detail: extras.filter((extra) => !isDecafExtra(extra)),
+    serve: extras.map(serveName).find((name) => name !== null) ?? null,
+    detail: extras.filter((extra) => !isDecafExtra(extra) && serveName(extra) === null),
   };
 }
 
@@ -23,7 +31,7 @@ export function ticketAriaLabel(item: {
   const base = `${item.quantity > 1 ? `${item.quantity}× ` : ""}${item.drinkName}${
     item.sizeName ? ` ${item.sizeName}` : ""
   }`;
-  const { decaf, detail } = ticketExtras(item.extras);
-  const notes = [decaf ? "Decaf" : "", ...detail.map((extra) => extra.name)].filter(Boolean);
+  const { decaf, serve, detail } = ticketExtras(item.extras);
+  const notes = [serve ?? "", decaf ? "Decaf" : "", ...detail.map((extra) => extra.name)].filter(Boolean);
   return notes.length > 0 ? `${base}, ${notes.join(", ")}` : base;
 }

@@ -34,6 +34,8 @@
       "accent": "#4a2c1f",
       "foam": "#c4a484",
       "extras": [
+        "americano-black",
+        "americano-white",
         "decaf",
         "oat",
         "extra-shot",
@@ -513,6 +515,18 @@
     }
   ],
   "extras": [
+    {
+      "id": "americano-black",
+      "name": "Black",
+      "pricePence": 0,
+      "group": "serve"
+    },
+    {
+      "id": "americano-white",
+      "name": "White",
+      "pricePence": 0,
+      "group": "serve"
+    },
     {
       "id": "decaf",
       "name": "Decaf",

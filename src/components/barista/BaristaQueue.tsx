@@ -274,7 +274,7 @@ function OrderTicket({
       <ul className="mt-4 space-y-2">
         {order.items.map((item) => {
           const made = Boolean(item.made);
-          const { decaf, detail } = ticketExtras(item.extras);
+          const { decaf, serve, detail } = ticketExtras(item.extras);
           const label = ticketAriaLabel(item);
           const content = (
             <>
@@ -300,6 +300,11 @@ function OrderTicket({
                 ) : item.kind === "cold-drink" ? (
                   <span className="block text-xs font-semibold uppercase tracking-[0.2em] text-mocha">
                     Cold drink
+                  </span>
+                ) : null}
+                {serve ? (
+                  <span className="mb-1 mr-2 inline-block rounded-full bg-espresso px-3 py-1 text-sm font-bold uppercase tracking-[0.18em] text-foam">
+                    {serve}
                   </span>
                 ) : null}
                 {decaf ? (
