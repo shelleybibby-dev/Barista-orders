@@ -209,7 +209,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
 
         <h2 className="mt-10 font-display text-3xl font-semibold">Drinks</h2>
         <p className="mt-1 text-base text-coffee">
-          Espresso has Single or Double. Other drinks are one size. Americano is black or white. Decaf is free on coffee. Cream on top is +£0.50 on latte and iced latte.
+          Espresso has Single or Double. Other drinks are one size. Americano is black or white. Decaf is free on coffee. Cream on top is +£0.50 on latte and iced latte. Cappuccino can have free chocolate on top.
         </p>
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {menu.drinks.map((drink) => (
@@ -627,7 +627,9 @@ function CustomiseSheet({
                 <ChoiceChip
                   key={extra.id}
                   label={extra.name}
-                  hint={`+ ${formatGbp(extra.pricePence)}`}
+                  hint={
+                    extra.pricePence === 0 ? "No extra charge" : `+ ${formatGbp(extra.pricePence)}`
+                  }
                   selected={draft.extraIds.includes(extra.id)}
                   onClick={() => onExtra(extra)}
                 />

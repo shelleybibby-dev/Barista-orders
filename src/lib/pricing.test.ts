@@ -539,37 +539,113 @@ describe("café menu syrup flavours", () => {
       const drink = cafeMenu.drinks.find((item) => item.id === id)!;
       expect(drink.name).toBe(name);
       expect(drink.accent).toBe(accent);
-      expect(drink.extras).toEqual([...latteOptions, "cream-and-flake"]);
+      expect(drink.extras).toEqual([...latteOptions, "cream-and-flake-free"]);
       expect(drink.extras).not.toContain("cream-on-top");
+      expect(drink.extras).not.toContain("cream-and-flake");
       expect(drink.sizes).toEqual([{ id: "standard", name: "", pricePence: 450 }]);
       expect(defaultExtraIds(cafeMenu, drink)).toEqual([]);
       expect(priceUnitPence(drink, "standard", [], cafeMenu.extras)).toBe(450);
       expect(priceUnitPence(drink, "standard", ["decaf", "oat"], cafeMenu.extras)).toBe(450);
-      expect(priceUnitPence(drink, "standard", ["cream-and-flake"], cafeMenu.extras)).toBe(500);
+      expect(priceUnitPence(drink, "standard", ["cream-and-flake-free"], cafeMenu.extras)).toBe(450);
+      expect(() => priceUnitPence(drink, "standard", ["cream-and-flake"], cafeMenu.extras)).toThrow(
+        OrderValidationError,
+      );
       expect(priceUnitPence(drink, "standard", ["extra-shot", "syrup-vanilla"], cafeMenu.extras)).toBe(
         550,
       );
     }
+
+    expect(cafeMenu.extras.find((extra) => extra.id === "cream-and-flake-free")).toMatchObject({
+      name: "Cream & flake",
+      pricePence: 0,
+      group: "cream",
+    });
+    expect(cafeMenu.extras.find((extra) => extra.id === "cream-and-flake")?.pricePence).toBe(50);
 
     const withFlake = buildOrderItem(
       cafeMenu,
       {
         drinkId: "pumpkin-spiced-latte",
         sizeId: "standard",
-        extraIds: ["cream-and-flake"],
+        extraIds: ["cream-and-flake-free"],
         quantity: 1,
       },
       "pumpkin-flake",
     );
-    expect(withFlake.lineTotalPence).toBe(500);
+    expect(withFlake.lineTotalPence).toBe(450);
     expect(ticketExtras(withFlake.extras).detail).toEqual([
-      { id: "cream-and-flake", name: "Cream & flake", pricePence: 50 },
+      { id: "cream-and-flake-free", name: "Cream & flake", pricePence: 0 },
     ]);
     expect(ticketAriaLabel(withFlake)).toBe("Pumpkin spiced latte, Cream & flake");
 
     for (const drink of cafeMenu.drinks) {
       if (drink.id === "pumpkin-spiced-latte" || drink.id === "maple-spiced-latte") continue;
-      expect(drink.extras).not.toContain("cream-and-flake");
+      expect(drink.extras).not.toContain("cream-and-flake-free");
+    }
+    const hotChocolate = cafeMenu.hotChocolates?.find((item) => item.id === "hot-chocolate");
+    expect(hotChocolate?.extras).toEqual(["cream-and-flake"]);
+  });
+
+  it("offers optional free chocolate on top on the cappuccino only", () => {
+    const cafeMenu = getMenu();
+    expect(cafeMenu.extras.find((extra) => extra.id === "chocolate-on-top")).toMatchObject({
+      name: "Chocolate on top",
+      pricePence: 0,
+      group: "topping",
+    });
+
+    const cappuccino = cafeMenu.drinks.find((drink) => drink.id === "cappuccino")!;
+    expect(cappuccino.extras.at(-1)).toBe("chocolate-on-top");
+    expect(cappuccino.extras).toEqual(
+      expect.arrayContaining(["decaf", "oat", "extra-shot", "syrup-cinnamon-roll", "chocolate-on-top"]),
+    );
+    expect(defaultExtraIds(cafeMenu, cappuccino)).toEqual([]);
+    expect(priceUnitPence(cappuccino, "standard", [], cafeMenu.extras)).toBe(400);
+    expect(priceUnitPence(cappuccino, "standard", ["chocolate-on-top"], cafeMenu.extras)).toBe(400);
+    expect(
+      priceUnitPence(
+        cappuccino,
+        "standard",
+        ["chocolate-on-top", "decaf", "oat", "extra-shot", "syrup-vanilla"],
+        cafeMenu.extras,
+      ),
+    ).toBe(500);
+
+    const withChocolate = buildOrderItem(
+      cafeMenu,
+      {
+        drinkId: "cappuccino",
+        sizeId: "standard",
+        extraIds: ["chocolate-on-top", "oat"],
+        quantity: 1,
+      },
+      "cap-choc",
+    );
+    expect(withChocolate.lineTotalPence).toBe(400);
+    expect(withChocolate.extras).toEqual([
+      { id: "chocolate-on-top", name: "Chocolate on top", pricePence: 0 },
+      { id: "oat", name: "Oat milk", pricePence: 0 },
+    ]);
+    expect(ticketExtras(withChocolate.extras).detail.map((extra) => extra.name)).toEqual([
+      "Chocolate on top",
+      "Oat milk",
+    ]);
+    expect(ticketAriaLabel(withChocolate)).toBe("Cappuccino, Chocolate on top, Oat milk");
+
+    const products = [
+      ...cafeMenu.drinks.filter((drink) => drink.id !== "cappuccino"),
+      ...(cafeMenu.teas ?? []),
+      ...(cafeMenu.hotChocolates ?? []),
+      ...(cafeMenu.milkshakes ?? []),
+      ...(cafeMenu.bobas ?? []),
+      ...(cafeMenu.coldDrinks ?? []),
+      ...cafeMenu.donuts,
+    ];
+    for (const product of products) {
+      expect(product.extras).not.toContain("chocolate-on-top");
+      expect(() =>
+        priceUnitPence(product, product.sizes[0].id, ["chocolate-on-top"], cafeMenu.extras),
+      ).toThrow(OrderValidationError);
     }
   });
 

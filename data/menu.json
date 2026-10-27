@@ -122,7 +122,7 @@
         "syrup-maple-spice",
         "syrup-maple-pecan-pie",
         "syrup-cinnamon-roll",
-        "cream-and-flake"
+        "cream-and-flake-free"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
@@ -147,7 +147,7 @@
         "syrup-maple-spice",
         "syrup-maple-pecan-pie",
         "syrup-cinnamon-roll",
-        "cream-and-flake"
+        "cream-and-flake-free"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
@@ -171,7 +171,8 @@
         "syrup-pumpkin-spice",
         "syrup-maple-spice",
         "syrup-maple-pecan-pie",
-        "syrup-cinnamon-roll"
+        "syrup-cinnamon-roll",
+        "chocolate-on-top"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
@@ -681,10 +682,22 @@
       "group": "cream"
     },
     {
+      "id": "cream-and-flake-free",
+      "name": "Cream & flake",
+      "pricePence": 0,
+      "group": "cream"
+    },
+    {
       "id": "cream-on-top",
       "name": "Cream on top",
       "pricePence": 50,
       "group": "cream"
+    },
+    {
+      "id": "chocolate-on-top",
+      "name": "Chocolate on top",
+      "pricePence": 0,
+      "group": "topping"
     }
   ],
   "donuts": [
