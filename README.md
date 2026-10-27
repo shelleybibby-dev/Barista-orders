@@ -90,7 +90,7 @@ Useful fields:
 - `drinks[].extras` — which extras from the shared `extras` list are allowed on that drink
 - `specials[]` — pumpkin spiced latte and maple spiced latte (£4.50, same decaf, oat milk, extra shot and syrups as a latte, plus optional free cream), shown in their own section under the coffees
 - `teas[]` — tea, decaf tea, green tea, pure peppermint tea, earl grey and strawberry & raspberry tea (one size at £3, no extras), shown in their own kiosk section
-- `hotChocolates[]` — hot chocolate (£4, optional cream & flake +£0.50), kids hot chocolate (£2.50, no add-ons), and caramel, orange, Dubai, black forest and mint (£4.50, free with cream or no cream); one size, no milk, syrup or shot
+- `hotChocolates[]` — hot chocolate (£4, optional cream & flake +£0.50), kids hot chocolate (£2.50, no add-ons), and caramel, orange, Dubai, black forest, mint and pumpkin spiced (£4.50, free with cream or no cream); one size, no milk, syrup or shot
 - `milkshakes[]` — strawberry, vanilla and chocolate (one size at £5) and Oreo and Biscoff (one size at £5.50), with or without cream at no extra charge
 - `bobas[]` — tropical with mango boba and strawberry and apple boba (one size at £4, no extras), and coffee boba (one size at £5, no extras)
 - `coldDrinks[]` — Coke, Pepsi Max, Orange Tango and Apple Tango cans, a bottle of water, and orange, strawberry and apple Fruit Shoot (one size at £2, no extras)
@@ -108,7 +108,7 @@ Starter prices (GBP):
 | Tea, Decaf tea, Green tea, Pure peppermint tea, Earl grey, Strawberry & raspberry tea | £3.00 |
 | Kids hot chocolate | £2.50 |
 | Hot chocolate | £4.00 |
-| Caramel, Orange, Dubai, Black Forest, Mint hot chocolate | £4.50 |
+| Caramel, Orange, Dubai, Black Forest, Mint, Pumpkin spiced hot chocolate | £4.50 |
 | Strawberry, Vanilla, Chocolate milkshake | £5.00 |
 | Oreo, Biscoff milkshake | £5.50 |
 | Tropical with mango boba; Strawberry and apple boba | £4.00 |

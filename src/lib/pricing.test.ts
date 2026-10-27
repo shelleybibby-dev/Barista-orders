@@ -705,6 +705,7 @@ describe("café menu syrup flavours", () => {
       ["hot-chocolate-dubai", "Dubai Hot Chocolate", 450],
       ["hot-chocolate-black-forest", "Black Forest Hot Chocolate", 450],
       ["hot-chocolate-mint", "Mint Hot Chocolate", 450],
+      ["pumpkin-spiced-hot-chocolate", "Pumpkin spiced hot chocolate", 450],
     ] as const;
 
     expect(cafeMenu.hotChocolates?.map((drink) => drink.id)).toEqual([
@@ -822,6 +823,28 @@ describe("café menu syrup flavours", () => {
     expect(caramel.drinkName).toBe("Caramel Hot Chocolate");
     expect(caramel.extras).toEqual([{ id: "with-cream", name: "With cream", pricePence: 0 }]);
     expect(caramel.lineTotalPence).toBe(450);
+
+    const pumpkinCocoa = buildOrderItem(
+      cafeMenu,
+      {
+        drinkId: "pumpkin-spiced-hot-chocolate",
+        sizeId: "standard",
+        extraIds: ["with-cream"],
+        quantity: 1,
+      },
+      "cocoa-pumpkin",
+    );
+    expect(pumpkinCocoa.kind).toBe("hot-chocolate");
+    expect(pumpkinCocoa.drinkName).toBe("Pumpkin spiced hot chocolate");
+    expect(pumpkinCocoa.extras).toEqual([{ id: "with-cream", name: "With cream", pricePence: 0 }]);
+    expect(pumpkinCocoa.lineTotalPence).toBe(450);
+    expect(ticketAriaLabel(pumpkinCocoa)).toBe("Pumpkin spiced hot chocolate, With cream");
+    expect(
+      defaultExtraIds(
+        cafeMenu,
+        cafeMenu.hotChocolates!.find((item) => item.id === "pumpkin-spiced-hot-chocolate")!,
+      ),
+    ).toEqual(["no-cream"]);
   });
 
   it("offers fruit milkshakes at £5 and Oreo and Biscoff at £5.50 with a cream choice", () => {

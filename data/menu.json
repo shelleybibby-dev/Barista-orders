@@ -396,6 +396,17 @@
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
+    },
+    {
+      "id": "pumpkin-spiced-hot-chocolate",
+      "name": "Pumpkin spiced hot chocolate",
+      "description": "Hot chocolate with pumpkin spice",
+      "accent": "#e07020",
+      "foam": "#f6ddb8",
+      "extras": ["no-cream", "with-cream"],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 450 }
+      ]
     }
   ],
   "milkshakes": [

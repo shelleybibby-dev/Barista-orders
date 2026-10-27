@@ -407,7 +407,7 @@ function DrinkCard({
         <BobaIcon drink={product} className="h-20 w-20 shrink-0" />
       ) : kind === "cold-drink" ? (
         <ColdDrinkIcon drink={product} className="h-20 w-20 shrink-0" />
-      ) : kind === "hot-chocolate" ? (
+      ) : kind === "hot-chocolate" || product.id.includes("hot-chocolate") ? (
         <HotChocolateIcon drink={product} className="h-20 w-20 shrink-0" />
       ) : product.id.startsWith("iced-") ? (
         <IcedCoffeeCup drink={product} className="h-20 w-20 shrink-0" />
@@ -482,7 +482,7 @@ function CustomiseSheet({
             <BobaIcon drink={draft.product} className="h-16 w-16" />
           ) : isColdDrink ? (
             <ColdDrinkIcon drink={draft.product} className="h-16 w-16" />
-          ) : isHotChocolate ? (
+          ) : isHotChocolate || draft.product.id.includes("hot-chocolate") ? (
             <HotChocolateIcon drink={draft.product} className="h-16 w-16" />
           ) : draft.product.id.startsWith("iced-") ? (
             <IcedCoffeeCup drink={draft.product} className="h-16 w-16" />
