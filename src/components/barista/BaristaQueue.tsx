@@ -27,8 +27,23 @@ export function BaristaQueue({ cafeName }: { cafeName: string }) {
 
   useEffect(() => {
     if (!soundOn || newOrderIds.length === 0) return;
-    playChime(audioRef.current);
+    const context = audioRef.current;
+    if (!context) return;
+    if (context.state === "suspended") {
+      void context.resume().then(() => playChime(audioRef.current));
+      return;
+    }
+    playChime(context);
   }, [newOrderIds, soundOn]);
+
+  useEffect(() => {
+    if (!soundOn) return;
+    const resume = () => {
+      if (document.visibilityState === "visible") void audioRef.current?.resume();
+    };
+    document.addEventListener("visibilitychange", resume);
+    return () => document.removeEventListener("visibilitychange", resume);
+  }, [soundOn]);
 
   const queued = useMemo(
     () => orders.filter((order) => order.status === "queued"),
@@ -420,17 +435,36 @@ function OrderTicket({
 function playChime(context: AudioContext | null) {
   if (!context) return;
   const now = context.currentTime;
-  [0, 0.16].forEach((offset, index) => {
+  const limiter = context.createDynamicsCompressor();
+  limiter.threshold.value = -1;
+  limiter.knee.value = 0;
+  limiter.ratio.value = 20;
+  limiter.attack.value = 0.002;
+  limiter.release.value = 0.12;
+  const master = context.createGain();
+  master.gain.value = 1;
+  limiter.connect(master);
+  master.connect(context.destination);
+
+  // Two full-scale notes. The second starts as the first finishes so the peaks do not add.
+  const notes = [
+    { offset: 0, frequency: 880, duration: 0.55 },
+    { offset: 0.52, frequency: 1175, duration: 0.62 },
+  ];
+  for (const note of notes) {
     const oscillator = context.createOscillator();
     const gain = context.createGain();
+    const start = now + note.offset;
+    const end = start + note.duration;
     oscillator.type = "sine";
-    oscillator.frequency.value = index === 0 ? 880 : 1175;
-    gain.gain.setValueAtTime(0.0001, now + offset);
-    gain.gain.exponentialRampToValueAtTime(0.08, now + offset + 0.02);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.18);
+    oscillator.frequency.setValueAtTime(note.frequency, start);
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(1, start + 0.015);
+    gain.gain.setValueAtTime(1, start + note.duration * 0.62);
+    gain.gain.exponentialRampToValueAtTime(0.0001, end);
     oscillator.connect(gain);
-    gain.connect(context.destination);
-    oscillator.start(now + offset);
-    oscillator.stop(now + offset + 0.2);
-  });
+    gain.connect(limiter);
+    oscillator.start(start);
+    oscillator.stop(end + 0.02);
+  }
 }
