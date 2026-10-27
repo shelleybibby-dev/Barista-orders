@@ -41,7 +41,7 @@ If an old Home Screen icon was added before this standalone setup, **delete that
 
 Both iPads must talk to **the same host**. The barista screen updates as soon as a customer places an order — no pull-to-refresh.
 
-On first use, tap **Enable new-order chime** on the barista iPad if you want an audible cue (Safari requires a tap before sound). The alert is three repeats of a bright 2–3.5 kHz tone, about two and a half seconds in total.
+On first use, tap **Enable new-order chime** on the barista iPad if you want an audible cue (Safari requires a tap before sound).
 
 If the iPads cannot connect, check the café firewall allows port 3000 on the host machine.
 
