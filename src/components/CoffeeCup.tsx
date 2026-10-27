@@ -1,5 +1,37 @@
 import type { MenuDrink } from "@/lib/types";
 
+export function KidCup({ drink, className = "" }: { drink: MenuDrink; className?: string }) {
+  return (
+    <svg viewBox="0 0 96 96" className={className} aria-hidden="true" focusable="false">
+      <ellipse cx="46" cy="82" rx="20" ry="4.5" fill="rgba(42,24,16,0.12)" />
+      <path
+        d="M26 46h40c1 10 0 20-5 27-2.6 3.4-8 5.2-15 5.2s-12.4-1.8-15-5.2c-5-7-6-17-5-27Z"
+        fill={drink.accent}
+      />
+      <path
+        d="M30 49h32c.5 8-.2 15-4.2 20-2 2.6-6.4 4-11.8 4s-9.8-1.4-11.8-4c-4-5-4.7-12-4.2-20Z"
+        fill={drink.foam}
+      />
+      <circle cx="40" cy="60" r="2.1" fill="#6a3a48" />
+      <circle cx="54" cy="60" r="2.1" fill="#6a3a48" />
+      <path
+        d="M41 66c2.4 2.4 7 2.4 10 0"
+        fill="none"
+        stroke="#6a3a48"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M66 50c8 1 11 7 6 12-2.6 2.6-6.4 3.2-9.2 2.4"
+        fill="none"
+        stroke={drink.accent}
+        strokeWidth="5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export function CoffeeCup({ drink, className = "" }: { drink: MenuDrink; className?: string }) {
   return (
     <svg

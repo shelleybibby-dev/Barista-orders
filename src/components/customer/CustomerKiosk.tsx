@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { BobaIcon } from "@/components/BobaIcon";
 import { ColdDrinkIcon } from "@/components/ColdDrinkIcon";
-import { CoffeeCup } from "@/components/CoffeeCup";
+import { CoffeeCup, KidCup } from "@/components/CoffeeCup";
 import { IcedCoffeeCup } from "@/components/IcedCoffeeCup";
 import { HotChocolateIcon } from "@/components/HotChocolateIcon";
 import { BrandLockup } from "@/components/CoffeeBeansLogo";
@@ -483,6 +483,8 @@ function DrinkCard({
         <ColdDrinkIcon drink={product} className="h-20 w-20 shrink-0" />
       ) : kind === "hot-chocolate" || product.id.includes("hot-chocolate") ? (
         <HotChocolateIcon drink={product} className="h-20 w-20 shrink-0" />
+      ) : product.id === "babychino" ? (
+        <KidCup drink={product} className="h-20 w-20 shrink-0" />
       ) : product.id.startsWith("iced-") ? (
         <IcedCoffeeCup drink={product} className="h-20 w-20 shrink-0" />
       ) : (
@@ -558,6 +560,8 @@ function CustomiseSheet({
             <ColdDrinkIcon drink={draft.product} className="h-16 w-16" />
           ) : isHotChocolate || draft.product.id.includes("hot-chocolate") ? (
             <HotChocolateIcon drink={draft.product} className="h-16 w-16" />
+          ) : draft.product.id === "babychino" ? (
+            <KidCup drink={draft.product} className="h-16 w-16" />
           ) : draft.product.id.startsWith("iced-") ? (
             <IcedCoffeeCup drink={draft.product} className="h-16 w-16" />
           ) : (

@@ -129,6 +129,17 @@
       ]
     },
     {
+      "id": "babychino",
+      "name": "Babychino",
+      "description": "Warm frothy milk in a small cup",
+      "accent": "#e8a0b4",
+      "foam": "#fff6f8",
+      "extras": ["babychino-chocolate", "babychino-cream"],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 200 }
+      ]
+    },
+    {
       "id": "flat-white",
       "name": "Flat white",
       "description": "Velvety microfoam, stronger coffee",
@@ -326,7 +337,20 @@
       "description": "Rich hot chocolate",
       "accent": "#3d2418",
       "foam": "#fff6ee",
-      "extras": ["cream-and-flake"],
+      "extras": [
+        "oat",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-pumpkin-spice",
+        "syrup-maple-spice",
+        "syrup-maple-pecan-pie",
+        "syrup-cinnamon-roll",
+        "cream-and-flake"
+      ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
       ]
@@ -348,7 +372,7 @@
       "description": "Caramel hot chocolate",
       "accent": "#d0894a",
       "foam": "#fff3e0",
-      "extras": ["no-cream", "with-cream"],
+      "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -359,7 +383,7 @@
       "description": "Orange hot chocolate",
       "accent": "#e36a1e",
       "foam": "#fff4ea",
-      "extras": ["no-cream", "with-cream"],
+      "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -370,7 +394,7 @@
       "description": "Pistachio and kataifi hot chocolate",
       "accent": "#3d9a62",
       "foam": "#f4f8ef",
-      "extras": ["no-cream", "with-cream"],
+      "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -381,7 +405,7 @@
       "description": "Cherry black forest hot chocolate",
       "accent": "#c23b4a",
       "foam": "#fff3f4",
-      "extras": ["no-cream", "with-cream"],
+      "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -392,7 +416,7 @@
       "description": "Mint hot chocolate",
       "accent": "#2fafa0",
       "foam": "#f3fbf8",
-      "extras": ["no-cream", "with-cream"],
+      "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -403,7 +427,7 @@
       "description": "Hot chocolate with pumpkin spice",
       "accent": "#e07020",
       "foam": "#f6ddb8",
-      "extras": ["no-cream", "with-cream"],
+      "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
@@ -711,6 +735,18 @@
       "name": "Chocolate on top",
       "pricePence": 0,
       "group": "topping"
+    },
+    {
+      "id": "babychino-chocolate",
+      "name": "Chocolate",
+      "pricePence": 0,
+      "group": "topping"
+    },
+    {
+      "id": "babychino-cream",
+      "name": "Cream",
+      "pricePence": 50,
+      "group": "cream"
     }
   ],
   "donuts": [

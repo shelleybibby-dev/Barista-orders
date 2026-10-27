@@ -90,7 +90,7 @@ Useful fields:
 - `drinks[].extras` — which extras from the shared `extras` list are allowed on that drink
 - `specials[]` — pumpkin spiced latte and maple spiced latte (£4.50, same decaf, oat milk, extra shot and syrups as a latte, plus optional free cream), shown in their own section under the coffees
 - `teas[]` — tea, decaf tea, green tea, pure peppermint tea, earl grey and strawberry & raspberry tea (one size at £3, no extras), shown in their own kiosk section
-- `hotChocolates[]` — hot chocolate (£4, optional cream & flake +£0.50), kids hot chocolate (£2.50, no add-ons), and caramel, orange, Dubai, black forest, mint and pumpkin spiced (£4.50, free with cream or no cream); one size, no milk, syrup or shot
+- `hotChocolates[]` — hot chocolate (£4, free oat milk, extra shot +£0.50, one syrup +£0.50, optional cream & flake +£0.50), kids hot chocolate (£2.50, no add-ons), and caramel, orange, Dubai, black forest, mint and pumpkin spiced (£4.50, free oat milk, extra shot +£0.50, free with cream or no cream); one size, no decaf
 - `milkshakes[]` — strawberry, vanilla and chocolate (one size at £5) and Oreo and Biscoff (one size at £5.50), with or without cream at no extra charge
 - `bobas[]` — tropical with mango boba and strawberry and apple boba (one size at £4, no extras), and coffee boba (one size at £5, no extras)
 - `coldDrinks[]` — Coke, Pepsi Max, Orange Tango and Apple Tango cans, a bottle of water, and orange, strawberry and apple Fruit Shoot (one size at £2, no extras)
@@ -102,6 +102,7 @@ Starter prices (GBP):
 | Drink | Price |
 | --- | --- |
 | Espresso | Single £2.50 / Double £3.00 |
+| Babychino | £2.00 |
 | Americano | £3.50 |
 | Latte, Iced latte, Cappuccino, Flat white, Chai latte | £4.00 |
 | Pumpkin spiced latte, Maple spiced latte (Specials), Mocha | £4.50 |
@@ -115,7 +116,7 @@ Starter prices (GBP):
 | Coffee boba | £5.00 |
 | Coke, Pepsi Max, Orange Tango, Apple Tango, Bottle of water, Orange Fruit Shoot, Strawberry Fruit Shoot, Apple Fruit Shoot | £2.00 |
 
-Extras: decaf free on coffee (not on chai latte), oat milk free, extra shot +£0.50 (not on chai latte), syrup flavour +£0.50 on every coffee including espresso Single and Double (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, pumpkin spice, maple spice, maple pecan pie or cinnamon roll — one per drink). Espresso keeps decaf and extra shot, and has no oat milk. Americano needs a free black or white choice, defaulting to black, and that choice is shown on the barista ticket. Hot latte and iced latte have optional cream on top at +£0.50, off unless the customer adds it, and that choice is shown on the barista ticket. Pumpkin spiced latte and maple spiced latte are £4.50, with the same decaf, oat milk, extra shot and syrups as a latte, plus optional free cream, named Cream, shown on the barista ticket. Cappuccino can add free chocolate on top, off unless chosen, and that choice is shown on the barista ticket. Chai latte has oat milk and the syrups only. Milkshakes and flavoured hot chocolates: with cream or no cream, no extra charge. Plain hot chocolate: optional cream & flake +£0.50. Kids hot chocolate has no add-ons.
+Extras: decaf free on coffee (not on chai latte), oat milk free, extra shot +£0.50 (not on chai latte), syrup flavour +£0.50 on every coffee including espresso Single and Double (caramel, hazelnut, vanilla, toasted marshmallow, pistachio, pumpkin spice, maple spice, maple pecan pie or cinnamon roll — one per drink). Espresso keeps decaf and extra shot, and has no oat milk. Americano needs a free black or white choice, defaulting to black, and that choice is shown on the barista ticket. Hot latte and iced latte have optional cream on top at +£0.50, off unless the customer adds it, and that choice is shown on the barista ticket. Pumpkin spiced latte and maple spiced latte are £4.50, with the same decaf, oat milk, extra shot and syrups as a latte, plus optional free cream, named Cream, shown on the barista ticket. Cappuccino can add free chocolate on top, off unless chosen, and that choice is shown on the barista ticket. Chai latte has oat milk and the syrups only. Milkshakes and flavoured hot chocolates: with cream or no cream, no extra charge. Every hot chocolate except kids also has free oat milk and an extra shot at +£0.50. Plain hot chocolate also has one syrup flavour at +£0.50 and optional cream & flake +£0.50. Those choices are shown on the barista ticket. Kids hot chocolate has no add-ons. Babychino is £2, after cappuccino. Chocolate is a free optional extra and Cream is +£0.50. Neither is selected by default, so a plain Babychino at £2 can be ordered with nothing ticked. Chosen extras are shown on the barista ticket. It has no milk, decaf, syrup or shot.
 
 Donut packs (no singles — same bundles as the truck):
 
