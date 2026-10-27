@@ -104,6 +104,56 @@
       ]
     },
     {
+      "id": "pumpkin-spiced-latte",
+      "name": "Pumpkin spiced latte",
+      "description": "Latte with pumpkin spice",
+      "accent": "#e07020",
+      "foam": "#f6ddb8",
+      "extras": [
+        "decaf",
+        "oat",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-pumpkin-spice",
+        "syrup-maple-spice",
+        "syrup-maple-pecan-pie",
+        "syrup-cinnamon-roll",
+        "cream-and-flake"
+      ],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 450 }
+      ]
+    },
+    {
+      "id": "maple-spiced-latte",
+      "name": "Maple spiced latte",
+      "description": "Latte with maple spice",
+      "accent": "#c6862a",
+      "foam": "#f8e6c0",
+      "extras": [
+        "decaf",
+        "oat",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-pumpkin-spice",
+        "syrup-maple-spice",
+        "syrup-maple-pecan-pie",
+        "syrup-cinnamon-roll",
+        "cream-and-flake"
+      ],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 450 }
+      ]
+    },
+    {
       "id": "cappuccino",
       "name": "Cappuccino",
       "description": "Equal parts espresso, milk and foam",
@@ -424,6 +474,17 @@
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 400 }
       ]
+    },
+    {
+      "id": "boba-coffee",
+      "name": "Coffee boba",
+      "description": "Coffee milk tea with pearls",
+      "accent": "#6b3f2a",
+      "foam": "#f3e6d4",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 500 }
+      ]
     }
   ],
   "coldDrinks": [
@@ -622,7 +683,7 @@
     {
       "id": "cream-on-top",
       "name": "Cream on top",
-      "pricePence": 0,
+      "pricePence": 50,
       "group": "cream"
     }
   ],

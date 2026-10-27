@@ -209,7 +209,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
 
         <h2 className="mt-10 font-display text-3xl font-semibold">Drinks</h2>
         <p className="mt-1 text-base text-coffee">
-          Espresso has Single or Double. Other drinks are one size. Americano is black or white. Decaf is free on coffee. Hot latte and iced latte can have free cream on top.
+          Espresso has Single or Double. Other drinks are one size. Americano is black or white. Decaf is free on coffee. Cream on top is +£0.50 on latte and iced latte.
         </p>
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {menu.drinks.map((drink) => (
@@ -269,7 +269,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
         {(menu.bobas ?? []).length > 0 ? (
           <>
             <h2 className="mt-12 font-display text-3xl font-semibold">Boba</h2>
-            <p className="mt-1 text-base text-coffee">£4. One size.</p>
+            <p className="mt-1 text-base text-coffee">£4 or £5. One size. No extras.</p>
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {(menu.bobas ?? []).map((boba) => (
                 <DrinkCard
