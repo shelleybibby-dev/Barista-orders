@@ -122,7 +122,7 @@
         "syrup-maple-spice",
         "syrup-maple-pecan-pie",
         "syrup-cinnamon-roll",
-        "cream-and-flake-free"
+        "cream"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
@@ -147,7 +147,7 @@
         "syrup-maple-spice",
         "syrup-maple-pecan-pie",
         "syrup-cinnamon-roll",
-        "cream-and-flake-free"
+        "cream"
       ],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
@@ -682,8 +682,8 @@
       "group": "cream"
     },
     {
-      "id": "cream-and-flake-free",
-      "name": "Cream & flake",
+      "id": "cream",
+      "name": "Cream",
       "pricePence": 0,
       "group": "cream"
     },
