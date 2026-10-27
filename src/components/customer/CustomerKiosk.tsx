@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { BobaIcon } from "@/components/BobaIcon";
 import { ColdDrinkIcon } from "@/components/ColdDrinkIcon";
 import { CoffeeCup } from "@/components/CoffeeCup";
@@ -183,10 +183,61 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
     setError(null);
   }
 
+  const sections = useMemo(
+    () =>
+      [
+        { id: "coffees", label: "Coffees" },
+        (menu.specials ?? []).length > 0 ? { id: "specials", label: "Specials" } : null,
+        (menu.teas ?? []).length > 0 ? { id: "teas", label: "Teas" } : null,
+        (menu.hotChocolates ?? []).length > 0
+          ? { id: "hot-chocolates", label: "Hot chocolates" }
+          : null,
+        (menu.milkshakes ?? []).length > 0 ? { id: "milkshakes", label: "Milkshakes" } : null,
+        (menu.bobas ?? []).length > 0 ? { id: "boba", label: "Boba" } : null,
+        (menu.coldDrinks ?? []).length > 0 ? { id: "cold-drinks", label: "Cold drinks" } : null,
+        { id: "donuts", label: "Donuts" },
+      ].filter((section) => section !== null),
+    [menu],
+  );
+  const [activeSection, setActiveSection] = useState(sections[0]?.id ?? "coffees");
+  const scrollLock = useRef<string | null>(null);
+
+  useEffect(() => {
+    const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-menu-section]"));
+    if (nodes.length === 0) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (scrollLock.current) return;
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        const next = visible[0]?.target.id;
+        if (next) setActiveSection(next);
+      },
+      { rootMargin: "-210px 0px -45% 0px", threshold: [0, 0.15] },
+    );
+    for (const node of nodes) observer.observe(node);
+    return () => observer.disconnect();
+  }, [sections]);
+
+  function jumpToSection(id: string) {
+    setActiveSection(id);
+    scrollLock.current = id;
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById(`section-tab-${id}`)?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+    window.setTimeout(() => {
+      if (scrollLock.current === id) scrollLock.current = null;
+    }, 800);
+  }
+
   return (
     <div className="relative min-h-dvh bg-cream text-espresso">
-      <header className="sticky top-0 z-20 border-b border-espresso/10 bg-cream/95 px-5 py-4 backdrop-blur-md safe-top">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
+      <header className="sticky top-0 z-20 border-b border-espresso/10 bg-cream/95 backdrop-blur-md safe-top">
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 pb-2">
           <BrandLockup name={menu.cafeName} subtitle={menu.tagline} size="md" />
           <button
             type="button"
@@ -199,6 +250,25 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
             </span>
           </button>
         </div>
+        <nav aria-label="Menu sections" className="mx-auto flex max-w-5xl gap-2 overflow-x-auto px-5 pb-3">
+          {sections.map((section) => {
+            const selected = activeSection === section.id;
+            return (
+              <button
+                key={section.id}
+                id={`section-tab-${section.id}`}
+                type="button"
+                aria-current={selected ? "true" : undefined}
+                onClick={() => jumpToSection(section.id)}
+                className={`tap min-h-11 shrink-0 rounded-full px-4 text-sm font-semibold ${
+                  selected ? "bg-espresso text-foam" : "bg-foam text-espresso ring-1 ring-espresso/10"
+                }`}
+              >
+                {section.label}
+              </button>
+            );
+          })}
+        </nav>
       </header>
 
       <main className="mx-auto max-w-5xl px-5 py-6 pb-44">
@@ -207,6 +277,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
           Add coffee, specials, tea, hot chocolate, milkshakes, boba, cold drinks and donut packs to the same tray. No payment needed.
         </p>
 
+        <section id="coffees" data-menu-section className="scroll-mt-52">
         <h2 className="mt-10 font-display text-3xl font-semibold">Drinks</h2>
         <p className="mt-1 text-base text-coffee">
           Espresso has Single or Double. Other drinks are one size. Americano is black or white. Decaf is free on coffee. Cream on top is +£0.50 on latte and iced latte. Cappuccino can have free chocolate on top.
@@ -216,9 +287,10 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
             <DrinkCard key={drink.id} product={drink} onOpen={() => openProduct(drink, "drink")} />
           ))}
         </div>
+        </section>
 
         {(menu.specials ?? []).length > 0 ? (
-          <>
+          <section id="specials" data-menu-section className="scroll-mt-52">
             <h2 className="mt-12 font-display text-3xl font-semibold">Specials</h2>
             <p className="mt-1 text-base text-coffee">£4.50. Optional free cream.</p>
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -230,11 +302,11 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
                 />
               ))}
             </div>
-          </>
+          </section>
         ) : null}
 
         {(menu.teas ?? []).length > 0 ? (
-          <>
+          <section id="teas" data-menu-section className="scroll-mt-52">
             <h2 className="mt-12 font-display text-3xl font-semibold">Teas</h2>
             <p className="mt-1 text-base text-coffee">£3. No extras.</p>
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -242,11 +314,11 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
                 <DrinkCard key={tea.id} product={tea} onOpen={() => openProduct(tea, "drink")} />
               ))}
             </div>
-          </>
+          </section>
         ) : null}
 
         {(menu.hotChocolates ?? []).length > 0 ? (
-          <>
+          <section id="hot-chocolates" data-menu-section className="scroll-mt-52">
             <h2 className="mt-12 font-display text-3xl font-semibold">Hot chocolates</h2>
             <p className="mt-1 text-base text-coffee">
               £2.50, £4 or £4.50. Cream & flake on hot chocolate, +£0.50. Flavoured hot chocolates
@@ -262,11 +334,11 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
                 />
               ))}
             </div>
-          </>
+          </section>
         ) : null}
 
         {(menu.milkshakes ?? []).length > 0 ? (
-          <>
+          <section id="milkshakes" data-menu-section className="scroll-mt-52">
             <h2 className="mt-12 font-display text-3xl font-semibold">Milkshakes</h2>
             <p className="mt-1 text-base text-coffee">£5 or £5.50. Choose with or without cream.</p>
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -279,11 +351,11 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
                 />
               ))}
             </div>
-          </>
+          </section>
         ) : null}
 
         {(menu.bobas ?? []).length > 0 ? (
-          <>
+          <section id="boba" data-menu-section className="scroll-mt-52">
             <h2 className="mt-12 font-display text-3xl font-semibold">Boba</h2>
             <p className="mt-1 text-base text-coffee">£4 or £5. One size. No extras.</p>
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -296,11 +368,11 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
                 />
               ))}
             </div>
-          </>
+          </section>
         ) : null}
 
         {(menu.coldDrinks ?? []).length > 0 ? (
-          <>
+          <section id="cold-drinks" data-menu-section className="scroll-mt-52">
             <h2 className="mt-12 font-display text-3xl font-semibold">Cold drinks</h2>
             <p className="mt-1 text-base text-coffee">£2. Cans and bottles. No extras.</p>
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -313,9 +385,10 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
                 />
               ))}
             </div>
-          </>
+          </section>
         ) : null}
 
+        <section id="donuts" data-menu-section className="scroll-mt-52">
         <h2 className="mt-12 font-display text-3xl font-semibold">Donuts</h2>
         <p className="mt-1 text-base text-coffee">
           Freshly made. Choose a topping, then a pack of 2, 4 or 6.
@@ -341,6 +414,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
             </button>
           ))}
         </div>
+        </section>
       </main>
 
       <button
