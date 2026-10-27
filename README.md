@@ -88,6 +88,7 @@ Useful fields:
 - `cafeName` / `tagline` — shown on the home and kiosk screens
 - `drinks[].name`, `description`, `sizes[]` — most coffees are one size; espresso still has Single / Double
 - `drinks[].extras` — which extras from the shared `extras` list are allowed on that drink
+- `specials[]` — pumpkin spiced latte and maple spiced latte (£4.50, same decaf, oat milk, extra shot and syrups as a latte, plus optional free cream), shown in their own section under the coffees
 - `teas[]` — tea, decaf tea, green tea, pure peppermint tea, earl grey and strawberry & raspberry tea (one size at £3, no extras), shown in their own kiosk section
 - `hotChocolates[]` — hot chocolate (£4, optional cream & flake +£0.50), kids hot chocolate (£2.50, no add-ons), and caramel, orange, Dubai, black forest and mint (£4.50, free with cream or no cream); one size, no milk, syrup or shot
 - `milkshakes[]` — strawberry, vanilla and chocolate (one size at £5) and Oreo and Biscoff (one size at £5.50), with or without cream at no extra charge
@@ -103,7 +104,7 @@ Starter prices (GBP):
 | Espresso | Single £2.50 / Double £3.00 |
 | Americano | £3.50 |
 | Latte, Iced latte, Cappuccino, Flat white, Chai latte | £4.00 |
-| Pumpkin spiced latte, Maple spiced latte, Mocha | £4.50 |
+| Pumpkin spiced latte, Maple spiced latte (Specials), Mocha | £4.50 |
 | Tea, Decaf tea, Green tea, Pure peppermint tea, Earl grey, Strawberry & raspberry tea | £3.00 |
 | Kids hot chocolate | £2.50 |
 | Hot chocolate | £4.00 |

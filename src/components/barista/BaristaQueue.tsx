@@ -293,6 +293,10 @@ function OrderTicket({
                   <span className="block text-xs font-semibold uppercase tracking-[0.2em] text-mocha">
                     Donuts
                   </span>
+                ) : item.kind === "special" ? (
+                  <span className="block text-xs font-semibold uppercase tracking-[0.2em] text-mocha">
+                    Special
+                  </span>
                 ) : item.kind === "boba" ? (
                   <span className="block text-xs font-semibold uppercase tracking-[0.2em] text-mocha">
                     Boba

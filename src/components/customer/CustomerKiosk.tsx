@@ -204,7 +204,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
       <main className="mx-auto max-w-5xl px-5 py-6 pb-44">
         <h1 className="font-display text-4xl font-semibold">Order here</h1>
         <p className="mt-2 text-lg text-coffee">
-          Add coffee, tea, hot chocolate, milkshakes, boba, cold drinks and donut packs to the same tray. No payment needed.
+          Add coffee, specials, tea, hot chocolate, milkshakes, boba, cold drinks and donut packs to the same tray. No payment needed.
         </p>
 
         <h2 className="mt-10 font-display text-3xl font-semibold">Drinks</h2>
@@ -216,6 +216,22 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
             <DrinkCard key={drink.id} product={drink} onOpen={() => openProduct(drink, "drink")} />
           ))}
         </div>
+
+        {(menu.specials ?? []).length > 0 ? (
+          <>
+            <h2 className="mt-12 font-display text-3xl font-semibold">Specials</h2>
+            <p className="mt-1 text-base text-coffee">£4.50. Optional free cream.</p>
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {(menu.specials ?? []).map((drink) => (
+                <DrinkCard
+                  key={drink.id}
+                  product={drink}
+                  onOpen={() => openProduct(drink, "special")}
+                />
+              ))}
+            </div>
+          </>
+        ) : null}
 
         {(menu.teas ?? []).length > 0 ? (
           <>
@@ -792,7 +808,7 @@ function CartDrawer({
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-2xl font-semibold">
-                      {line.kind === "donut" ? "Donuts · " : ""}
+                      {line.kind === "donut" ? "Donuts · " : line.kind === "special" ? "Specials · " : ""}
                       {line.product.name}
                       {line.sizeName ? (
                         <span className="ml-2 text-lg font-normal text-coffee">{line.sizeName}</span>

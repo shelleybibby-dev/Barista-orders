@@ -226,14 +226,14 @@ describe("café menu syrup flavours", () => {
       "americano",
       "latte",
       "iced-latte",
-      "pumpkin-spiced-latte",
-      "maple-spiced-latte",
       "cappuccino",
       "flat-white",
       "mocha",
       "chai-latte",
+      "pumpkin-spiced-latte",
+      "maple-spiced-latte",
     ]);
-    for (const drink of cafeMenu.drinks) {
+    for (const drink of [...cafeMenu.drinks, ...(cafeMenu.specials ?? [])]) {
       if (coffeeWithSyrup.has(drink.id)) {
         expect(drink.extras).toEqual(expect.arrayContaining(flavourIds));
         expect(drink.extras).not.toContain("syrup");
@@ -265,8 +265,6 @@ describe("café menu syrup flavours", () => {
       ["americano", 350],
       ["latte", 400],
       ["iced-latte", 400],
-      ["pumpkin-spiced-latte", 450],
-      ["maple-spiced-latte", 450],
       ["cappuccino", 400],
       ["flat-white", 400],
       ["mocha", 450],
@@ -286,8 +284,6 @@ describe("café menu syrup flavours", () => {
       "americano",
       "latte",
       "iced-latte",
-      "pumpkin-spiced-latte",
-      "maple-spiced-latte",
       "cappuccino",
       "flat-white",
       "mocha",
@@ -511,6 +507,7 @@ describe("café menu syrup flavours", () => {
 
     const products = [
       ...cafeMenu.drinks.filter((drink) => drink.id !== "latte" && drink.id !== "iced-latte"),
+      ...(cafeMenu.specials ?? []),
       ...(cafeMenu.teas ?? []),
       ...(cafeMenu.hotChocolates ?? []),
       ...(cafeMenu.milkshakes ?? []),
@@ -535,8 +532,11 @@ describe("café menu syrup flavours", () => {
       ["maple-spiced-latte", "Maple spiced latte", "#c6862a"],
     ] as const;
 
+    expect(cafeMenu.specials?.map((drink) => drink.id)).toEqual(specs.map(([id]) => id));
+    expect(cafeMenu.drinks.some((drink) => drink.id.endsWith("-spiced-latte"))).toBe(false);
+
     for (const [id, name, accent] of specs) {
-      const drink = cafeMenu.drinks.find((item) => item.id === id)!;
+      const drink = cafeMenu.specials?.find((item) => item.id === id)!;
       expect(drink.name).toBe(name);
       expect(drink.accent).toBe(accent);
       expect(drink.extras).toEqual([...latteOptions, "cream"]);
@@ -572,13 +572,14 @@ describe("café menu syrup flavours", () => {
       },
       "pumpkin-flake",
     );
+    expect(withFlake.kind).toBe("special");
     expect(withFlake.lineTotalPence).toBe(450);
     expect(ticketExtras(withFlake.extras).detail).toEqual([
       { id: "cream", name: "Cream", pricePence: 0 },
     ]);
     expect(ticketAriaLabel(withFlake)).toBe("Pumpkin spiced latte, Cream");
 
-    for (const drink of cafeMenu.drinks) {
+    for (const drink of [...cafeMenu.drinks, ...(cafeMenu.specials ?? [])]) {
       if (drink.id === "pumpkin-spiced-latte" || drink.id === "maple-spiced-latte") continue;
       expect(drink.extras).not.toContain("cream");
     }
@@ -634,6 +635,7 @@ describe("café menu syrup flavours", () => {
 
     const products = [
       ...cafeMenu.drinks.filter((drink) => drink.id !== "cappuccino"),
+      ...(cafeMenu.specials ?? []),
       ...(cafeMenu.teas ?? []),
       ...(cafeMenu.hotChocolates ?? []),
       ...(cafeMenu.milkshakes ?? []),
