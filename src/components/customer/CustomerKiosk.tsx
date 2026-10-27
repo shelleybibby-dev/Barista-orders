@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BobaIcon } from "@/components/BobaIcon";
 import { ColdDrinkIcon } from "@/components/ColdDrinkIcon";
 import { CoffeeCup } from "@/components/CoffeeCup";
@@ -183,206 +183,174 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
     setError(null);
   }
 
-  const sections = useMemo(
-    () =>
-      [
-        menu.drinks.length > 0 ? { id: "coffees", label: "Coffees" } : null,
-        (menu.specials ?? []).length > 0 ? { id: "specials", label: "Specials" } : null,
-        (menu.teas ?? []).length > 0 ? { id: "teas", label: "Teas" } : null,
-        (menu.hotChocolates ?? []).length > 0
-          ? { id: "hot-chocolates", label: "Hot chocolates" }
-          : null,
-        (menu.milkshakes ?? []).length > 0 ? { id: "milkshakes", label: "Milkshakes" } : null,
-        (menu.bobas ?? []).length > 0 ? { id: "boba", label: "Boba" } : null,
-        (menu.coldDrinks ?? []).length > 0 ? { id: "cold-drinks", label: "Cold drinks" } : null,
-        (menu.donuts ?? []).length > 0 ? { id: "donuts", label: "Donuts" } : null,
-      ].filter((section) => section !== null),
-    [menu],
-  );
-  const [activeSection, setActiveSection] = useState(sections[0]?.id ?? "coffees");
-  const scrollLock = useRef<string | null>(null);
-
-  useEffect(() => {
-    const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-menu-section]"));
-    if (nodes.length === 0) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (scrollLock.current) return;
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        const next = visible[0]?.target.id;
-        if (next) setActiveSection(next);
-      },
-      { rootMargin: "-132px 0px -50% 0px", threshold: [0, 0.2] },
-    );
-    for (const node of nodes) observer.observe(node);
-    return () => observer.disconnect();
-  }, [sections]);
-
-  function jumpToSection(id: string) {
-    setActiveSection(id);
-    scrollLock.current = id;
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    document.getElementById(`section-tab-${id}`)?.scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
-      block: "nearest",
-    });
-    window.setTimeout(() => {
-      if (scrollLock.current === id) scrollLock.current = null;
-    }, 800);
-  }
-
   return (
     <div className="relative min-h-dvh bg-cream text-espresso">
-      <div className="sticky top-0 z-20 border-b border-espresso/10 bg-cream/95 backdrop-blur-md safe-top">
-        <header className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-3 pb-1">
-          <BrandLockup name={menu.cafeName} subtitle={menu.tagline} size="sm" />
+      <header className="sticky top-0 z-20 border-b border-espresso/10 bg-cream/95 px-5 py-4 backdrop-blur-md safe-top">
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
+          <BrandLockup name={menu.cafeName} subtitle={menu.tagline} size="md" />
           <button
             type="button"
             onClick={() => setCartOpen(true)}
-            className="tap min-h-11 shrink-0 rounded-xl bg-espresso px-3 text-left text-foam shadow-lg"
+            className="tap min-h-16 min-w-16 rounded-2xl bg-espresso px-5 text-left text-foam shadow-lg"
           >
-            <span className="block text-[0.65rem] uppercase tracking-[0.16em] text-caramel">Order</span>
-            <span className="block text-sm font-semibold">
+            <span className="block text-xs uppercase tracking-[0.2em] text-caramel">Order</span>
+            <span className="block text-2xl font-semibold">
               {itemCount} · {formatGbp(totalPence)}
             </span>
           </button>
-        </header>
-        <nav aria-label="Menu sections" className="mx-auto flex max-w-6xl gap-1.5 overflow-x-auto px-3 pb-2">
-          {sections.map((section) => {
-            const selected = activeSection === section.id;
-            return (
-              <button
-                key={section.id}
-                id={`section-tab-${section.id}`}
-                type="button"
-                aria-current={selected ? "true" : undefined}
-                onClick={() => jumpToSection(section.id)}
-                className={`tap min-h-11 shrink-0 rounded-full px-3 text-sm font-semibold ${
-                  selected ? "bg-espresso text-foam" : "bg-foam text-espresso ring-1 ring-espresso/10"
-                }`}
-              >
-                {section.label}
-              </button>
-            );
-          })}
-        </nav>
-      </div>
+        </div>
+      </header>
 
-      <main className="mx-auto flex max-w-6xl flex-col gap-5 px-3 py-3 pb-24">
-        {menu.drinks.length > 0 ? (
-          <MenuSection
-            id="coffees"
-            title="Coffees"
-            blurb="Espresso has Single or Double. Other drinks are one size. Americano is black or white. Decaf is free on coffee. Cream on top is +£0.50 on latte and iced latte. Cappuccino can have free chocolate on top."
-          >
-            {menu.drinks.map((drink) => (
-              <DrinkCard key={drink.id} product={drink} onOpen={() => openProduct(drink, "drink")} />
-            ))}
-          </MenuSection>
-        ) : null}
+      <main className="mx-auto max-w-5xl px-5 py-6 pb-44">
+        <h1 className="font-display text-4xl font-semibold">Order here</h1>
+        <p className="mt-2 text-lg text-coffee">
+          Add coffee, specials, tea, hot chocolate, milkshakes, boba, cold drinks and donut packs to the same tray. No payment needed.
+        </p>
+
+        <h2 className="mt-10 font-display text-3xl font-semibold">Drinks</h2>
+        <p className="mt-1 text-base text-coffee">
+          Espresso has Single or Double. Other drinks are one size. Americano is black or white. Decaf is free on coffee. Cream on top is +£0.50 on latte and iced latte. Cappuccino can have free chocolate on top.
+        </p>
+        <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {menu.drinks.map((drink) => (
+            <DrinkCard key={drink.id} product={drink} onOpen={() => openProduct(drink, "drink")} />
+          ))}
+        </div>
 
         {(menu.specials ?? []).length > 0 ? (
-          <MenuSection id="specials" title="Specials" blurb="£4.50. Optional free cream.">
-            {(menu.specials ?? []).map((drink) => (
-              <DrinkCard key={drink.id} product={drink} onOpen={() => openProduct(drink, "special")} />
-            ))}
-          </MenuSection>
+          <>
+            <h2 className="mt-12 font-display text-3xl font-semibold">Specials</h2>
+            <p className="mt-1 text-base text-coffee">£4.50. Optional free cream.</p>
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {(menu.specials ?? []).map((drink) => (
+                <DrinkCard
+                  key={drink.id}
+                  product={drink}
+                  onOpen={() => openProduct(drink, "special")}
+                />
+              ))}
+            </div>
+          </>
         ) : null}
 
         {(menu.teas ?? []).length > 0 ? (
-          <MenuSection id="teas" title="Teas" blurb="£3. No extras.">
-            {(menu.teas ?? []).map((tea) => (
-              <DrinkCard key={tea.id} product={tea} onOpen={() => openProduct(tea, "drink")} />
-            ))}
-          </MenuSection>
+          <>
+            <h2 className="mt-12 font-display text-3xl font-semibold">Teas</h2>
+            <p className="mt-1 text-base text-coffee">£3. No extras.</p>
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {(menu.teas ?? []).map((tea) => (
+                <DrinkCard key={tea.id} product={tea} onOpen={() => openProduct(tea, "drink")} />
+              ))}
+            </div>
+          </>
         ) : null}
 
         {(menu.hotChocolates ?? []).length > 0 ? (
-          <MenuSection
-            id="hot-chocolates"
-            title="Hot chocolates"
-            blurb="£2.50, £4 or £4.50. Cream & flake on hot chocolate, +£0.50. Flavoured hot chocolates include a free cream choice."
-          >
-            {(menu.hotChocolates ?? []).map((drink) => (
-              <DrinkCard
-                key={drink.id}
-                product={drink}
-                kind="hot-chocolate"
-                onOpen={() => openProduct(drink, "hot-chocolate")}
-              />
-            ))}
-          </MenuSection>
+          <>
+            <h2 className="mt-12 font-display text-3xl font-semibold">Hot chocolates</h2>
+            <p className="mt-1 text-base text-coffee">
+              £2.50, £4 or £4.50. Cream & flake on hot chocolate, +£0.50. Flavoured hot chocolates
+              include a free cream choice.
+            </p>
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {(menu.hotChocolates ?? []).map((drink) => (
+                <DrinkCard
+                  key={drink.id}
+                  product={drink}
+                  kind="hot-chocolate"
+                  onOpen={() => openProduct(drink, "hot-chocolate")}
+                />
+              ))}
+            </div>
+          </>
         ) : null}
 
         {(menu.milkshakes ?? []).length > 0 ? (
-          <MenuSection id="milkshakes" title="Milkshakes" blurb="£5 or £5.50. Choose with or without cream.">
-            {(menu.milkshakes ?? []).map((shake) => (
-              <DrinkCard
-                key={shake.id}
-                product={shake}
-                kind="milkshake"
-                onOpen={() => openProduct(shake, "milkshake")}
-              />
-            ))}
-          </MenuSection>
+          <>
+            <h2 className="mt-12 font-display text-3xl font-semibold">Milkshakes</h2>
+            <p className="mt-1 text-base text-coffee">£5 or £5.50. Choose with or without cream.</p>
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {(menu.milkshakes ?? []).map((shake) => (
+                <DrinkCard
+                  key={shake.id}
+                  product={shake}
+                  kind="milkshake"
+                  onOpen={() => openProduct(shake, "milkshake")}
+                />
+              ))}
+            </div>
+          </>
         ) : null}
 
         {(menu.bobas ?? []).length > 0 ? (
-          <MenuSection id="boba" title="Boba" blurb="£4 or £5. One size. No extras.">
-            {(menu.bobas ?? []).map((boba) => (
-              <DrinkCard key={boba.id} product={boba} kind="boba" onOpen={() => openProduct(boba, "boba")} />
-            ))}
-          </MenuSection>
+          <>
+            <h2 className="mt-12 font-display text-3xl font-semibold">Boba</h2>
+            <p className="mt-1 text-base text-coffee">£4 or £5. One size. No extras.</p>
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {(menu.bobas ?? []).map((boba) => (
+                <DrinkCard
+                  key={boba.id}
+                  product={boba}
+                  kind="boba"
+                  onOpen={() => openProduct(boba, "boba")}
+                />
+              ))}
+            </div>
+          </>
         ) : null}
 
         {(menu.coldDrinks ?? []).length > 0 ? (
-          <MenuSection id="cold-drinks" title="Cold drinks" blurb="£2. Cans and bottles. No extras.">
-            {(menu.coldDrinks ?? []).map((drink) => (
-              <DrinkCard
-                key={drink.id}
-                product={drink}
-                kind="cold-drink"
-                onOpen={() => openProduct(drink, "cold-drink")}
-              />
-            ))}
-          </MenuSection>
+          <>
+            <h2 className="mt-12 font-display text-3xl font-semibold">Cold drinks</h2>
+            <p className="mt-1 text-base text-coffee">£2. Cans and bottles. No extras.</p>
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {(menu.coldDrinks ?? []).map((drink) => (
+                <DrinkCard
+                  key={drink.id}
+                  product={drink}
+                  kind="cold-drink"
+                  onOpen={() => openProduct(drink, "cold-drink")}
+                />
+              ))}
+            </div>
+          </>
         ) : null}
 
-        {(menu.donuts ?? []).length > 0 ? (
-          <MenuSection id="donuts" title="Donuts" blurb="Freshly made. Choose a topping, then a pack of 2, 4 or 6.">
-            {(menu.donuts ?? []).map((donut) => (
-              <button
-                key={donut.id}
-                type="button"
-                onClick={() => openProduct(donut, "donut")}
-                className={itemCardClass}
-              >
-                <DonutIcon donut={donut} className="h-8 w-8 shrink-0" />
-                <span className="line-clamp-2 w-full font-display text-[0.78rem] font-semibold leading-tight">
+        <h2 className="mt-12 font-display text-3xl font-semibold">Donuts</h2>
+        <p className="mt-1 text-base text-coffee">
+          Freshly made. Choose a topping, then a pack of 2, 4 or 6.
+        </p>
+        <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {(menu.donuts ?? []).map((donut) => (
+            <button
+              key={donut.id}
+              type="button"
+              onClick={() => openProduct(donut, "donut")}
+              className="tap flex min-h-36 items-center gap-4 rounded-3xl bg-foam p-5 text-left shadow-[0_10px_30px_rgba(42,24,16,0.08)] ring-1 ring-espresso/5"
+            >
+              <DonutIcon donut={donut} className="h-20 w-20 shrink-0" />
+              <span>
+                <span className="block font-display text-3xl font-semibold leading-tight">
                   {donut.name}
                 </span>
-                <span className="text-[0.7rem] font-semibold leading-none text-mocha">
+                <span className="mt-1 block text-base text-coffee">{donut.description}</span>
+                <span className="mt-3 inline-flex rounded-full bg-caramel/15 px-3 py-1 text-sm font-semibold text-mocha">
                   From {formatGbp(lowestPricePence(donut))}
                 </span>
-              </button>
-            ))}
-          </MenuSection>
-        ) : null}
+              </span>
+            </button>
+          ))}
+        </div>
       </main>
 
-      <div className="fixed inset-x-0 bottom-0 z-20 border-t border-espresso/10 bg-cream/95 px-3 pt-2 backdrop-blur-md pb-[max(0.5rem,env(safe-area-inset-bottom))]">
-        <button
-          type="button"
-          onClick={() => setCartOpen(true)}
-          className="tap mx-auto flex min-h-11 w-full max-w-6xl items-center justify-between rounded-xl bg-espresso px-4 text-foam shadow-lg"
-        >
-          <span className="text-base font-semibold">View order</span>
-          <span className="text-sm">{itemCount} items · {formatGbp(totalPence)}</span>
-        </button>
-      </div>
+      <button
+        type="button"
+        onClick={() => setCartOpen(true)}
+        className="tap fixed bottom-5 left-1/2 z-20 flex min-h-16 w-[min(92%,36rem)] -translate-x-1/2 items-center justify-between rounded-full bg-espresso px-7 text-foam shadow-2xl"
+      >
+        <span className="text-lg font-semibold">View order</span>
+        <span className="text-lg">{itemCount} items · {formatGbp(totalPence)}</span>
+      </button>
 
       {draft ? (
         <CustomiseSheet
@@ -418,31 +386,6 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
   );
 }
 
-const itemCardClass =
-  "tap flex min-h-11 flex-col items-center justify-start gap-0.5 rounded-xl bg-foam px-1 py-1.5 text-center shadow-[0_4px_12px_rgba(42,24,16,0.06)] ring-1 ring-espresso/5";
-
-const itemGridClass = "mt-1.5 grid grid-cols-2 gap-1.5 md:grid-cols-4 md:gap-2 lg:grid-cols-6";
-
-function MenuSection({
-  id,
-  title,
-  blurb,
-  children,
-}: {
-  id: string;
-  title: string;
-  blurb: string;
-  children: ReactNode;
-}) {
-  return (
-    <section id={id} data-menu-section className="scroll-mt-36">
-      <h2 className="font-display text-lg font-semibold leading-tight">{title}</h2>
-      <p className="text-[0.7rem] leading-snug text-coffee">{blurb}</p>
-      <div className={itemGridClass}>{children}</div>
-    </section>
-  );
-}
-
 function DrinkCard({
   product,
   kind = "drink",
@@ -452,29 +395,36 @@ function DrinkCard({
   kind?: ProductKind;
   onOpen: () => void;
 }) {
-  const price =
-    product.sizes.length === 1
-      ? formatGbp(lowestPricePence(product))
-      : `From ${formatGbp(lowestPricePence(product))}`;
   return (
-    <button type="button" onClick={onOpen} className={itemCardClass}>
+    <button
+      type="button"
+      onClick={onOpen}
+      className="tap flex min-h-36 items-center gap-4 rounded-3xl bg-foam p-5 text-left shadow-[0_10px_30px_rgba(42,24,16,0.08)] ring-1 ring-espresso/5"
+    >
       {kind === "milkshake" ? (
-        <MilkshakeIcon shake={product} className="h-8 w-8 shrink-0" />
+        <MilkshakeIcon shake={product} className="h-20 w-20 shrink-0" />
       ) : kind === "boba" ? (
-        <BobaIcon drink={product} className="h-8 w-8 shrink-0" />
+        <BobaIcon drink={product} className="h-20 w-20 shrink-0" />
       ) : kind === "cold-drink" ? (
-        <ColdDrinkIcon drink={product} className="h-8 w-8 shrink-0" />
+        <ColdDrinkIcon drink={product} className="h-20 w-20 shrink-0" />
       ) : kind === "hot-chocolate" || product.id.includes("hot-chocolate") ? (
-        <HotChocolateIcon drink={product} className="h-8 w-8 shrink-0" />
+        <HotChocolateIcon drink={product} className="h-20 w-20 shrink-0" />
       ) : product.id.startsWith("iced-") ? (
-        <IcedCoffeeCup drink={product} className="h-8 w-8 shrink-0" />
+        <IcedCoffeeCup drink={product} className="h-20 w-20 shrink-0" />
       ) : (
-        <CoffeeCup drink={product} className="h-8 w-8 shrink-0" />
+        <CoffeeCup drink={product} className="h-20 w-20 shrink-0" />
       )}
-      <span className="line-clamp-2 w-full font-display text-[0.78rem] font-semibold leading-tight">
-        {productCardName(product)}
+      <span>
+        <span className="block font-display text-3xl font-semibold leading-tight">
+          {productCardName(product)}
+        </span>
+        <span className="mt-1 block text-base text-coffee">{product.description}</span>
+        <span className="mt-3 inline-flex rounded-full bg-caramel/15 px-3 py-1 text-sm font-semibold text-mocha">
+          {product.sizes.length === 1
+            ? formatGbp(lowestPricePence(product))
+            : `From ${formatGbp(lowestPricePence(product))}`}
+        </span>
       </span>
-      <span className="text-[0.7rem] font-semibold leading-none text-mocha">{price}</span>
     </button>
   );
 }
