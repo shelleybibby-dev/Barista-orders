@@ -432,39 +432,79 @@ function OrderTicket({
   );
 }
 
+function distortionCurve() {
+  const length = 1024;
+  const curve = new Float32Array(length);
+  const amount = 14;
+  const peak = Math.tanh(amount);
+  for (let i = 0; i < length; i += 1) {
+    const x = (i / (length - 1)) * 2 - 1;
+    curve[i] = Math.tanh(amount * x) / peak;
+  }
+  return curve;
+}
+
 function playChime(context: AudioContext | null) {
-  if (!context) return;
+  if (!context || context.state === "closed") return;
   const now = context.currentTime;
+
+  const drive = context.createGain();
+  drive.gain.value = 2.6;
+  const shaper = context.createWaveShaper();
+  shaper.curve = distortionCurve();
+  shaper.oversample = "2x";
   const limiter = context.createDynamicsCompressor();
   limiter.threshold.value = -1;
   limiter.knee.value = 0;
   limiter.ratio.value = 20;
-  limiter.attack.value = 0.002;
-  limiter.release.value = 0.12;
+  limiter.attack.value = 0.001;
+  limiter.release.value = 0.06;
   const master = context.createGain();
   master.gain.value = 1;
+  drive.connect(shaper);
+  shaper.connect(limiter);
   limiter.connect(master);
   master.connect(context.destination);
 
-  // Two full-scale notes. The second starts as the first finishes so the peaks do not add.
-  const notes = [
-    { offset: 0, frequency: 880, duration: 0.55 },
-    { offset: 0.52, frequency: 1175, duration: 0.62 },
+  // Square plus sawtooth, both inside 2–3.5 kHz, repeated three times (~2.5s).
+  const pattern = [
+    {
+      offset: 0,
+      duration: 0.32,
+      tones: [
+        { type: "square" as OscillatorType, frequency: 2400 },
+        { type: "sawtooth" as OscillatorType, frequency: 2050 },
+      ],
+    },
+    {
+      offset: 0.38,
+      duration: 0.34,
+      tones: [
+        { type: "square" as OscillatorType, frequency: 3300 },
+        { type: "sawtooth" as OscillatorType, frequency: 2800 },
+      ],
+    },
   ];
-  for (const note of notes) {
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    const start = now + note.offset;
-    const end = start + note.duration;
-    oscillator.type = "sine";
-    oscillator.frequency.setValueAtTime(note.frequency, start);
-    gain.gain.setValueAtTime(0.0001, start);
-    gain.gain.exponentialRampToValueAtTime(1, start + 0.015);
-    gain.gain.setValueAtTime(1, start + note.duration * 0.62);
-    gain.gain.exponentialRampToValueAtTime(0.0001, end);
-    oscillator.connect(gain);
-    gain.connect(limiter);
-    oscillator.start(start);
-    oscillator.stop(end + 0.02);
+  const cycle = 0.86;
+
+  for (let repeat = 0; repeat < 3; repeat += 1) {
+    for (const hit of pattern) {
+      const start = now + repeat * cycle + hit.offset;
+      const end = start + hit.duration;
+      const gain = context.createGain();
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(1, start + 0.008);
+      gain.gain.setValueAtTime(1, Math.max(start + 0.012, end - 0.03));
+      gain.gain.exponentialRampToValueAtTime(0.0001, end);
+      gain.connect(drive);
+      for (const tone of hit.tones) {
+        const oscillator = context.createOscillator();
+        oscillator.type = tone.type;
+        oscillator.frequency.setValueAtTime(tone.frequency, start);
+        oscillator.connect(gain);
+        oscillator.start(start);
+        oscillator.stop(end + 0.02);
+      }
+    }
   }
 }
