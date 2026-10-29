@@ -426,7 +426,7 @@ function playChime(context: AudioContext | null) {
     oscillator.type = "sine";
     oscillator.frequency.value = index === 0 ? 880 : 1175;
     gain.gain.setValueAtTime(0.0001, now + offset);
-    gain.gain.exponentialRampToValueAtTime(0.08, now + offset + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.6, now + offset + 0.02);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.18);
     oscillator.connect(gain);
     gain.connect(context.destination);
