@@ -20,6 +20,9 @@ export function findProduct(
   const hotChocolate = (menu.hotChocolates ?? []).find((item) => item.id === productId);
   if (hotChocolate) return { product: hotChocolate, kind: "hot-chocolate" };
 
+  const winterWarmer = (menu.winterWarmers ?? []).find((item) => item.id === productId);
+  if (winterWarmer) return { product: winterWarmer, kind: "winter-warmer" };
+
   const milkshake = (menu.milkshakes ?? []).find((item) => item.id === productId);
   if (milkshake) return { product: milkshake, kind: "milkshake" };
 

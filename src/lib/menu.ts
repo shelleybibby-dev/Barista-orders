@@ -15,6 +15,7 @@ export function getMenu(): Menu {
   menu.teas = Array.isArray(menu.teas) ? menu.teas : [];
   menu.specials = Array.isArray(menu.specials) ? menu.specials : [];
   menu.hotChocolates = Array.isArray(menu.hotChocolates) ? menu.hotChocolates : [];
+  menu.winterWarmers = Array.isArray(menu.winterWarmers) ? menu.winterWarmers : [];
   menu.milkshakes = Array.isArray(menu.milkshakes) ? menu.milkshakes : [];
   menu.bobas = Array.isArray(menu.bobas) ? menu.bobas : [];
   menu.coldDrinks = Array.isArray(menu.coldDrinks) ? menu.coldDrinks : [];

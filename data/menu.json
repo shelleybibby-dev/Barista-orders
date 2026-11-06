@@ -433,6 +433,41 @@
       ]
     }
   ],
+  "winterWarmers": [
+    {
+      "id": "winter-sour-cherry-plum",
+      "name": "Sour Cherry & Plum",
+      "description": "Warm sour cherry and plum",
+      "accent": "#c4233a",
+      "foam": "#fde8ec",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 350 }
+      ]
+    },
+    {
+      "id": "winter-mulled-fruit",
+      "name": "Mulled Fruit",
+      "description": "Warm mulled fruit",
+      "accent": "#e07a1f",
+      "foam": "#fff1dc",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 350 }
+      ]
+    },
+    {
+      "id": "winter-spiced-apple",
+      "name": "Spiced Apple",
+      "description": "Warm spiced apple",
+      "accent": "#d4a017",
+      "foam": "#fff6d8",
+      "extras": [],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 350 }
+      ]
+    }
+  ],
   "milkshakes": [
     {
       "id": "milkshake-strawberry",

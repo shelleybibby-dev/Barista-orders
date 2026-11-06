@@ -417,6 +417,7 @@ describe("café menu syrup flavours", () => {
     const blocked = [
       ...(cafeMenu.teas ?? []),
       ...(cafeMenu.hotChocolates ?? []),
+      ...(cafeMenu.winterWarmers ?? []),
       ...(cafeMenu.milkshakes ?? []),
       ...(cafeMenu.bobas ?? []),
       ...(cafeMenu.coldDrinks ?? []),
@@ -512,6 +513,7 @@ describe("café menu syrup flavours", () => {
       ...(cafeMenu.specials ?? []),
       ...(cafeMenu.teas ?? []),
       ...(cafeMenu.hotChocolates ?? []),
+      ...(cafeMenu.winterWarmers ?? []),
       ...(cafeMenu.milkshakes ?? []),
       ...(cafeMenu.bobas ?? []),
       ...(cafeMenu.coldDrinks ?? []),
@@ -696,6 +698,7 @@ describe("café menu syrup flavours", () => {
       ...(cafeMenu.specials ?? []),
       ...(cafeMenu.teas ?? []),
       ...(cafeMenu.hotChocolates ?? []),
+      ...(cafeMenu.winterWarmers ?? []),
       ...(cafeMenu.milkshakes ?? []),
       ...(cafeMenu.bobas ?? []),
       ...(cafeMenu.coldDrinks ?? []),
@@ -957,6 +960,41 @@ describe("café menu syrup flavours", () => {
         cafeMenu.hotChocolates!.find((item) => item.id === "pumpkin-spiced-hot-chocolate")!,
       ),
     ).toEqual(["no-cream"]);
+  });
+
+  it("offers winter warmers at £3.50 with no extras", () => {
+    const cafeMenu = getMenu();
+    const warmers = [
+      ["winter-sour-cherry-plum", "Sour Cherry & Plum", "#c4233a"],
+      ["winter-mulled-fruit", "Mulled Fruit", "#e07a1f"],
+      ["winter-spiced-apple", "Spiced Apple", "#d4a017"],
+    ] as const;
+
+    expect(cafeMenu.winterWarmers?.map((drink) => drink.id)).toEqual(warmers.map(([id]) => id));
+    for (const [id, name, accent] of warmers) {
+      const drink = cafeMenu.winterWarmers?.find((item) => item.id === id);
+      expect(drink?.name).toBe(name);
+      expect(drink?.accent).toBe(accent);
+      expect(drink?.extras).toEqual([]);
+      expect(drink?.sizes).toEqual([{ id: "standard", name: "", pricePence: 350 }]);
+      expect(priceUnitPence(drink!, "standard", [], cafeMenu.extras)).toBe(350);
+      for (const blocked of ["oat", "extra-shot", "syrup-vanilla", "decaf", "cream", "with-cream", "no-cream"]) {
+        expect(() => priceUnitPence(drink!, "standard", [blocked], cafeMenu.extras)).toThrow(
+          OrderValidationError,
+        );
+      }
+    }
+
+    const item = buildOrderItem(
+      cafeMenu,
+      { drinkId: "winter-mulled-fruit", sizeId: "standard", extraIds: [], quantity: 1 },
+      "warmer-1",
+    );
+    expect(item.kind).toBe("winter-warmer");
+    expect(item.drinkName).toBe("Mulled Fruit");
+    expect(item.extras).toEqual([]);
+    expect(item.lineTotalPence).toBe(350);
+    expect(ticketAriaLabel(item)).toBe("Mulled Fruit");
   });
 
   it("offers fruit milkshakes at £5 and Oreo and Biscoff at £5.50 with a cream choice", () => {

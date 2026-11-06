@@ -305,6 +305,10 @@ function OrderTicket({
                   <span className="block text-xs font-semibold uppercase tracking-[0.2em] text-mocha">
                     Cold drink
                   </span>
+                ) : item.kind === "winter-warmer" ? (
+                  <span className="block text-xs font-semibold uppercase tracking-[0.2em] text-mocha">
+                    Winter Warmers
+                  </span>
                 ) : null}
                 {serve ? (
                   <span className="mb-1 mr-2 inline-block rounded-full bg-espresso px-3 py-1 text-sm font-bold uppercase tracking-[0.18em] text-foam">

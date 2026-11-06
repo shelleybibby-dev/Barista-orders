@@ -6,6 +6,7 @@ import { ColdDrinkIcon } from "@/components/ColdDrinkIcon";
 import { CoffeeCup, KidCup } from "@/components/CoffeeCup";
 import { IcedCoffeeCup } from "@/components/IcedCoffeeCup";
 import { HotChocolateIcon } from "@/components/HotChocolateIcon";
+import { WinterWarmerIcon } from "@/components/WinterWarmerIcon";
 import { BrandLockup } from "@/components/CoffeeBeansLogo";
 import { DonutIcon } from "@/components/DonutIcon";
 import { MilkshakeIcon } from "@/components/MilkshakeIcon";
@@ -192,6 +193,9 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
         (menu.hotChocolates ?? []).length > 0
           ? { id: "hot-chocolates", label: "Hot chocolates" }
           : null,
+        (menu.winterWarmers ?? []).length > 0
+          ? { id: "winter-warmers", label: "Winter Warmers" }
+          : null,
         (menu.milkshakes ?? []).length > 0 ? { id: "milkshakes", label: "Milkshakes" } : null,
         (menu.bobas ?? []).length > 0 ? { id: "boba", label: "Boba" } : null,
         (menu.coldDrinks ?? []).length > 0 ? { id: "cold-drinks", label: "Cold drinks" } : null,
@@ -274,7 +278,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
       <main className="mx-auto max-w-5xl px-5 py-6 pb-44">
         <h1 className="font-display text-4xl font-semibold">Order here</h1>
         <p className="mt-2 text-lg text-coffee">
-          Add coffee, specials, tea, hot chocolate, milkshakes, boba, cold drinks and donut packs to the same tray. No payment needed.
+          Add coffee, specials, tea, hot chocolate, winter warmers, milkshakes, boba, cold drinks and donut packs to the same tray. No payment needed.
         </p>
 
         <section id="coffees" data-menu-section className="scroll-mt-52">
@@ -321,7 +325,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
           <section id="hot-chocolates" data-menu-section className="scroll-mt-52">
             <h2 className="mt-12 font-display text-3xl font-semibold">Hot chocolates</h2>
             <p className="mt-1 text-base text-coffee">
-              £2.50, £4 or £4.50. Cream & flake on hot chocolate, +£0.50. Flavoured hot chocolates
+              £2.50, £4 or £5. Cream & flake on hot chocolate, +£0.50. Flavoured hot chocolates
               include a free cream choice.
             </p>
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -331,6 +335,23 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
                   product={drink}
                   kind="hot-chocolate"
                   onOpen={() => openProduct(drink, "hot-chocolate")}
+                />
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {(menu.winterWarmers ?? []).length > 0 ? (
+          <section id="winter-warmers" data-menu-section className="scroll-mt-52">
+            <h2 className="mt-12 font-display text-3xl font-semibold">Winter Warmers</h2>
+            <p className="mt-1 text-base text-coffee">£3.50. No extras.</p>
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {(menu.winterWarmers ?? []).map((drink) => (
+                <DrinkCard
+                  key={drink.id}
+                  product={drink}
+                  kind="winter-warmer"
+                  onOpen={() => openProduct(drink, "winter-warmer")}
                 />
               ))}
             </div>
@@ -483,6 +504,8 @@ function DrinkCard({
         <ColdDrinkIcon drink={product} className="h-20 w-20 shrink-0" />
       ) : kind === "hot-chocolate" || product.id.includes("hot-chocolate") ? (
         <HotChocolateIcon drink={product} className="h-20 w-20 shrink-0" />
+      ) : kind === "winter-warmer" ? (
+        <WinterWarmerIcon drink={product} className="h-20 w-20 shrink-0" />
       ) : product.id === "babychino" ? (
         <KidCup drink={product} className="h-20 w-20 shrink-0" />
       ) : product.id.startsWith("iced-") ? (
@@ -542,6 +565,7 @@ function CustomiseSheet({
   const isBoba = draft.kind === "boba";
   const isColdDrink = draft.kind === "cold-drink";
   const isHotChocolate = draft.kind === "hot-chocolate";
+  const isWinterWarmer = draft.kind === "winter-warmer";
   const sizeLabel = isDonut ? "Pack" : "Size";
 
   return (
@@ -560,6 +584,8 @@ function CustomiseSheet({
             <ColdDrinkIcon drink={draft.product} className="h-16 w-16" />
           ) : isHotChocolate || draft.product.id.includes("hot-chocolate") ? (
             <HotChocolateIcon drink={draft.product} className="h-16 w-16" />
+          ) : isWinterWarmer ? (
+            <WinterWarmerIcon drink={draft.product} className="h-16 w-16" />
           ) : draft.product.id === "babychino" ? (
             <KidCup drink={draft.product} className="h-16 w-16" />
           ) : draft.product.id.startsWith("iced-") ? (
@@ -886,7 +912,13 @@ function CartDrawer({
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-2xl font-semibold">
-                      {line.kind === "donut" ? "Donuts · " : line.kind === "special" ? "Specials · " : ""}
+                      {line.kind === "donut"
+                        ? "Donuts · "
+                        : line.kind === "special"
+                          ? "Specials · "
+                          : line.kind === "winter-warmer"
+                            ? "Winter Warmers · "
+                            : ""}
                       {line.product.name}
                       {line.sizeName ? (
                         <span className="ml-2 text-lg font-normal text-coffee">{line.sizeName}</span>
