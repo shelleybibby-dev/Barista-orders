@@ -5,7 +5,6 @@ import type { Order } from "@/lib/types";
 
 export type QueueLink = "live" | "updating" | "offline";
 
-const OPEN_TIMEOUT_MS = 3000;
 const POLL_INTERVAL_MS = 2500;
 const STREAM_RETRY_MS = 15000;
 
@@ -19,13 +18,14 @@ export function useOrderStream() {
     let stopped = false;
     let source: EventSource | null = null;
     let connection = 0;
-    let live = false;
-    let polling = false;
-    let openTimer = 0;
+    let streamOpen = false;
+    let sawList = false;
+    let listVersion = 0;
     let pollTimer = 0;
     let retryTimer = 0;
 
     const publish = (next: Order[]) => {
+      listVersion += 1;
       const previous = seenRef.current;
       const incoming = next
         .filter((order) => order.status === "queued")
@@ -37,77 +37,85 @@ export function useOrderStream() {
       if (incoming.length > 0) setNewOrderIds(incoming);
     };
 
+    const showLink = () => {
+      if (!sawList) {
+        setLink("updating");
+        return;
+      }
+      setLink(streamOpen ? "live" : "offline");
+    };
+
     const pollOnce = async () => {
-      if (stopped || live) return;
+      if (stopped) return;
+      const started = listVersion;
       try {
-        const response = await fetch("/api/orders", { cache: "no-store" });
+        const response = await fetch(`/api/orders?t=${Date.now()}`, {
+          cache: "no-store",
+          headers: { Accept: "application/json", "Cache-Control": "no-cache" },
+        });
         if (!response.ok) throw new Error(String(response.status));
         const payload = (await response.json()) as { orders?: Order[] };
-        if (stopped || live) return;
-        publish(payload.orders ?? []);
-        setLink("offline");
+        if (stopped) return;
+        sawList = true;
+        if (listVersion === started) publish(payload.orders ?? []);
+        showLink();
       } catch {
-        if (stopped || live) return;
-        setLink((current) => (current === "live" ? current : "offline"));
+        if (!stopped) showLink();
       }
-    };
-
-    const ensurePolling = () => {
-      if (stopped || polling) return;
-      polling = true;
-      void pollOnce();
-      pollTimer = window.setInterval(() => void pollOnce(), POLL_INTERVAL_MS);
-    };
-
-    const stopPolling = () => {
-      polling = false;
-      window.clearInterval(pollTimer);
-      pollTimer = 0;
     };
 
     const scheduleStreamRetry = () => {
       window.clearTimeout(retryTimer);
       retryTimer = window.setTimeout(() => {
-        if (!stopped && !live) connect();
+        if (!stopped && !streamOpen) connect();
       }, STREAM_RETRY_MS);
     };
 
     const connect = () => {
       if (stopped) return;
-      const id = ++connection;
-      window.clearTimeout(openTimer);
-      window.clearTimeout(retryTimer);
-      source?.close();
-
-      const current = new EventSource("/api/orders/stream");
-      source = current;
-
-      openTimer = window.setTimeout(() => {
-        if (stopped || live || id !== connection) return;
-        current.close();
-        if (source === current) source = null;
-        setLink((currentLink) => (currentLink === "offline" ? currentLink : "updating"));
-        ensurePolling();
+      if (typeof EventSource === "undefined") {
+        streamOpen = false;
+        showLink();
         scheduleStreamRetry();
-      }, OPEN_TIMEOUT_MS);
+        return;
+      }
+
+      const id = ++connection;
+      window.clearTimeout(retryTimer);
+      try {
+        source?.close();
+      } catch {
+        // Ignore a stream that is already closed.
+      }
+
+      let current: EventSource;
+      try {
+        current = new EventSource("/api/orders/stream");
+      } catch {
+        source = null;
+        streamOpen = false;
+        showLink();
+        scheduleStreamRetry();
+        return;
+      }
+      source = current;
 
       current.onopen = () => {
         if (stopped || id !== connection) return;
-        live = true;
-        window.clearTimeout(openTimer);
-        window.clearTimeout(retryTimer);
-        stopPolling();
-        setLink("live");
+        streamOpen = true;
+        showLink();
       };
 
       current.onerror = () => {
         if (stopped || id !== connection) return;
-        live = false;
-        window.clearTimeout(openTimer);
-        current.close();
+        streamOpen = false;
+        try {
+          current.close();
+        } catch {
+          // Already closed.
+        }
         if (source === current) source = null;
-        setLink((currentLink) => (currentLink === "offline" ? currentLink : "updating"));
-        ensurePolling();
+        showLink();
         scheduleStreamRetry();
       };
 
@@ -115,41 +123,44 @@ export function useOrderStream() {
         if (stopped || id !== connection) return;
         try {
           const payload = JSON.parse(event.data) as { orders?: Order[] };
-          if (!live) {
-            live = true;
-            window.clearTimeout(openTimer);
-            window.clearTimeout(retryTimer);
-            stopPolling();
-            setLink("live");
-          }
+          streamOpen = true;
           publish(payload.orders ?? []);
+          showLink();
         } catch {
-          if (!live) {
-            setLink((currentLink) => (currentLink === "offline" ? currentLink : "updating"));
-            ensurePolling();
-          }
+          // Keep the tickets already on screen. The poll loop still refreshes them.
         }
       };
     };
 
-    const onVisible = () => {
-      if (stopped || document.visibilityState !== "visible" || live) return;
+    const onWake = () => {
+      if (stopped || document.visibilityState === "hidden") return;
       void pollOnce();
       if (!source) connect();
     };
 
+    void pollOnce();
+    pollTimer = window.setInterval(() => {
+      void pollOnce();
+    }, POLL_INTERVAL_MS);
     connect();
-    document.addEventListener("visibilitychange", onVisible);
+    document.addEventListener("visibilitychange", onWake);
+    window.addEventListener("pageshow", onWake);
+    window.addEventListener("focus", onWake);
 
     return () => {
       stopped = true;
       connection += 1;
-      live = false;
-      window.clearTimeout(openTimer);
+      streamOpen = false;
       window.clearTimeout(retryTimer);
       window.clearInterval(pollTimer);
-      document.removeEventListener("visibilitychange", onVisible);
-      source?.close();
+      document.removeEventListener("visibilitychange", onWake);
+      window.removeEventListener("pageshow", onWake);
+      window.removeEventListener("focus", onWake);
+      try {
+        source?.close();
+      } catch {
+        // Ignore a stream that is already closed.
+      }
       source = null;
     };
   }, []);
