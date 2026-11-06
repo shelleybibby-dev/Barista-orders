@@ -758,11 +758,11 @@ describe("café menu syrup flavours", () => {
     const plain = ["hot-chocolate", "Hot chocolate", 400] as const;
     const kidsSpec = ["hot-chocolate-kids", "Kids hot chocolate", 250] as const;
     const flavoured = [
-      ["hot-chocolate-cadbury-caramel", "Caramel Hot Chocolate", 450],
-      ["hot-chocolate-orange", "Orange Hot Chocolate", 450],
-      ["hot-chocolate-dubai", "Dubai Hot Chocolate", 450],
-      ["hot-chocolate-black-forest", "Black Forest Hot Chocolate", 450],
-      ["hot-chocolate-mint", "Mint Hot Chocolate", 450],
+      ["hot-chocolate-cadbury-caramel", "Caramel Hot Chocolate", 500],
+      ["hot-chocolate-orange", "Orange Hot Chocolate", 500],
+      ["hot-chocolate-dubai", "Dubai Hot Chocolate", 500],
+      ["hot-chocolate-black-forest", "Black Forest Hot Chocolate", 500],
+      ["hot-chocolate-mint", "Mint Hot Chocolate", 500],
       ["pumpkin-spiced-hot-chocolate", "Pumpkin spiced hot chocolate", 450],
     ] as const;
 
@@ -934,7 +934,7 @@ describe("café menu syrup flavours", () => {
     );
     expect(caramel.drinkName).toBe("Caramel Hot Chocolate");
     expect(caramel.extras).toEqual([{ id: "with-cream", name: "With cream", pricePence: 0 }]);
-    expect(caramel.lineTotalPence).toBe(450);
+    expect(caramel.lineTotalPence).toBe(500);
 
     const pumpkinCocoa = buildOrderItem(
       cafeMenu,
