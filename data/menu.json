@@ -429,7 +429,7 @@
       "foam": "#f6ddb8",
       "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 450 }
+        { "id": "standard", "name": "", "pricePence": 500 }
       ]
     }
   ],

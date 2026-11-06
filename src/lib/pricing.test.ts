@@ -763,7 +763,7 @@ describe("café menu syrup flavours", () => {
       ["hot-chocolate-dubai", "Dubai Hot Chocolate", 500],
       ["hot-chocolate-black-forest", "Black Forest Hot Chocolate", 500],
       ["hot-chocolate-mint", "Mint Hot Chocolate", 500],
-      ["pumpkin-spiced-hot-chocolate", "Pumpkin spiced hot chocolate", 450],
+      ["pumpkin-spiced-hot-chocolate", "Pumpkin spiced hot chocolate", 500],
     ] as const;
 
     expect(cafeMenu.hotChocolates?.map((drink) => drink.id)).toEqual([
@@ -949,7 +949,7 @@ describe("café menu syrup flavours", () => {
     expect(pumpkinCocoa.kind).toBe("hot-chocolate");
     expect(pumpkinCocoa.drinkName).toBe("Pumpkin spiced hot chocolate");
     expect(pumpkinCocoa.extras).toEqual([{ id: "with-cream", name: "With cream", pricePence: 0 }]);
-    expect(pumpkinCocoa.lineTotalPence).toBe(450);
+    expect(pumpkinCocoa.lineTotalPence).toBe(500);
     expect(ticketAriaLabel(pumpkinCocoa)).toBe("Pumpkin spiced hot chocolate, With cream");
     expect(
       defaultExtraIds(
