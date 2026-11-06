@@ -5,7 +5,7 @@ A café kiosk web app for two iPads:
 - **Customer iPad** (`/customer`) — large-button drinks and donut packs, cart, and place order (no payment)
 - **Barista iPad** (`/barista`) — live FIFO queue, tick off line items as they’re made, mark ready / done, short completed history
 
-Orders sync in real time over Server-Sent Events. The queue is saved to disk so a refresh does not lose tickets.
+Orders sync in real time over Server-Sent Events. If that stream errors or does not open within a few seconds, the barista screen keeps the tickets it already has and refreshes them from `GET /api/orders` every few seconds, including when the queue is opened from the Home Screen icon. The queue is saved to disk so a refresh does not lose tickets.
 
 ## Run locally
 

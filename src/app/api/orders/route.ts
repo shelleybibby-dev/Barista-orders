@@ -7,7 +7,10 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export function GET() {
-  return NextResponse.json({ orders: getOrderStore().list() });
+  return NextResponse.json(
+    { orders: getOrderStore().list() },
+    { headers: { "Cache-Control": "no-store" } },
+  );
 }
 
 export async function POST(request: Request) {

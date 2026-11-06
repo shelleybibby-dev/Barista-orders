@@ -9,7 +9,7 @@ import { formatClock, formatRelative } from "@/lib/time";
 import type { Order, OrderStatus } from "@/lib/types";
 
 export function BaristaQueue({ cafeName }: { cafeName: string }) {
-  const { orders, connected, error, newOrderIds } = useOrderStream();
+  const { orders, link, newOrderIds } = useOrderStream();
   const [busyId, setBusyId] = useState<string | null>(null);
   const [busyItemId, setBusyItemId] = useState<string | null>(null);
   const [soundOn, setSoundOn] = useState(false);
@@ -97,10 +97,11 @@ export function BaristaQueue({ cafeName }: { cafeName: string }) {
           <div className="flex flex-wrap items-center gap-3">
             <span
               className={`rounded-full px-4 py-2 text-sm font-semibold ${
-                connected ? "bg-leaf/20 text-leaf-soft" : "bg-white/10 text-foam/70"
+                link === "live" ? "bg-leaf/20 text-leaf-soft" : "bg-white/10 text-foam/70"
               }`}
+              role="status"
             >
-              {connected ? "Live" : "Reconnecting"}
+              {link === "live" ? "Live" : link === "updating" ? "Updating…" : "Offline refresh"}
             </span>
             {!soundOn ? (
               <button
@@ -115,7 +116,6 @@ export function BaristaQueue({ cafeName }: { cafeName: string }) {
             )}
           </div>
         </div>
-        {error ? <p className="mx-auto mt-3 max-w-7xl text-caramel">{error}</p> : null}
       </header>
 
       <main className="mx-auto grid max-w-7xl gap-8 px-5 py-6 lg:grid-cols-[1.4fr_1fr]">
