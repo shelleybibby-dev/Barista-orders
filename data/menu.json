@@ -361,7 +361,7 @@
       "description": "A smaller hot chocolate",
       "accent": "#3d2418",
       "foam": "#fff6ee",
-      "extras": [],
+      "extras": ["cream-on-top"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 250 }
       ]

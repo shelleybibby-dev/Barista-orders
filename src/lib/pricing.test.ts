@@ -512,7 +512,7 @@ describe("café menu syrup flavours", () => {
       ...cafeMenu.drinks.filter((drink) => drink.id !== "latte" && drink.id !== "iced-latte"),
       ...(cafeMenu.specials ?? []),
       ...(cafeMenu.teas ?? []),
-      ...(cafeMenu.hotChocolates ?? []),
+      ...(cafeMenu.hotChocolates ?? []).filter((drink) => drink.id !== "hot-chocolate-kids"),
       ...(cafeMenu.winterWarmers ?? []),
       ...(cafeMenu.milkshakes ?? []),
       ...(cafeMenu.bobas ?? []),
@@ -825,9 +825,11 @@ describe("café menu syrup flavours", () => {
 
     const kidsDrink = cafeMenu.hotChocolates?.find((item) => item.id === kidsSpec[0]);
     expect(kidsDrink?.name).toBe(kidsSpec[1]);
-    expect(kidsDrink?.extras).toEqual([]);
+    expect(kidsDrink?.extras).toEqual(["cream-on-top"]);
     expect(kidsDrink?.sizes).toEqual([{ id: "standard", name: "", pricePence: kidsSpec[2] }]);
+    expect(defaultExtraIds(cafeMenu, kidsDrink!)).toEqual([]);
     expect(priceUnitPence(kidsDrink!, "standard", [], cafeMenu.extras)).toBe(kidsSpec[2]);
+    expect(priceUnitPence(kidsDrink!, "standard", ["cream-on-top"], cafeMenu.extras)).toBe(kidsSpec[2] + 50);
     for (const blocked of ["cream-and-flake", "no-cream", "with-cream", "oat", "extra-shot", "syrup-caramel"]) {
       expect(() => priceUnitPence(kidsDrink!, "standard", [blocked], cafeMenu.extras)).toThrow(
         OrderValidationError,
@@ -894,6 +896,14 @@ describe("café menu syrup flavours", () => {
     expect(kidsOrder.drinkName).toBe("Kids hot chocolate");
     expect(kidsOrder.extras).toEqual([]);
     expect(kidsOrder.lineTotalPence).toBe(250);
+    const kidsCream = buildOrderItem(
+      cafeMenu,
+      { drinkId: "hot-chocolate-kids", sizeId: "standard", extraIds: ["cream-on-top"], quantity: 1 },
+      "cocoa-kids-cream",
+    );
+    expect(kidsCream.extras).toEqual([{ id: "cream-on-top", name: "Cream on top", pricePence: 50 }]);
+    expect(kidsCream.lineTotalPence).toBe(300);
+    expect(ticketAriaLabel(kidsCream)).toBe("Kids hot chocolate, Cream on top");
 
     const plainOrder = buildOrderItem(
       cafeMenu,
