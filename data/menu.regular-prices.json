@@ -260,6 +260,56 @@
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 450 }
       ]
+    },
+    {
+      "id": "gingerbread-latte",
+      "name": "Gingerbread latte",
+      "description": "Topped with cream & a dusting of cinnamon",
+      "accent": "#b86b2f",
+      "foam": "#f7e3c8",
+      "extras": [
+        "decaf",
+        "oat",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-pumpkin-spice",
+        "syrup-maple-spice",
+        "syrup-maple-pecan-pie",
+        "syrup-cinnamon-roll",
+        "cream"
+      ],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 450 }
+      ]
+    },
+    {
+      "id": "cinnamon-roll-latte",
+      "name": "Cinnamon roll latte",
+      "description": "Topped with cream, cinnamon & a mini cinnamon roll",
+      "accent": "#a34b2a",
+      "foam": "#f8e0c4",
+      "extras": [
+        "decaf",
+        "oat",
+        "extra-shot",
+        "syrup-caramel",
+        "syrup-hazelnut",
+        "syrup-vanilla",
+        "syrup-toasted-marshmallow",
+        "syrup-pistachio",
+        "syrup-pumpkin-spice",
+        "syrup-maple-spice",
+        "syrup-maple-pecan-pie",
+        "syrup-cinnamon-roll",
+        "cream"
+      ],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 450 }
+      ]
     }
   ],
   "teas": [
@@ -430,6 +480,39 @@
       "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
       "sizes": [
         { "id": "standard", "name": "", "pricePence": 500 }
+      ]
+    },
+    {
+      "id": "gingerbread-hot-chocolate",
+      "name": "Gingerbread hot chocolate",
+      "description": "Topped with cream & a dusting of cinnamon",
+      "accent": "#8f4e24",
+      "foam": "#f6e6d4",
+      "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 450 }
+      ]
+    },
+    {
+      "id": "toasted-marshmallow-hot-chocolate",
+      "name": "Toasted marshmallow hot chocolate",
+      "description": "Topped with cream & a giant toasted marshmallow",
+      "accent": "#e8b56a",
+      "foam": "#fff6ea",
+      "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 450 }
+      ]
+    },
+    {
+      "id": "cinnamon-roll-hot-chocolate",
+      "name": "Cinnamon roll hot chocolate",
+      "description": "Topped with cream, cinnamon & a mini cinnamon roll",
+      "accent": "#c45a2a",
+      "foam": "#f8e0c4",
+      "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
+      "sizes": [
+        { "id": "standard", "name": "", "pricePence": 450 }
       ]
     }
   ],

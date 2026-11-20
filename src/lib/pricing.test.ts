@@ -232,6 +232,8 @@ describe("café menu syrup flavours", () => {
       "chai-latte",
       "pumpkin-spiced-latte",
       "maple-spiced-latte",
+      "gingerbread-latte",
+      "cinnamon-roll-latte",
     ]);
     for (const drink of [...cafeMenu.drinks, ...(cafeMenu.specials ?? [])]) {
       if (coffeeWithSyrup.has(drink.id)) {
@@ -532,16 +534,24 @@ describe("café menu syrup flavours", () => {
     const latte = cafeMenu.drinks.find((drink) => drink.id === "latte")!;
     const latteOptions = latte.extras.filter((id) => id !== "cream-on-top");
     const specs = [
-      ["pumpkin-spiced-latte", "Pumpkin spiced latte", "#e07020"],
-      ["maple-spiced-latte", "Maple spiced latte", "#c6862a"],
+      ["pumpkin-spiced-latte", "Pumpkin spiced latte", "#e07020", "Latte with pumpkin spice"],
+      ["maple-spiced-latte", "Maple spiced latte", "#c6862a", "Latte with maple spice"],
+      ["gingerbread-latte", "Gingerbread latte", "#b86b2f", "Topped with cream & a dusting of cinnamon"],
+      [
+        "cinnamon-roll-latte",
+        "Cinnamon roll latte",
+        "#a34b2a",
+        "Topped with cream, cinnamon & a mini cinnamon roll",
+      ],
     ] as const;
 
     expect(cafeMenu.specials?.map((drink) => drink.id)).toEqual(specs.map(([id]) => id));
     expect(cafeMenu.drinks.some((drink) => drink.id.endsWith("-spiced-latte"))).toBe(false);
 
-    for (const [id, name, accent] of specs) {
+    for (const [id, name, accent, description] of specs) {
       const drink = cafeMenu.specials?.find((item) => item.id === id)!;
       expect(drink.name).toBe(name);
+      expect(drink.description).toBe(description);
       expect(drink.accent).toBe(accent);
       expect(drink.extras).toEqual([...latteOptions, "cream"]);
       expect(drink.extras).not.toContain("cream-on-top");
@@ -584,7 +594,14 @@ describe("café menu syrup flavours", () => {
     expect(ticketAriaLabel(withFlake)).toBe("Pumpkin spiced latte, Cream");
 
     for (const drink of [...cafeMenu.drinks, ...(cafeMenu.specials ?? [])]) {
-      if (drink.id === "pumpkin-spiced-latte" || drink.id === "maple-spiced-latte") continue;
+      if (
+        drink.id === "pumpkin-spiced-latte" ||
+        drink.id === "maple-spiced-latte" ||
+        drink.id === "gingerbread-latte" ||
+        drink.id === "cinnamon-roll-latte"
+      ) {
+        continue;
+      }
       expect(drink.extras).not.toContain("cream");
     }
     const hotChocolate = cafeMenu.hotChocolates?.find((item) => item.id === "hot-chocolate");
@@ -766,7 +783,25 @@ describe("café menu syrup flavours", () => {
       ["hot-chocolate-dubai", "Dubai Hot Chocolate", 450],
       ["hot-chocolate-black-forest", "Black Forest Hot Chocolate", 450],
       ["hot-chocolate-mint", "Mint Hot Chocolate", 450],
-      ["pumpkin-spiced-hot-chocolate", "Pumpkin spiced hot chocolate", 450],
+      ["pumpkin-spiced-hot-chocolate", "Pumpkin spiced hot chocolate", 450, "Hot chocolate with pumpkin spice"],
+      [
+        "gingerbread-hot-chocolate",
+        "Gingerbread hot chocolate",
+        450,
+        "Topped with cream & a dusting of cinnamon",
+      ],
+      [
+        "toasted-marshmallow-hot-chocolate",
+        "Toasted marshmallow hot chocolate",
+        450,
+        "Topped with cream & a giant toasted marshmallow",
+      ],
+      [
+        "cinnamon-roll-hot-chocolate",
+        "Cinnamon roll hot chocolate",
+        450,
+        "Topped with cream, cinnamon & a mini cinnamon roll",
+      ],
     ] as const;
 
     expect(cafeMenu.hotChocolates?.map((drink) => drink.id)).toEqual([
@@ -841,9 +876,10 @@ describe("café menu syrup flavours", () => {
       );
     }
 
-    for (const [id, name, pricePence] of flavoured) {
+    for (const [id, name, pricePence, description] of flavoured) {
       const drink = cafeMenu.hotChocolates?.find((item) => item.id === id);
       expect(drink?.name).toBe(name);
+      if (description) expect(drink?.description).toBe(description);
       expect(drink?.extras).toEqual(["oat", "extra-shot", "no-cream", "with-cream"]);
       expect(priceUnitPence(drink!, "standard", ["oat", "no-cream"], cafeMenu.extras)).toBe(pricePence);
       expect(priceUnitPence(drink!, "standard", ["extra-shot", "with-cream"], cafeMenu.extras)).toBe(
