@@ -312,7 +312,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
         {(menu.teas ?? []).length > 0 ? (
           <section id="teas" data-menu-section className="scroll-mt-52">
             <h2 className="mt-12 font-display text-3xl font-semibold">Teas</h2>
-            <p className="mt-1 text-base text-coffee">£3. No extras.</p>
+            <p className="mt-1 text-base text-coffee">£2. No extras.</p>
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {(menu.teas ?? []).map((tea) => (
                 <DrinkCard key={tea.id} product={tea} onOpen={() => openProduct(tea, "drink")} />
@@ -325,7 +325,7 @@ export function CustomerKiosk({ menu }: { menu: Menu }) {
           <section id="hot-chocolates" data-menu-section className="scroll-mt-52">
             <h2 className="mt-12 font-display text-3xl font-semibold">Hot chocolates</h2>
             <p className="mt-1 text-base text-coffee">
-              £2.50, £4 or £5. Cream & flake on hot chocolate, +£0.50. Flavoured hot chocolates
+              £2.50, £3 or £3.50. Cream & flake on hot chocolate, +£0.50. Flavoured hot chocolates
               include a free cream choice.
             </p>
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">

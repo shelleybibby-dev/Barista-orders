@@ -89,8 +89,8 @@ Useful fields:
 - `drinks[].name`, `description`, `sizes[]` — most coffees are one size; espresso still has Single / Double
 - `drinks[].extras` — which extras from the shared `extras` list are allowed on that drink
 - `specials[]` — pumpkin spiced latte and maple spiced latte (£4.50, same decaf, oat milk, extra shot and syrups as a latte, plus optional free cream), shown in their own section under the coffees
-- `teas[]` — tea, decaf tea, green tea, pure peppermint tea, earl grey and strawberry & raspberry tea (one size at £3, no extras), shown in their own kiosk section
-- `hotChocolates[]` — hot chocolate (£4, free oat milk, extra shot +£0.50, one syrup +£0.50, optional cream & flake +£0.50), kids hot chocolate (£2.50, optional cream on top +£0.50, off unless ticked), caramel, orange, Dubai, black forest, mint and pumpkin spiced (£5, free oat milk, extra shot +£0.50, free with cream or no cream); one size, no decaf
+- `teas[]` — tea, decaf tea, green tea, pure peppermint tea, earl grey and strawberry & raspberry tea (one size at £2, no extras), shown in their own kiosk section
+- `hotChocolates[]` — hot chocolate (£3, free oat milk, extra shot +£0.50, one syrup +£0.50, optional cream & flake +£0.50), kids hot chocolate (£2.50, optional cream on top +£0.50, off unless ticked), caramel, orange, Dubai, black forest, mint and pumpkin spiced (£3.50, free oat milk, extra shot +£0.50, free with cream or no cream); one size, no decaf
 - `winterWarmers[]` — sour cherry & plum, mulled fruit and spiced apple (one size at £3.50, no extras), shown after hot chocolates
 - `milkshakes[]` — strawberry, vanilla and chocolate (one size at £5) and Oreo and Biscoff (one size at £5.50), with or without cream at no extra charge
 - `bobas[]` — tropical with mango boba and strawberry and apple boba (one size at £4, no extras), and coffee boba (one size at £5, no extras)
@@ -98,19 +98,23 @@ Useful fields:
 - `donuts[]` — topping/style plus pack sizes (`2 donuts`, `4 donuts`, `6 donuts`) matching the truck
 - `extras[].pricePence` and `group` — `milk` options are mutually exclusive; syrup flavours are mutually exclusive; milkshake and flavoured hot chocolate `cream` is a yes/no choice at no charge; plain hot chocolate has one optional cream & flake add-on at +£0.50; pumpkin and maple spiced lattes have a separate free cream option named Cream; hot latte and iced latte have optional cream on top at +£0.50; cappuccino has optional free chocolate on top; `decaf`, `shot` and a syrup flavour can combine with milk
 
+Starter prices below are a temporary menu. Regular prices are saved in `data/menu.regular-prices.json` and on git tag `regular-prices`.
+
 Starter prices (GBP):
 
 | Drink | Price |
 | --- | --- |
 | Espresso | Single £2.50 / Double £3.00 |
 | Babychino | £2.00 |
-| Americano | £3.50 |
-| Latte, Iced latte, Cappuccino, Flat white, Chai latte | £4.00 |
-| Pumpkin spiced latte, Maple spiced latte (Specials), Mocha | £4.50 |
-| Tea, Decaf tea, Green tea, Pure peppermint tea, Earl grey, Strawberry & raspberry tea | £3.00 |
+| Americano | £2.50 |
+| Latte, Cappuccino, Flat white | £3.00 |
+| Iced latte, Chai latte | £4.00 |
+| Mocha | £3.50 |
+| Pumpkin spiced latte, Maple spiced latte (Specials) | £4.50 |
+| Tea, Decaf tea, Green tea, Pure peppermint tea, Earl grey, Strawberry & raspberry tea | £2.00 |
 | Kids hot chocolate | £2.50 |
-| Hot chocolate | £4.00 |
-| Caramel, Orange, Dubai, Black Forest, Mint, Pumpkin spiced hot chocolate | £5.00 |
+| Hot chocolate | £3.00 |
+| Caramel, Orange, Dubai, Black Forest, Mint, Pumpkin spiced hot chocolate | £3.50 |
 | Sour Cherry & Plum, Mulled Fruit, Spiced Apple | £3.50 |
 | Strawberry, Vanilla, Chocolate milkshake | £5.00 |
 | Oreo, Biscoff milkshake | £5.50 |
