@@ -424,7 +424,7 @@
       "foam": "#fff3e0",
       "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 500 }
+        { "id": "standard", "name": "", "pricePence": 450 }
       ]
     },
     {
@@ -435,7 +435,7 @@
       "foam": "#fff4ea",
       "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 500 }
+        { "id": "standard", "name": "", "pricePence": 450 }
       ]
     },
     {
@@ -446,7 +446,7 @@
       "foam": "#f4f8ef",
       "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 500 }
+        { "id": "standard", "name": "", "pricePence": 450 }
       ]
     },
     {
@@ -457,7 +457,7 @@
       "foam": "#fff3f4",
       "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 500 }
+        { "id": "standard", "name": "", "pricePence": 450 }
       ]
     },
     {
@@ -468,7 +468,7 @@
       "foam": "#f3fbf8",
       "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 500 }
+        { "id": "standard", "name": "", "pricePence": 450 }
       ]
     },
     {
@@ -479,7 +479,7 @@
       "foam": "#f6ddb8",
       "extras": ["oat", "extra-shot", "no-cream", "with-cream"],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 500 }
+        { "id": "standard", "name": "", "pricePence": 450 }
       ]
     },
     {

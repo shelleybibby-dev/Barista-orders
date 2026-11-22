@@ -50,7 +50,7 @@
         "syrup-cinnamon-roll"
       ],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 250 }
+        { "id": "standard", "name": "", "pricePence": 350 }
       ]
     },
     {
@@ -75,7 +75,7 @@
         "cream-on-top"
       ],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 300 }
+        { "id": "standard", "name": "", "pricePence": 400 }
       ]
     },
     {
@@ -125,7 +125,7 @@
         "chocolate-on-top"
       ],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 300 }
+        { "id": "standard", "name": "", "pricePence": 400 }
       ]
     },
     {
@@ -160,7 +160,7 @@
         "syrup-cinnamon-roll"
       ],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 300 }
+        { "id": "standard", "name": "", "pricePence": 400 }
       ]
     },
     {
@@ -184,7 +184,7 @@
         "syrup-cinnamon-roll"
       ],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 350 }
+        { "id": "standard", "name": "", "pricePence": 450 }
       ]
     },
     {
@@ -321,7 +321,7 @@
       "foam": "#e8d5a8",
       "extras": [],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 200 }
+        { "id": "standard", "name": "", "pricePence": 300 }
       ]
     },
     {
@@ -332,7 +332,7 @@
       "foam": "#efe4c8",
       "extras": [],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 200 }
+        { "id": "standard", "name": "", "pricePence": 300 }
       ]
     },
     {
@@ -343,7 +343,7 @@
       "foam": "#d8e8c0",
       "extras": [],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 200 }
+        { "id": "standard", "name": "", "pricePence": 300 }
       ]
     },
     {
@@ -354,7 +354,7 @@
       "foam": "#d0ebe0",
       "extras": [],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 200 }
+        { "id": "standard", "name": "", "pricePence": 300 }
       ]
     },
     {
@@ -365,7 +365,7 @@
       "foam": "#e4e4ec",
       "extras": [],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 200 }
+        { "id": "standard", "name": "", "pricePence": 300 }
       ]
     },
     {
@@ -376,7 +376,7 @@
       "foam": "#f6d8e0",
       "extras": [],
       "sizes": [
-        { "id": "standard", "name": "", "pricePence": 200 }
+        { "id": "standard", "name": "", "pricePence": 300 }
       ]
     }
   ],
